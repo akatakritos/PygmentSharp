@@ -1,28 +1,57 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core
 {
     public abstract class StateAction
     {
+        public abstract IEnumerable<Token> Execute(RegexLexerContext context);
+    }
 
-        public abstract Token? Execute(RegexLexerContext context);
+    public class GroupAction : StateAction
+    {
+        public StateChangingAction Action { get; set; }
+        public GroupProcessor[] Processors { get; }
+
+        public GroupAction(params GroupProcessor[] processors)
+        {
+            Processors = processors;
+        }
+
+        public GroupAction(StateChangingAction action, params GroupProcessor[] processors)
+            : this(processors)
+        {
+            Action = action ?? new NoopAction();
+        }
+
+        public override IEnumerable<Token> Execute(RegexLexerContext context)
+        {
+            int pos = context.Position;
+
+
+            for(int i = 1; i < context.Match.Groups.Count; i++)
+            {
+                var group = context.Match.Groups[i + 1];
+                var tokens = Processors[i-1].GetTokens(context, group.Value);
+                foreach (var token in tokens)
+                    yield return token;
+            }
+
+            Action.Apply(context.StateStack);
+        }
     }
 
     public abstract class StateChangingAction : StateAction
     {
         public abstract void Apply(Stack<string> stateStack);
 
-        public override Token? Execute(RegexLexerContext context)
+        public override IEnumerable<Token> Execute(RegexLexerContext context)
         {
+            if(context.Match.Value != "")
+                yield return new Token(context.Position, context.RuleTokenType, context.Match.Value);
+
             Apply(context.StateStack);
-
-            var token = context.Match.Value == ""
-                ? default(Token?)
-                : new Token(context.Position, context.RuleTokenType, context.Match.Value);
-
             context.Position += context.Match.Length;
-
-            return token;
         }
     }
 

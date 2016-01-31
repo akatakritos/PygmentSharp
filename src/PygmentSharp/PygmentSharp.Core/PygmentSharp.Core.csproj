@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lexer.cs" />
+    <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexLexer.cs" />
     <Compile Include="StateActions.cs" />

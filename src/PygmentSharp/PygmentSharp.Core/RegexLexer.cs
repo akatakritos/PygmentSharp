@@ -41,9 +41,10 @@ namespace PygmentSharp.Core
                     {
                         var context = new RegexLexerContext(pos, m, stateStack, rule.TokenType);
 
-                        var token = rule.Action.Execute(context);
-                        if (token != null)
-                            yield return token.Value;
+                        var tokens = rule.Action.Execute(context);
+
+                        foreach (var token in tokens)
+                            yield return token;
 
                         pos = context.Position;
                         currentStateRules = rules[stateStack.Peek()];

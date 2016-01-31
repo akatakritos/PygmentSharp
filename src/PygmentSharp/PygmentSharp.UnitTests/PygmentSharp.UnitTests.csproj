@@ -88,8 +88,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lexers\ExampleFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexLexterTests.cs" />
+    <Compile Include="SampleFile.cs" />
     <Compile Include="TokenTypeMapTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +99,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fixtures\csharp-sample.txt" />
     <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>

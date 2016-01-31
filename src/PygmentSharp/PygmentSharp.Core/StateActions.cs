@@ -31,7 +31,7 @@ namespace PygmentSharp.Core
 
             for(int i = 1; i < context.Match.Groups.Count; i++)
             {
-                var group = context.Match.Groups[i + 1];
+                var group = context.Match.Groups[i];
                 var tokens = Processors[i-1].GetTokens(context, group.Value);
                 foreach (var token in tokens)
                     yield return token;

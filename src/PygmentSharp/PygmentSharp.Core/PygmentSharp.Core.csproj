@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatter.cs" />
+    <Compile Include="Formatters\NullFormatter.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

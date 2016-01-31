@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NFluent;
 using PygmentSharp.Core;
+using PygmentSharp.Core.Formatters;
 using PygmentSharp.Core.Lexers;
 using Xunit;
 using Xunit.Abstractions;
@@ -63,14 +64,13 @@ namespace PygmentSharp.UnitTests.Lexers
         public void NoCharactersAreLost()
         {
             var expected = SampleFile.Load("csharp-sample.txt");
-            var sb = new StringBuilder(expected.Length);
 
-            foreach (var t in _results)
-                sb.Append(t.Value);
+            var writer = new StringWriter();
+            new NullFormatter().Format(_results, writer);
 
-            sb.Replace("\n", "\r\n");
+            var s = writer.ToString().Replace("\n", "\r\n");
 
-            Check.That(sb.ToString()).IsEqualTo(expected);
+            Check.That(s).IsEqualTo(expected);
         }
     }
 }

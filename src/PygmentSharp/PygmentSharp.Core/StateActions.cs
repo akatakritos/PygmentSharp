@@ -4,9 +4,29 @@ namespace PygmentSharp.Core
 {
     public abstract class StateAction
     {
-        public abstract void Apply(Stack<string> stateStack);
+
+        public abstract Token? Execute(RegexLexerContext context);
     }
-    public class PushStateAction : StateAction
+
+    public abstract class StateChangingAction : StateAction
+    {
+        public abstract void Apply(Stack<string> stateStack);
+
+        public override Token? Execute(RegexLexerContext context)
+        {
+            Apply(context.StateStack);
+
+            var token = context.Match.Value == ""
+                ? default(Token?)
+                : new Token(context.Position, context.RuleTokenType, context.Match.Value);
+
+            context.Position += context.Match.Length;
+
+            return token;
+        }
+    }
+
+    public class PushStateAction : StateChangingAction
     {
         public string DestinationState { get; }
 
@@ -21,10 +41,10 @@ namespace PygmentSharp.Core
         }
     }
 
-    public class CombinedAction : StateAction
+    public class CombinedAction : StateChangingAction
     {
-        public IReadOnlyCollection<StateAction> Actions { get; }
-        public CombinedAction(params StateAction[] actions)
+        public IReadOnlyCollection<StateChangingAction> Actions { get; }
+        public CombinedAction(params StateChangingAction[] actions)
         {
             Actions = actions;
         }
@@ -38,7 +58,7 @@ namespace PygmentSharp.Core
         }
     }
 
-    public class NoopAction : StateAction
+    public class NoopAction : StateChangingAction
     {
         public override void Apply(Stack<string> stateStack)
         {
@@ -46,7 +66,7 @@ namespace PygmentSharp.Core
         }
     }
 
-    public class PushAgainAction : StateAction
+    public class PushAgainAction : StateChangingAction
     {
         public override void Apply(Stack<string> stateStack)
         {
@@ -54,7 +74,7 @@ namespace PygmentSharp.Core
         }
     }
 
-    public class PopAction : StateAction
+    public class PopAction : StateChangingAction
     {
         public override void Apply(Stack<string> stateStack)
         {

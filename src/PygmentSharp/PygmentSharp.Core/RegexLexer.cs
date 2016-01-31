@@ -1,7 +1,26 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core
 {
+    public class RegexLexerContext
+    {
+        public int Position { get; set; }
+
+        public Match Match { get; }
+
+        public Stack<string> StateStack { get; }
+        public TokenType RuleTokenType { get; }
+
+        public RegexLexerContext(int position, Match match, Stack<string> stateStack, TokenType ruleTokenType)
+        {
+            Position = position;
+            Match = match;
+            StateStack = stateStack;
+            RuleTokenType = ruleTokenType;
+        }
+    }
+
     public abstract class RegexLexer : Lexer
     {
         protected override IEnumerable<Token> GetTokensUnprocessed(string text)
@@ -20,10 +39,13 @@ namespace PygmentSharp.Core
                     var m = rule.Regex.Match(text, pos);
                     if (m.Success)
                     {
-                        if (m.Value != "")
-                            yield return new Token(pos, rule.TokenType, m.Value);
-                        rule.Action.Apply(stateStack);
-                        pos += m.Length;
+                        var context = new RegexLexerContext(pos, m, stateStack, rule.TokenType);
+
+                        var token = rule.Action.Execute(context);
+                        if (token != null)
+                            yield return token.Value;
+
+                        pos = context.Position;
                         currentStateRules = rules[stateStack.Peek()];
                         found = true;
                         break;

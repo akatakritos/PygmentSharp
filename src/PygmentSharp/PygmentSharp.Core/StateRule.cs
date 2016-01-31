@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -37,7 +38,7 @@ namespace PygmentSharp.Core
                 new CombinedAction(states.Select(Parse).ToArray()));
         }
 
-        private static StateAction Parse(string name)
+        private static StateChangingAction Parse(string name)
         {
             if (name == "#push")
                 return new PushAgainAction();

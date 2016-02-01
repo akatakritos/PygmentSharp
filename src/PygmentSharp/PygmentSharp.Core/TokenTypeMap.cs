@@ -11,7 +11,9 @@ namespace PygmentSharp.Core
             _map = new Dictionary<TokenType, string>();
         }
 
-        public string this[TokenType type] => _map[type];
+        public string this[TokenType type] => _map.ContainsKey(type) ? _map[type] : null;
+
+        public bool Contains(TokenType type) => _map.ContainsKey(type);
 
         static TokenTypeMap()
         {

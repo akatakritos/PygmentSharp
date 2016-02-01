@@ -48,6 +48,7 @@
     <Compile Include="RegexLexer.cs" />
     <Compile Include="StateActions.cs" />
     <Compile Include="StateRule.cs" />
+    <Compile Include="StyleData.cs" />
     <Compile Include="TokenType.cs" />
     <Compile Include="TokenTypeMap.cs" />
   </ItemGroup>

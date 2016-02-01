@@ -92,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexLexterTests.cs" />
     <Compile Include="SampleFile.cs" />
+    <Compile Include="StyleDataTests.cs" />
     <Compile Include="TokenTypeMapTests.cs" />
   </ItemGroup>
   <ItemGroup>

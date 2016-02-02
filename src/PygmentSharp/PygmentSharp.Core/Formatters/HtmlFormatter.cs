@@ -265,16 +265,16 @@ pre {{ line-height: 125%; }}
                         if (i%sp == 0)
                         {
                             if (aln)
-                                lines.Add($"<a href=\"#{la}-{i}\" class=\"special\">{i.ToString().PadLeft(mw, '0')}</a>");
+                                lines.Add($"<a href=\"#{la}-{i}\" class=\"special\">{i.ToString().PadLeft(mw, ' ')}</a>");
                             else
-                                lines.Add($"<span class=\"special\">{i.ToString().PadLeft(mw, '0')}</span>");
+                                lines.Add($"<span class=\"special\">{i.ToString().PadLeft(mw, ' ')}</span>");
                         }
                         else
                         {
                             if (aln)
-                                lines.Add($"<a href=\"#{la}-{i}\">{i.ToString().PadLeft(mw, '0')}</a>");
+                                lines.Add($"<a href=\"#{la}-{i}\">{i.ToString().PadLeft(mw, ' ')}</a>");
                             else
-                                lines.Add(i.ToString().PadLeft(mw, '0'));
+                                lines.Add(i.ToString().PadLeft(mw, ' '));
                         }
                     }
                     else
@@ -294,9 +294,9 @@ pre {{ line-height: 125%; }}
                     if (i%st == 0)
                     {
                         if (aln)
-                            lines.Add($"<a href=\"#{la}-{i}\">{i.ToString().PadLeft(mw, '0')}</a>");
+                            lines.Add($"<a href=\"#{la}-{i}\">{i.ToString().PadLeft(mw, ' ')}</a>");
                         else
-                            lines.Add(i.ToString().PadLeft(mw, '0'));
+                            lines.Add(i.ToString().PadLeft(mw, ' '));
                     }
                     else
                         lines.Add("");

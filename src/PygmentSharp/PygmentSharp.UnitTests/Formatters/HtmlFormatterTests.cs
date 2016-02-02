@@ -42,5 +42,26 @@ namespace PygmentSharp.UnitTests.Formatters
 
             Check.That(strippedHtml).IsEqualTo(escapedText);
         }
+
+        [Fact]
+        public void TestLineNumbers()
+        {
+            var options = new HtmlFormatterOptions()
+            {
+                LineNumbers = LineNumberStype.Table
+            };
+            var input = SampleFile.Load("csharp-sample.txt");
+            var tokens = new CSharpLexer()
+                .GetTokens(input);
+
+            var subject = new HtmlFormatter(options);
+            var output = new StringWriter();
+            subject.Format(tokens, output);
+
+            var html = output.ToString();
+
+            Check.That(Regex.IsMatch(html, @"<pre>\s+1\s+2\s+3"))
+                .IsTrue();
+        }
     }
 }

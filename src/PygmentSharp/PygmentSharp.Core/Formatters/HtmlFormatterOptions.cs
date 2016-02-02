@@ -21,7 +21,7 @@ namespace PygmentSharp.Core.Formatters
         public string CssFile { get; set; }
         public bool NoClobberCssFile { get; set; }
         public LineNumberStype LineNumbers { get; set; } = LineNumberStype.None;
-        public int LineNumberStart { get; set; } = 0;
+        public int LineNumberStart { get; set; } = 1;
         public int LineNumberStep { get; set; } = 1;
         public int LineNumberSpecial { get; set; } = 0;
         public bool NoBackground { get; set; } = false;

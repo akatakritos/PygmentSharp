@@ -6,9 +6,13 @@ namespace PygmentSharp.Core
     {
         private readonly IDictionary<TokenType, string> _map;
 
-        public TokenTypeMap()
+        public TokenTypeMap() : this(new Dictionary<TokenType, string>())
         {
-            _map = new Dictionary<TokenType, string>();
+        }
+
+        public TokenTypeMap(IDictionary<TokenType, string> map)
+        {
+            _map = map;
         }
 
         public string this[TokenType type] => _map.ContainsKey(type) ? _map[type] : null;

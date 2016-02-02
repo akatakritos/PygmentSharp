@@ -20,7 +20,16 @@ namespace PygmentSharp.Core
             Parent = parent;
             Name = name;
             _subtypes = new List<TokenType>();
+
+            Depth = CalculateDepth();
         }
+
+        private int CalculateDepth()
+        {
+            return YieldAncestors().Count();
+        }
+
+        public int Depth { get; }
 
         public TokenType Create(string name)
         {
@@ -50,6 +59,7 @@ namespace PygmentSharp.Core
         {
             return string.Join(".", Split().Select(t => t.Name));
         }
+
     }
 
     public class NameTokenType : TokenType

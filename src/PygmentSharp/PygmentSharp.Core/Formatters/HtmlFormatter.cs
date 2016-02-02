@@ -334,7 +334,7 @@ pre {{ line-height: 125%; }}
                 if (item.IsSourceLine)
                 {
                     i++;
-                    yield return new WrapResult(true, $"<a name=\"{s}-{i}></a>{item.FormattedLine}");
+                    yield return new WrapResult(true, $"<a name=\"{s}-{i}\"></a>{item.FormattedLine}");
                 }
                 else
                     yield return item;

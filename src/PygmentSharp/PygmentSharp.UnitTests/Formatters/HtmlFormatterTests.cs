@@ -63,5 +63,50 @@ namespace PygmentSharp.UnitTests.Formatters
             Check.That(Regex.IsMatch(html, @"<pre>\s+1\s+2\s+3"))
                 .IsTrue();
         }
+
+        [Fact]
+        public void TestLineNumbersWithStart()
+        {
+            var options = new HtmlFormatterOptions()
+            {
+                LineNumbers = LineNumberStype.Table,
+                LineNumberStart = 5
+            };
+            var input = SampleFile.Load("csharp-sample.txt");
+            var tokens = new CSharpLexer()
+                .GetTokens(input);
+
+            var subject = new HtmlFormatter(options);
+            var output = new StringWriter();
+            subject.Format(tokens, output);
+
+            var html = output.ToString();
+
+            Check.That(Regex.IsMatch(html, @"<pre>\s+5\s+6\s+7"))
+                .IsTrue();
+        }
+
+        [Fact]
+        public void TestLineAnchors()
+        {
+            var options = new HtmlFormatterOptions()
+            {
+                LineAnchors = "foo",
+                AnchorLineNumbers = true
+            };
+            var input = SampleFile.Load("csharp-sample.txt");
+            var tokens = new CSharpLexer()
+                .GetTokens(input);
+
+            var subject = new HtmlFormatter(options);
+            var output = new StringWriter();
+            subject.Format(tokens, output);
+
+            var html = output.ToString();
+            File.WriteAllText("output.html", html);
+
+            Check.That(Regex.IsMatch(html, "<a name=\"foo-1\">"))
+                .IsTrue();
+        }
     }
 }

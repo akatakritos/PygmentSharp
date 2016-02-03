@@ -134,7 +134,10 @@ pre {{ line-height: 125%; }}
         private void CreateStylesheet()
         {
             //variable names kept for parity with python
-            var t2c = new Dictionary<TokenType, string>();
+            var t2c = new Dictionary<TokenType, string>()
+            {
+                {TokenTypes.Token, ""}
+            };
             var c2s = new Dictionary<string, ClassToStyle>();
 
             var style = new StringBuilder();

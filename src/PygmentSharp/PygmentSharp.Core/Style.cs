@@ -22,6 +22,12 @@ namespace PygmentSharp.Core
 
         private static Dictionary<TokenType, StyleData> ParseStyles(IDictionary<TokenType, string> styles)
         {
+            foreach (var ttype in TokenTypeMap.Instance.Keys)
+            {
+                if (!styles.ContainsKey(ttype))
+                    styles[ttype] = "";
+            }
+
             var output = new Dictionary<TokenType, StyleData>();
             foreach (var style in styles)
             {

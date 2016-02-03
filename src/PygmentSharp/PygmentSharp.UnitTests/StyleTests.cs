@@ -53,8 +53,9 @@ namespace PygmentSharp.UnitTests
 
             var subject = new Style(dict);
 
+            // other styles from the default list are added as well
             Check.That(subject.Select(kvp => kvp.Key.Name))
-                .ContainsExactly("Root", "Foo");
+                .Contains("Root", "Foo");
         }
 
     }

@@ -36,10 +36,12 @@ namespace PygmentSharp.Core
             Mono = mono;
         }
 
-        public static StyleData Parse(string text)
+        public static StyleData Parse(string text) => Parse(text, new StyleData());
+
+        public static StyleData Parse(string text, StyleData merged)
         {
-            string color = null, bgColor = null, borderColor = null;
-            bool bold = false, italic = false, underline = false, roman = false, sans = false, mono = false;
+            string color = merged.Color, bgColor = merged.BackgroundColor, borderColor = merged.BorderColor;
+            bool bold = merged.Bold, italic = merged.Italic, underline = merged.Underline, roman = merged.Roman, sans = merged.Sans, mono = merged.Mono;
 
             foreach (var styledef in text.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries))
             {

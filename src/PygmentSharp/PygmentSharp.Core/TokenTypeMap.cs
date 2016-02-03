@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PygmentSharp.Core
@@ -100,5 +101,6 @@ namespace PygmentSharp.Core
         }
 
         public static TokenTypeMap Instance { get; }
+        public IEnumerable<TokenType> Keys => _map.Keys;
     }
 }

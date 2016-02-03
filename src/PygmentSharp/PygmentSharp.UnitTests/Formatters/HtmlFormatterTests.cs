@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NFluent;
+using PygmentSharp.Core;
 using PygmentSharp.Core.Formatters;
 using PygmentSharp.Core.Lexers;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PygmentSharp.UnitTests.Formatters
 {
     public class HtmlFormatterTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public HtmlFormatterTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void StrippedHtmlIsSameAsInput()
         {
@@ -103,7 +113,6 @@ namespace PygmentSharp.UnitTests.Formatters
             subject.Format(tokens, output);
 
             var html = output.ToString();
-            File.WriteAllText("output.html", html);
 
             Check.That(Regex.IsMatch(html, "<a name=\"foo-1\">"))
                 .IsTrue();
@@ -142,5 +151,15 @@ namespace PygmentSharp.UnitTests.Formatters
             Check.That(sd).StartsWith(".highlight");
         }
 
+        [Fact]
+        public void StyleDefaults_ClassConfiguredForEachTokenType()
+        {
+            var fmt = new HtmlFormatter();
+            var sd = fmt.GetStyleDefaults("");
+
+            _output.WriteLine(sd);
+
+            Check.That(sd).Contains(".c1");
+        }
     }
 }

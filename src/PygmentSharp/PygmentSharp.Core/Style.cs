@@ -33,7 +33,19 @@ namespace PygmentSharp.Core
             {
                 foreach (var ttype in style.Key.Split())
                 {
-                    output[ttype] = StyleData.Parse(style.Value);
+                    if (output.ContainsKey(ttype))
+                        continue;
+
+                    var styledefs = styles[ttype] ?? "";
+
+                    var parentStyle = ttype.Parent == null ? null : output[ttype.Parent];
+
+                    if (parentStyle == null)
+                        parentStyle = new StyleData();
+                    else if (style.Value.Contains("noinherit") && ttype != TokenTypes.Token)
+                        parentStyle = output[TokenTypes.Token]; //inherit from Token
+
+                    output[ttype] = StyleData.Parse(styledefs, parentStyle);
                 }
             }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using PygmentSharp.Core.Styles;
 
 namespace PygmentSharp.Core.Formatters
 {
@@ -14,14 +15,14 @@ namespace PygmentSharp.Core.Formatters
     {
         /// <summary>
         /// Port of the python idiom `result = s and "default"` where
-        /// the result is "default" if s is null or empty
+        /// the result is "default" if s is non empty
         /// </summary>
         /// <param name="s"></param>
         /// <param name="def"></param>
         /// <returns></returns>
-        public static string ValueOr(this string s, string def)
+        public static string PythonAnd(this string s, string def)
         {
-            return string.IsNullOrEmpty(s) ? def : s;
+            return string.IsNullOrEmpty(s) ? s : def;
         }
     }
 
@@ -56,7 +57,7 @@ pre {{ line-height: 125%; }}
 @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd"">
 <html>
 <head>
-  <title>{0}</ title >
+  <title>{0}</title>
   <meta http-equiv=""content-type"" content=""text/html; charset=""utf-8"">
   <style type=""text/css"">
 " + CSSFILE_TEMPLATE + @"
@@ -85,7 +86,8 @@ pre {{ line-height: 125%; }}
         public HtmlFormatter(HtmlFormatterOptions options)
         {
             Options = options;
-            _style = Options.Style ?? new Style(); //TODO: new default style
+            _style = Options.Style ?? new DefaultStyle();
+            CreateStylesheet();
         }
 
         public override string Name => "HTML";
@@ -438,16 +440,16 @@ pre {{ line-height: 125%; }}
                     {
                         if (lspan != cspan)
                         {
-                            line.Append(lspan.ValueOr("</span>"));
+                            line.Append(lspan.PythonAnd("</span>"));
                             line.Append(cspan);
                             line.Append(part);
-                            line.Append(cspan.ValueOr("</span>"));
+                            line.Append(cspan.PythonAnd("</span>"));
                             line.Append(lsep);
                         }
                         else
                         {
                             line.Append(part)
-                                .Append(lspan.ValueOr("</span>"))
+                                .Append(lspan.PythonAnd("</span>"))
                                 .Append(lsep);
                         }
                         yield return new WrapResult(true, line.ToString());
@@ -456,7 +458,7 @@ pre {{ line-height: 125%; }}
                     else if (part != null)
                     {
                         yield return new WrapResult(true,
-                            "" + cspan + part + (cspan.ValueOr("</span>")) + lsep);
+                            "" + cspan + part + (cspan.PythonAnd("</span>")) + lsep);
                     }
                     else
                     {
@@ -469,7 +471,7 @@ pre {{ line-height: 125%; }}
                 {
                     if (lspan != cspan)
                     {
-                        line.Append(lspan.ValueOr("</span>"))
+                        line.Append(lspan.PythonAnd("</span>"))
                             .Append(cspan)
                             .Append(parts.Last());
                         lspan = cspan;
@@ -489,7 +491,7 @@ pre {{ line-height: 125%; }}
 
             if (line.Length > 0)
             {
-                line.Append(lspan.ValueOr("</span>"))
+                line.Append(lspan.PythonAnd("</span>"))
                     .Append(lsep);
                 yield return new WrapResult(true, line.ToString());
             }

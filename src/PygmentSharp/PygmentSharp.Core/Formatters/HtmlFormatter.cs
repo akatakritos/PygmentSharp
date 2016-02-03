@@ -389,7 +389,7 @@ pre {{ line-height: 125%; }}
             if (Options.Filename != null)
                 yield return new WrapResult(false, $"<span class=\"filename\">{Options.Filename}</span>");
 
-            yield return new WrapResult(false, "<span " +
+            yield return new WrapResult(false, "<pre " +
                 (styles.Length > 0 ? $"style=\"{styles}\" " : "") +
                 ">");
 
@@ -539,6 +539,7 @@ pre {{ line-height: 125%; }}
         protected override void FormatUnencoded(IEnumerable<Token> tokenSource, TextWriter writer)
         {
             var source = FormatLines(tokenSource);
+
             if (Options.HighlightLines.Any())
                 source = HighlighLines(source);
 

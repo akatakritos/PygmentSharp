@@ -108,5 +108,39 @@ namespace PygmentSharp.UnitTests.Formatters
             Check.That(Regex.IsMatch(html, "<a name=\"foo-1\">"))
                 .IsTrue();
         }
+
+        [Fact]
+        public void Full()
+        {
+            var options = new HtmlFormatterOptions()
+            {
+                Full = true,
+                Title = "My Source Code"
+            };
+            var input = SampleFile.Load("csharp-sample.txt");
+            var tokens = new CSharpLexer()
+                .GetTokens(input);
+
+            var subject = new HtmlFormatter(options);
+            var output = new StringWriter();
+            subject.Format(tokens, output);
+
+            var html = output.ToString();
+            File.WriteAllText("output.html", html);
+
+            Check.That(html).Contains("<html>", "<head>", "<title>My Source Code</title>");
+        }
+
+        [Fact]
+        public void StyleDefaults_SpacedToHighlight()
+        {
+            var fmt = new HtmlFormatter();
+            var sd = fmt.GetStyleDefaults();
+
+            _output.WriteLine(sd);
+
+            Check.That(sd).StartsWith(".highlight");
+        }
+
     }
 }

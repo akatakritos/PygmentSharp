@@ -52,6 +52,7 @@
     <Compile Include="StateRule.cs" />
     <Compile Include="Style.cs" />
     <Compile Include="StyleData.cs" />
+    <Compile Include="Styles\DefaultStyle.cs" />
     <Compile Include="TokenType.cs" />
     <Compile Include="TokenTypeMap.cs" />
   </ItemGroup>

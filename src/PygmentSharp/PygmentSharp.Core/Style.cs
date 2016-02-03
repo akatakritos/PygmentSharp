@@ -25,7 +25,10 @@ namespace PygmentSharp.Core
             var output = new Dictionary<TokenType, StyleData>();
             foreach (var style in styles)
             {
-                output[style.Key] = StyleData.Parse(style.Value);
+                foreach (var ttype in style.Key.Split())
+                {
+                    output[ttype] = StyleData.Parse(style.Value);
+                }
             }
 
             return output;

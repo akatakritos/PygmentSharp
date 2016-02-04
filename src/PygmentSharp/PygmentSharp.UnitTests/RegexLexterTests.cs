@@ -17,8 +17,6 @@ namespace PygmentSharp.UnitTests
 
         private class TestLexer : RegexLexer
         {
-            public override string Name => "TestLexer";
-
             protected override IDictionary<string, StateRule[]> GetStateRules()
             {
                 var rules = new Dictionary<string, StateRule[]>();

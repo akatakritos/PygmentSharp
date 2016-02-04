@@ -68,8 +68,6 @@ namespace PygmentSharp.Core
 
     public abstract class Lexer
     {
-        public abstract string Name { get; }
-
         public IEnumerable<Token> GetTokens(string text)
         {
             text = text.Replace("\r\n", "\n");

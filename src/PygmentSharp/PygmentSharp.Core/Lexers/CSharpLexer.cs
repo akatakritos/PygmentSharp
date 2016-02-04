@@ -26,8 +26,6 @@ namespace PygmentSharp.Core.Lexers
     [LexerFileExtension("*.cs")]
     public class CSharpLexer : RegexLexer
     {
-        public override string Name => "C# Lexer";
-
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();

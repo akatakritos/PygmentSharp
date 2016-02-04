@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Formatters\HtmlFormatterTests.cs" />
+    <Compile Include="LexerLocatorTests.cs" />
     <Compile Include="Lexers\CSharpExampleFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexLexterTests.cs" />

@@ -19,6 +19,11 @@ namespace PygmentSharp.Core.Lexers
                                        + "[^" + RegexUtil.AllExcept("Lu", "Ll", "Lt", "Lm", "Lo", "Nl",
                                            "Nd", "Pc", "Cf", "Mn", "Mc") + "]*");
     }
+
+
+
+    [Lexer("C#", AlternateNames = "csharp,c#,c-sharp,c sharp,c #")]
+    [LexerFileExtension("*.cs")]
     public class CSharpLexer : RegexLexer
     {
         public override string Name => "C# Lexer";

@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="Formatters\HtmlFormatter.cs" />
     <Compile Include="Formatters\HtmlFormatterOptions.cs" />
     <Compile Include="Formatters\NullFormatter.cs" />
     <Compile Include="Lexer.cs" />
+    <Compile Include="LexerLocator.cs" />
     <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Lexers\RegexUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

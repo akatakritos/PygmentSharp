@@ -32,6 +32,9 @@ namespace PygmentSharp.Core.Formatters
         }
     }
 
+    [Formatter("Html", AlternateNames = "web")]
+    [FormatterFileExtension("*.html")]
+    [FormatterFileExtension("*.htm")]
     public class HtmlFormatter : Formatter
     {
         private const string CSSFILE_TEMPLATE =

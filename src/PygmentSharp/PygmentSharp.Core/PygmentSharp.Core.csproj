@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeLocator.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Formatter.cs" />
+    <Compile Include="FormatterLocator.cs" />
     <Compile Include="Formatters\HtmlFormatter.cs" />
     <Compile Include="Formatters\HtmlFormatterOptions.cs" />
     <Compile Include="Formatters\NullFormatter.cs" />

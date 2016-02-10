@@ -1,5 +1,7 @@
 # PygmentSharp
 
+[![Build status](https://ci.appveyor.com/api/projects/status/24ayr5ou5cux26ui/branch/master?svg=true)](https://ci.appveyor.com/project/akatakritos/pygmentsharp/branch/master)
+
 A port of python's [Pygments](http://pygments.org/) syntax highlighter.
 
 Aims to follow the overall approach (for now) while still being mostly

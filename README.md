@@ -10,10 +10,10 @@ Roadmap:
 I need the following features from Pygment for my static blog generator.
 Other features can be ported by the community as needed.
 
-* HTML Output
-* C# Highlighting
-* HTML Highlighting
-* XML Highlighting
-* Shell script highlighting
-* Ruby Highlighting
-* PHP Highlighting
+- [x] HTML Output
+- [x] C# Highlighting
+- [ ] HTML Highlighting
+- [ ] XML Highlighting
+- [ ] Shell script highlighting
+- [ ] Ruby Highlighting
+- [ ] PHP Highlighting

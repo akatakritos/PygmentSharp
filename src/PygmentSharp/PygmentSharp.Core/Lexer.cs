@@ -79,4 +79,14 @@ namespace PygmentSharp.Core
         protected abstract IEnumerable<Token> GetTokensUnprocessed(string text);
     }
 
+    [Lexer("Plain", AlternateNames = "Text,Plain Text")]
+    [LexerFileExtension("*.txt")]
+    public class PlainLexer : Lexer
+    {
+        protected override IEnumerable<Token> GetTokensUnprocessed(string text)
+        {
+            yield return new Token(0, TokenTypes.Text, text);
+        }
+
+    }
 }

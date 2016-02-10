@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FluentApiTests.cs" />
     <Compile Include="FormatterLocatorTests.cs" />
     <Compile Include="Formatters\HtmlFormatterTests.cs" />
     <Compile Include="LexerLocatorTests.cs" />

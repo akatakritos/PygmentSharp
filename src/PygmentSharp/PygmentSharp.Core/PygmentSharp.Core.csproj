@@ -54,6 +54,7 @@
     <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Lexers\RegexUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pygmentize.cs" />
     <Compile Include="RegexLexer.cs" />
     <Compile Include="StateActions.cs" />
     <Compile Include="StateRule.cs" />

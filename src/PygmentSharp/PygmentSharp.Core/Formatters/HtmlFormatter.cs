@@ -7,25 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
+using PygmentSharp.Core.Extensions;
 using PygmentSharp.Core.Styles;
 
 namespace PygmentSharp.Core.Formatters
 {
-    internal static class StringExtensions
-    {
-        /// <summary>
-        /// Port of the python idiom `result = s and "default"` where
-        /// the result is "default" if s is non empty
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="def"></param>
-        /// <returns></returns>
-        public static string PythonAnd(this string s, string def)
-        {
-            return string.IsNullOrEmpty(s) ? s : def;
-        }
-    }
-
     internal class ClassToStyle
     {
         public string StyleRules { get; set; }

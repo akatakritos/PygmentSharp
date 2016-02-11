@@ -14,6 +14,7 @@ Other features can be ported by the community as needed.
 
 - [x] HTML Output
 - [x] C# Highlighting
+- [ ] SQL Highlighting
 - [ ] HTML Highlighting
 - [ ] XML Highlighting
 - [ ] Shell script highlighting

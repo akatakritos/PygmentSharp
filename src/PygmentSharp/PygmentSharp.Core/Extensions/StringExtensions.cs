@@ -20,6 +20,18 @@ namespace PygmentSharp.Core.Extensions
         }
 
         /// <summary>
+        ///     Port of the python idiom `result = s and "default" where
+        ///     the result is "default" if s is null or empty
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="def">the default value</param>
+        /// <returns></returns>
+        public static string PythonOr(this string s, string def)
+        {
+            return string.IsNullOrEmpty(s) ? def : s;
+        }
+
+        /// <summary>
         ///     Gets a value indicating if the CSV string contains an element matching <paramref name="search" />
         /// </summary>
         /// <param name="s">the string to search</param>
@@ -37,7 +49,6 @@ namespace PygmentSharp.Core.Extensions
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .Any(x => x.Equals(search, comparison));
         }
-
 
         /// <summary>
         ///     Gets a value indicating if a string matches a wildcard pattern, similar to what's

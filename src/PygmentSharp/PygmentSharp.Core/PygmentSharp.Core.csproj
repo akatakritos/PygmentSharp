@@ -51,6 +51,7 @@
     <Compile Include="Formatters\NullFormatter.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerLocator.cs" />
+    <Compile Include="Lexers\CommonPrefix.cs" />
     <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Lexers\RegexUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

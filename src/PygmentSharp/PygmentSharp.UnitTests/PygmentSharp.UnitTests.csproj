@@ -102,6 +102,7 @@
     <Compile Include="StyleDataTests.cs" />
     <Compile Include="StyleTests.cs" />
     <Compile Include="TokenTypeMapTests.cs" />
+    <Compile Include="Utils\SliceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

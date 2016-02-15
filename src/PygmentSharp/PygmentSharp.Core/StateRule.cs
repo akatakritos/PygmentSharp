@@ -26,6 +26,10 @@ namespace PygmentSharp.Core
 
     public class StateRuleBuilder
     {
+        public StateRuleBuilder()
+        {
+            DefaultRegexOptions = RegexOptions.None;
+        }
 
         public StateRule Create(string regex, TokenType tokenType, string stateName)
         {
@@ -74,9 +78,10 @@ namespace PygmentSharp.Core
 
         public Regex CreateRegex(string regex)
         {
-            return new Regex(@"\G" + regex);
+            return new Regex(@"\G" + regex, DefaultRegexOptions);
         }
 
+        public RegexOptions DefaultRegexOptions { get; set; }
     }
 
     public abstract class GroupProcessor

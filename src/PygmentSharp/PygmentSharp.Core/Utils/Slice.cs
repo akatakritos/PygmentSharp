@@ -67,9 +67,9 @@ namespace PygmentSharp.Core.Utils
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = Start; i < Length; i++)
+            for (int i = 0; i < Length; i++)
             {
-                yield return _inner[i];
+                yield return _inner[Start + i];
             }
         }
 

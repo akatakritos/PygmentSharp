@@ -20,6 +20,7 @@ namespace PygmentSharp.UnitTests.Utils
 
             Check.That(subject.Start).IsEqualTo(0);
             Check.That(subject.Length).IsEqualTo(2);
+            Check.That((IEnumerable<int>)subject).ContainsExactly(1, 2);
         }
 
         [Fact]

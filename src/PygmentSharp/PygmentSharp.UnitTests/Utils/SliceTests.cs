@@ -82,6 +82,21 @@ namespace PygmentSharp.UnitTests.Utils
         }
 
         [Fact]
+        public void Slice_SubSlice()
+        {
+            var subject = new Slice<int>(new [] { 1, 2, 3, 4, 5 },
+                1, 3);
+
+
+            Check.That((IEnumerable<int>)subject)
+                .ContainsExactly(2, 3, 4);
+
+            var result = subject.SubSlice(2);
+
+            Check.That((IEnumerable<int>)result).ContainsExactly(4);
+        }
+
+        [Fact]
         public void ArrayExtensions_Slice()
         {
             var inner = new[] { 1, 2, 3, 4, 5 };

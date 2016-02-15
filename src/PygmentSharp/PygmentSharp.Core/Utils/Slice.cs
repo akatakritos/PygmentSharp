@@ -101,6 +101,12 @@ namespace PygmentSharp.Core.Utils
             return new Slice<T>(inner);
         }
 
+        public Slice<T> SubSlice(int start)
+        {
+            int length = (Length - start);
+            return new Slice<T>(_inner, Start + start, length);
+        }
+
         public int Count => Length;
 
     }

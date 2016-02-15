@@ -194,9 +194,9 @@ namespace PygmentSharp.Core.Lexers
         /// </summary>
         /// <param name="words"></param>
         /// <returns></returns>
-        public static string Words(params string[] words)
+        public static string Words(string[] words, string prefix = "", string suffix = "")
         {
-            return OptimizedRegex(words);
+            return OptimizedRegex(words, prefix, suffix);
         }
     }
 

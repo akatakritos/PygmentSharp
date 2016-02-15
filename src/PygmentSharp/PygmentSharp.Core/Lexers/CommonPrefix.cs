@@ -20,6 +20,11 @@ namespace PygmentSharp.Core.Lexers
         /// <returns>The common prefix</returns>
         public static string Of(params string[] strings)
         {
+            return Of((IReadOnlyList<string>)strings);
+        }
+
+        public static string Of(IReadOnlyList<string> strings)
+        {
             var sorted = strings.OrderBy(s => s.Length).ToArray();
             var check = sorted.First();
 

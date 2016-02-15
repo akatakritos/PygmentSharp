@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core.Extensions
@@ -48,6 +49,22 @@ namespace PygmentSharp.Core.Extensions
             return s
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .Any(x => x.Equals(search, comparison));
+        }
+
+        /// <summary>
+        /// Reverses a string
+        /// </summary>
+        /// <remarks>So named so as to not interfere with LINQ Enumerable.<see cref="Enumerable.Reverse"/></remarks>
+        /// <param name="input">The string to reverse</param>
+        /// <returns>The string in reverse</returns>
+        public static string Backwards(this string input)
+        {
+            var sb = new StringBuilder(input.Length);
+
+            for (int i = input.Length - 1; i >= 0; i--)
+                sb.Append(input[i]);
+
+            return sb.ToString();
         }
 
         /// <summary>

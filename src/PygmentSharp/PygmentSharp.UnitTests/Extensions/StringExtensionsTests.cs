@@ -46,5 +46,14 @@ namespace PygmentSharp.UnitTests.Extensions
 
             Check.That(result).IsEqualTo(expectedResult);
         }
+
+        [Theory]
+        [InlineData("foobar", "raboof")]
+        [InlineData("racecar", "racecar")]
+        public void Backwards(string input, string expectedOutput)
+        {
+            var result = input.Backwards();
+            Check.That(result).IsEqualTo(expectedOutput);
+        }
     }
 }

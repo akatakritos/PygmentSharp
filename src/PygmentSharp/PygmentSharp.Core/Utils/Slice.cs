@@ -11,7 +11,7 @@ namespace PygmentSharp.Core.Utils
     /// copy array parts all around.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal struct Slice<T> : IEnumerable<T>
+    internal struct Slice<T> : IReadOnlyList<T>
     {
         /// <summary>
         /// Gets the start index into the underlying array
@@ -100,6 +100,9 @@ namespace PygmentSharp.Core.Utils
         {
             return new Slice<T>(inner);
         }
+
+        public int Count => Length;
+
     }
 
     internal static class ArrayExtensions

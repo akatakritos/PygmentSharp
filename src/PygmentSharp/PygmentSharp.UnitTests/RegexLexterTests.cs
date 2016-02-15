@@ -19,24 +19,25 @@ namespace PygmentSharp.UnitTests
         {
             protected override IDictionary<string, StateRule[]> GetStateRules()
             {
+                var builder = new StateRuleBuilder();
                 var rules = new Dictionary<string, StateRule[]>();
 
                 rules["root"] = new[]
                 {
-                    StateRule.Create("a", Root, "rag"),
-                    StateRule.Create("e", Root),
-                    StateRule.Default("beer", "beer")
+                    builder.Create("a", Root, "rag"),
+                    builder.Create("e", Root),
+                    builder.Default("beer", "beer")
                 };
 
                 rules["beer"] = new[]
                 {
-                    StateRule.Create("d", Beer, "#pop", "#pop"),
+                    builder.Create("d", Beer, "#pop", "#pop"),
                 };
 
                 rules["rag"] = new[]
                 {
-                    StateRule.Create("b", Rag, "#push"),
-                    StateRule.Create("c", Rag, "#pop", "beer"),
+                    builder.Create("b", Rag, "#push"),
+                    builder.Create("c", Rag, "#pop", "beer"),
                 };
 
                 return rules;

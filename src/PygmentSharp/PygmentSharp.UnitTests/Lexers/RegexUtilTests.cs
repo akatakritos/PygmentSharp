@@ -25,5 +25,19 @@ namespace PygmentSharp.UnitTests.Lexers
             Check.That(result).IsEqualTo(expectedRegex);
         }
 
+        [Theory]
+        [InlineData("A,B,C", "[ABC]")]
+        [InlineData("A,AB,ABC", "(A(?:(?:B(?:(?:C)?))?))")]
+        [InlineData("A,AA,FOO", "(A(?:(?:A)?)|FOO)")]
+        public void OptimizedRegex(string input, string output)
+        {
+            var strings = input.Split(',');
+
+            var result = RegexUtil.OptimizedRegex(strings);
+
+            Check.That(result).IsEqualTo(output);
+        }
+
+
     }
 }

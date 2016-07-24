@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace PygmentSharp.Core
 {
@@ -31,17 +32,17 @@ namespace PygmentSharp.Core
             DefaultRegexOptions = RegexOptions.None;
         }
 
-        public StateRule Create(string regex, TokenType tokenType, string stateName)
+        public StateRule Create([RegexPattern]string regex, TokenType tokenType, string stateName)
         {
             return new StateRule(CreateRegex(regex), tokenType, Parse(stateName));
         }
-        public StateRule Create(string regex, TokenType tokenType, params string[] rules)
+        public StateRule Create([RegexPattern]string regex, TokenType tokenType, params string[] rules)
         {
             return new StateRule(CreateRegex(regex), tokenType,
                 new CombinedAction(rules.Select(Parse).ToArray()));
         }
 
-        public StateRule Create(string regex, TokenType tokenType)
+        public StateRule Create([RegexPattern]string regex, TokenType tokenType)
         {
             return new StateRule(CreateRegex(regex), tokenType, new NoopAction());
         }
@@ -62,13 +63,13 @@ namespace PygmentSharp.Core
             return new PushStateAction(name);
         }
 
-        public StateRule ByGroups(string regex,  params GroupProcessor[] processors)
+        public StateRule ByGroups([RegexPattern]string regex,  params GroupProcessor[] processors)
         {
             return new StateRule(CreateRegex(regex), TokenTypes.Token,
                 new GroupAction(processors));
         }
 
-        public StateRule ByGroups(string regex, string newState, params GroupProcessor[] processors)
+        public StateRule ByGroups([RegexPattern]string regex, string newState, params GroupProcessor[] processors)
         {
 
             return new StateRule(CreateRegex(regex), TokenTypes.Token,

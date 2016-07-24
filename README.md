@@ -16,6 +16,8 @@ Other features can be ported by the community as needed.
 - [x] C# Highlighting
 - [X] SQL Highlighting
 - [ ] HTML Highlighting
+  - [ ] Javascript Highlighting
+  - [ ] CSS Highlighting
 - [ ] XML Highlighting
 - [ ] Shell script highlighting
 - [ ] Ruby Highlighting

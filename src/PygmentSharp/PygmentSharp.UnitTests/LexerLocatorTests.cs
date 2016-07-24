@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,16 @@ namespace PygmentSharp.UnitTests
 {
     public class LexerLocatorTests
     {
-        [Fact]
-        public void FindByName_SearchesAttributeName()
+        [Theory]
+        [InlineData("C#", typeof(CSharpLexer))]
+        [InlineData("SQL", typeof(SqlLexer))]
+        public void FindByName_SearchesAttributeName(string name, Type lexerType)
         {
             var subject = new LexerLocator();
 
-            var lexer = subject.FindByName("C#");
+            var lexer = subject.FindByName(name);
 
-            Check.That(lexer).IsInstanceOf<CSharpLexer>();
+            Check.That(lexer.GetType()).IsEqualTo(lexerType);
         }
 
         [Fact]
@@ -42,14 +45,16 @@ namespace PygmentSharp.UnitTests
             Check.That(lexer).IsNull();
         }
 
-        [Fact]
-        public void FindByFilename_SearchesForFileExtensions()
+        [Theory]
+        [InlineData("file.cs", typeof(CSharpLexer))]
+        [InlineData("bigdata.sql", typeof(SqlLexer))]
+        public void FindByFilename_SearchesForFileExtensions(string file, Type lexerType)
         {
             var subject = new LexerLocator();
 
-            var lexer = subject.FindByFilename("file.cs");
+            var lexer = subject.FindByFilename(file);
 
-            Check.That(lexer).IsInstanceOf<CSharpLexer>();
+            Check.That(lexer.GetType()).IsEqualTo(lexerType);
         }
 
         [Fact]

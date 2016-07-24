@@ -11,7 +11,7 @@ namespace PygmentSharp.Core
         public TokenType TokenType { get; }
         public StateAction Action { get; }
 
-        private StateRule(Regex regex, TokenType tokenType, StateAction action)
+        internal StateRule(Regex regex, TokenType tokenType, StateAction action)
         {
             Regex = regex;
             TokenType = tokenType;
@@ -22,29 +22,37 @@ namespace PygmentSharp.Core
         {
             return $"{Regex} -> {TokenType}";
         }
+    }
 
-        public static StateRule Create(string regex, TokenType tokenType, string stateName)
+    public class StateRuleBuilder
+    {
+        public StateRuleBuilder()
+        {
+            DefaultRegexOptions = RegexOptions.None;
+        }
+
+        public StateRule Create(string regex, TokenType tokenType, string stateName)
         {
             return new StateRule(CreateRegex(regex), tokenType, Parse(stateName));
         }
-        public static StateRule Create(string regex, TokenType tokenType, params string[] rules)
+        public StateRule Create(string regex, TokenType tokenType, params string[] rules)
         {
             return new StateRule(CreateRegex(regex), tokenType,
                 new CombinedAction(rules.Select(Parse).ToArray()));
         }
 
-        public static StateRule Create(string regex, TokenType tokenType)
+        public StateRule Create(string regex, TokenType tokenType)
         {
             return new StateRule(CreateRegex(regex), tokenType, new NoopAction());
         }
 
-        public static StateRule Default(params string[] states)
+        public StateRule Default(params string[] states)
         {
             return new StateRule(CreateRegex(""), TokenTypes.Token,
                 new CombinedAction(states.Select(Parse).ToArray()));
         }
 
-        private static StateChangingAction Parse(string name)
+        private StateChangingAction Parse(string name)
         {
             if (name == "#push")
                 return new PushAgainAction();
@@ -54,13 +62,13 @@ namespace PygmentSharp.Core
             return new PushStateAction(name);
         }
 
-        public static StateRule ByGroups(string regex,  params GroupProcessor[] processors)
+        public StateRule ByGroups(string regex,  params GroupProcessor[] processors)
         {
             return new StateRule(CreateRegex(regex), TokenTypes.Token,
                 new GroupAction(processors));
         }
 
-        public static StateRule ByGroups(string regex, string newState, params GroupProcessor[] processors)
+        public StateRule ByGroups(string regex, string newState, params GroupProcessor[] processors)
         {
 
             return new StateRule(CreateRegex(regex), TokenTypes.Token,
@@ -68,11 +76,12 @@ namespace PygmentSharp.Core
         }
 
 
-        public static Regex CreateRegex(string regex)
+        public Regex CreateRegex(string regex)
         {
-            return new Regex(@"\G" + regex);
+            return new Regex(@"\G" + regex, DefaultRegexOptions);
         }
 
+        public RegexOptions DefaultRegexOptions { get; set; }
     }
 
     public abstract class GroupProcessor

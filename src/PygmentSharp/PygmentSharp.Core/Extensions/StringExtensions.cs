@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core.Extensions
@@ -17,6 +18,18 @@ namespace PygmentSharp.Core.Extensions
         public static string PythonAnd(this string s, string def)
         {
             return string.IsNullOrEmpty(s) ? s : def;
+        }
+
+        /// <summary>
+        ///     Port of the python idiom `result = s and "default" where
+        ///     the result is "default" if s is null or empty
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="def">the default value</param>
+        /// <returns></returns>
+        public static string PythonOr(this string s, string def)
+        {
+            return string.IsNullOrEmpty(s) ? def : s;
         }
 
         /// <summary>
@@ -38,6 +51,21 @@ namespace PygmentSharp.Core.Extensions
                 .Any(x => x.Equals(search, comparison));
         }
 
+        /// <summary>
+        /// Reverses a string
+        /// </summary>
+        /// <remarks>So named so as to not interfere with LINQ Enumerable.<see cref="Enumerable.Reverse"/></remarks>
+        /// <param name="input">The string to reverse</param>
+        /// <returns>The string in reverse</returns>
+        public static string Backwards(this string input)
+        {
+            var sb = new StringBuilder(input.Length);
+
+            for (int i = input.Length - 1; i >= 0; i--)
+                sb.Append(input[i]);
+
+            return sb.ToString();
+        }
 
         /// <summary>
         ///     Gets a value indicating if a string matches a wildcard pattern, similar to what's

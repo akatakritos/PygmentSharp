@@ -51,8 +51,10 @@
     <Compile Include="Formatters\NullFormatter.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerLocator.cs" />
+    <Compile Include="Lexers\CommonPrefix.cs" />
     <Compile Include="Lexers\CSharpLexer.cs" />
     <Compile Include="Lexers\RegexUtil.cs" />
+    <Compile Include="Lexers\SqlLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pygmentize.cs" />
     <Compile Include="RegexLexer.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Styles\DefaultStyle.cs" />
     <Compile Include="TokenType.cs" />
     <Compile Include="TokenTypeMap.cs" />
+    <Compile Include="Utils\Slice.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -57,6 +57,7 @@
     <Compile Include="LexerLocator.cs" />
     <Compile Include="Lexers\CommonPrefix.cs" />
     <Compile Include="Lexers\CSharpLexer.cs" />
+    <Compile Include="Lexers\HtmlLexer.cs" />
     <Compile Include="Lexers\RegexUtil.cs" />
     <Compile Include="Lexers\SqlLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

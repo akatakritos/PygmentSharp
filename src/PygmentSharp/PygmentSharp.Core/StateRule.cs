@@ -76,6 +76,13 @@ namespace PygmentSharp.Core
                 new GroupAction(Parse(newState), processors));
         }
 
+        public StateRule ByGroups([RegexPattern]string regex, string[] newStates, params GroupProcessor[] processors)
+        {
+            var actions = newStates.Select(Parse).ToArray();
+            return new StateRule(CreateRegex(regex), TokenTypes.Token,
+                new GroupAction(new CombinedAction(actions), processors));
+        }
+
 
         public Regex CreateRegex(string regex)
         {
@@ -83,6 +90,11 @@ namespace PygmentSharp.Core
         }
 
         public RegexOptions DefaultRegexOptions { get; set; }
+
+        public StateRule Using<T>([RegexPattern]string regex)
+        {
+            return new StateRule(CreateRegex(regex), TokenTypes.Token, new NoopAction());
+        }
     }
 
     public abstract class GroupProcessor

@@ -15,6 +15,7 @@ namespace PygmentSharp.Core
 
         public GroupAction(params GroupProcessor[] processors)
         {
+            Action = new NoopAction();
             Processors = processors;
         }
 
@@ -110,4 +111,5 @@ namespace PygmentSharp.Core
             stateStack.Pop();
         }
     }
+
 }

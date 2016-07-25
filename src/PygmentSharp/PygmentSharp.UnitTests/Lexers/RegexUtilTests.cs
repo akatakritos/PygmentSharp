@@ -27,6 +27,7 @@ namespace PygmentSharp.UnitTests.Lexers
         [InlineData("A,B,C", "[ABC]")]
         [InlineData("A,AB,ABC", "(A(?:(?:B(?:(?:C)?))?))")]
         [InlineData("A,AA,FOO", "(A(?:(?:A)?)|FOO)")]
+        [InlineData("cat,car,cap", "(ca[prt])")]
         public void OptimizedRegex(string input, string output)
         {
             var strings = input.Split(',');

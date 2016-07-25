@@ -27,9 +27,6 @@ namespace PygmentSharp.Core
 
         public override IEnumerable<Token> Execute(RegexLexerContext context)
         {
-            int pos = context.Position;
-
-
             for(int i = 1; i < context.Match.Groups.Count; i++)
             {
                 var group = context.Match.Groups[i];
@@ -39,6 +36,27 @@ namespace PygmentSharp.Core
             }
 
             Action.Apply(context.StateStack);
+        }
+    }
+
+    public class LexerAction : StateAction
+    {
+        public Lexer Lexer { get; }
+
+        public LexerAction(Lexer lexer)
+        {
+            Lexer = lexer;
+        }
+
+        public override IEnumerable<Token> Execute(RegexLexerContext context)
+        {
+            int offset = context.Position;
+
+            var tokens = Lexer.GetTokens(context.Match.Value);
+            foreach (var token in tokens)
+                yield return token.Offset(offset);
+
+            context.Position += context.Match.Length;
         }
     }
 

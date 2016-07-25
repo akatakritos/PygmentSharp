@@ -24,6 +24,17 @@ namespace PygmentSharp.Core
             Type = type;
         }
 
+        /// <summary>
+        /// Creates a new token with an index adjusted by <see cref="indexOffset"/>
+        /// </summary>
+        /// <remarks>This is useful for nested lexers that pass the inner lexer a substring of the full file, and nead to adjust the posititions accordingly</remarks>
+        /// <param name="indexOffset">The number of characters to offset</param>
+        /// <returns>A new token offset by the specified number of characters</returns>
+        public Token Offset(int indexOffset)
+        {
+            return new Token(Index + indexOffset, Type, Value);
+        }
+
         public override string ToString()
         {
             return $"{Index}: \"{Value}\" ({Type})";

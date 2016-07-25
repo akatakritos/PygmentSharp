@@ -96,10 +96,10 @@ namespace PygmentSharp.Core
 
         public RegexOptions DefaultRegexOptions { get; set; }
 
-        public StateRule Using<T>([RegexPattern]string regex)
+        public StateRule Using<T>([RegexPattern]string regex) where T:Lexer,new()
         {
-            // see lexer.py
-            return new StateRule(CreateRegex(regex), TokenTypes.Token, new NoopAction());
+            var lexer = new T();
+            return new StateRule(CreateRegex(regex), TokenTypes.Token, new LexerAction(lexer));
         }
     }
 

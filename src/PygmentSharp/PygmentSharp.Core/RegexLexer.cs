@@ -76,6 +76,12 @@ namespace PygmentSharp.Core
 
         }
 
+        /// <summary>
+        /// Gets the state transition rules for the lexer. Each time a regex is matched,
+        /// the internal state machine can be bumped to a new state which determines what
+        /// regexes become valid again
+        /// </summary>
+        /// <returns></returns>
         protected abstract IDictionary<string, StateRule[]> GetStateRules();
     }
 }

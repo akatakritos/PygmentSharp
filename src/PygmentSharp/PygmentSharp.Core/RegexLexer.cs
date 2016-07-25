@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core
@@ -40,6 +41,7 @@ namespace PygmentSharp.Core
                     if (m.Success)
                     {
                         var context = new RegexLexerContext(pos, m, stateStack, rule.TokenType);
+                        Debug.Assert(m.Index == pos, $"Regex \"{rule.Regex}\" should have matched at position {pos} but matched at {m.Index}");
 
                         var tokens = rule.Action.Execute(context);
 

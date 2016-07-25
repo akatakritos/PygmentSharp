@@ -91,7 +91,7 @@ namespace PygmentSharp.Core
 
         public Regex CreateRegex(string regex)
         {
-            return new Regex(@"\G" + regex, DefaultRegexOptions);
+            return new Regex(@"\G(?:" + regex + ")", DefaultRegexOptions);
         }
 
         public RegexOptions DefaultRegexOptions { get; set; }

@@ -114,6 +114,7 @@
     <Compile Include="RegexLexer.cs" />
     <Compile Include="StateActions.cs" />
     <Compile Include="StateRule.cs" />
+    <Compile Include="StateRuleBuilder.cs" />
     <Compile Include="Style.cs" />
     <Compile Include="StyleData.cs" />
     <Compile Include="Styles\DefaultStyle.cs" />

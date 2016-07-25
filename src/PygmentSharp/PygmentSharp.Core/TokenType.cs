@@ -114,7 +114,7 @@ namespace PygmentSharp.Core
 
     public class NameBuiltinTokenType : TokenType
     {
-        public NameBuiltinTokenType(TokenType parent) : base(parent, "Name")
+        public NameBuiltinTokenType(TokenType parent) : base(parent, "Builtin")
         {
             Pseudo = Create("Pseudo");
         }

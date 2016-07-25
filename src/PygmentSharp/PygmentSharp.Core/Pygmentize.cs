@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using PygmentSharp.Core.Formatters;
+using PygmentSharp.Core.Lexers;
 
 namespace PygmentSharp.Core
 {

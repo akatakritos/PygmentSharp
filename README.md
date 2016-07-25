@@ -20,8 +20,8 @@ Other features can be ported by the community as needed.
   - [X] CSS Highlighting
 - [X] XML Highlighting
 - [ ] Shell script highlighting
-- [ ] Ruby Highlighting
 - [ ] PHP Highlighting
+- [ ] Ruby Highlighting
 
 ## Installation
 

@@ -28,6 +28,12 @@ namespace TestUI
                 var locator = new LexerLocator();
                 var lexer = locator.FindByFilename(filename);
 
+                if (lexer == null)
+                {
+                    MessageBox.Show(@"I couldn't find a lexer for this file", @"No Lexer Available", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 var tokens = lexer.GetTokens(File.ReadAllText(filename)).ToArray();
 
                 var formatter = new HtmlFormatter(new HtmlFormatterOptions() {Full = true});

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using NFluent;
 using PygmentSharp.Core;
 using PygmentSharp.Core.Formatters;
@@ -15,6 +14,7 @@ namespace PygmentSharp.UnitTests.Lexers
 {
     public class CSharpExampleFileTests
     {
+        // ReSharper disable once NotAccessedField.Local
         private readonly ITestOutputHelper _output;
         private readonly Token[] _results;
 

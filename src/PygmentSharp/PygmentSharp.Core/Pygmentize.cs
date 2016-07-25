@@ -59,7 +59,7 @@ namespace PygmentSharp.Core
 
     internal class PygmentizeContentBuilder : IPygmentizeBuilder
     {
-        private string _input;
+        private readonly string _input;
         public PygmentizeContentBuilder(string content)
         {
             _input = content;

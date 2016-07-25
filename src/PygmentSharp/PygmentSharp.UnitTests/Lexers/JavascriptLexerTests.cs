@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using NFluent;
 
@@ -18,7 +16,7 @@ namespace PygmentSharp.UnitTests.Lexers
         [Fact]
         public void Sample1()
         {
-            var js = @"(function($) { $("".foo"").hide(); })(jQuery);";
+            const string js = @"(function($) { $("".foo"").hide(); })(jQuery);";
 
             var subject = new JavascriptLexer();
 

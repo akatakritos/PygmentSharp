@@ -35,6 +35,8 @@ namespace PygmentSharp.UnitTests
                 .ToHtml()
                 .AsString();
 
+            Check.That(result).StartsWith("<div class=\"highlight\" >");
+
         }
 
         [Fact]

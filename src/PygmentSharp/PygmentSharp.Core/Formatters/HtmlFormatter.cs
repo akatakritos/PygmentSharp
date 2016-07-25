@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.Common;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 using PygmentSharp.Core.Extensions;
 using PygmentSharp.Core.Styles;
@@ -32,6 +30,9 @@ namespace PygmentSharp.Core.Formatters
         }
     }
 
+    /// <summary>
+    /// An output formatter that writes a token stream as HTML
+    /// </summary>
     [Formatter("Html", AlternateNames = "web")]
     [FormatterFileExtension("*.html")]
     [FormatterFileExtension("*.htm")]
@@ -66,13 +67,20 @@ pre {{ line-height: 125%; }}
 
         private Dictionary<string, ClassToStyle> _cssToStyleMap;
         private TokenTypeMap _tokenToClassMap;
-        private Style _style;
+        private readonly Style _style;
 
 
+        /// <summary>
+        /// Initializes a new isntance of the <see cref="HtmlFormatter"/> class
+        /// </summary>
         public HtmlFormatter() : this(new HtmlFormatterOptions())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HtmlFormatter"/> class with given <see cref="options"/>
+        /// </summary>
+        /// <param name="options">Configuration details for the <see cref="HtmlFormatter"/></param>
         public HtmlFormatter(HtmlFormatterOptions options)
         {
             Options = options;
@@ -80,6 +88,9 @@ pre {{ line-height: 125%; }}
             CreateStylesheet();
         }
 
+        /// <summary>
+        /// Gets the name of the Formatter
+        /// </summary>
         public override string Name => "HTML";
 
         private string GetTokenTypeClass(TokenType ttype)
@@ -91,6 +102,7 @@ pre {{ line-height: 125%; }}
             var autoName = new StringBuilder();
             while (foundName == null)
             {
+                Debug.Assert(ttype != null, "ttype != null");
                 autoName.Insert(0, "-" + ttype.Parent?.Name);
                 ttype = ttype.Parent;
                 foundName = TokenTypeMap.Instance[ttype];
@@ -397,7 +409,7 @@ pre {{ line-height: 125%; }}
         {
             var nocls = Options.NoClasses;
             var lsep = Options.LineSeparator;
-            Func<TokenType, string> getcls = (ttype) => _tokenToClassMap[ttype];
+            Func<TokenType, string> getcls = ttype => _tokenToClassMap[ttype];
             var c2s = _cssToStyleMap;
             var lspan = "";
             var line = new StringBuilder();
@@ -416,7 +428,7 @@ pre {{ line-height: 125%; }}
                         ttype = ttype.Parent;
                         cclass = getcls(ttype);
                     }
-                    cspan = cclass != null ? $"<span style=\"{c2s[cclass].StyleRules}\">" : "";
+                    cspan = $"<span style=\"{c2s[cclass].StyleRules}\">";
 
                 }
                 else
@@ -509,10 +521,9 @@ pre {{ line-height: 125%; }}
                 {
                     if (Options.NoClasses)
                     {
-                        string style = null;
                         if (_style.HighlightColor != null)
                         {
-                            style = $" style=\"background-color: {_style.HighlightColor}";
+                            string style = $" style=\"background-color: {_style.HighlightColor}";
                             yield return new WrapResult(true, $"<span{style}>{value}</span>");
                         }
                         else
@@ -521,6 +532,8 @@ pre {{ line-height: 125%; }}
                 }
                 else
                     yield return inn;
+
+                i++;
             }
         }
 
@@ -556,17 +569,28 @@ pre {{ line-height: 125%; }}
                 writer.Write(line.FormattedLine);
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private IEnumerable<WrapResult> WrapInlineLineNumbers(IEnumerable<WrapResult> source)
         {
             throw new NotImplementedException();
         }
 
-        public static string EscapeHtml(string input)
+        /// <summary>
+        /// Escapes HTML to HTML Entities
+        /// </summary>
+        /// <param name="input">A snippet of html to escape</param>
+        /// <returns>An escaped string of html</returns>
+        internal static string EscapeHtml(string input)
         {
             return WebUtility.HtmlEncode(input);
         }
 
-        public static void EscapeHtml(string input, TextWriter output)
+        /// <summary>
+        /// Escapes HTML to a stream
+        /// </summary>
+        /// <param name="input">A snippet of html to escape</param>
+        /// <param name="output">The stream to write the escaped text</param>
+        internal static void EscapeHtml(string input, TextWriter output)
         {
             WebUtility.HtmlEncode(input, output);
         }

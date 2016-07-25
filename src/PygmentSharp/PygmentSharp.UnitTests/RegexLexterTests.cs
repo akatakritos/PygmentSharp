@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using NFluent;
 using PygmentSharp.Core;
 using Xunit;
@@ -15,7 +14,7 @@ namespace PygmentSharp.UnitTests
         public static readonly TokenType Beer = TokenTypes.Text.Create(nameof(Beer));
         public static readonly TokenType Rag = TokenTypes.Text.Create(nameof(Rag));
 
-        private class TestLexer : RegexLexer
+        private sealed class TestLexer : RegexLexer
         {
             protected override IDictionary<string, StateRule[]> GetStateRules()
             {

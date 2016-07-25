@@ -23,7 +23,7 @@ namespace PygmentSharp.UnitTests.Lexers
         [Fact]
         public void Sample1()
         {
-            var html = @"<html><body><div class=""foo"">Hi</div></body></html>";
+            const string html = @"<html><body><div class=""foo"">Hi</div></body></html>";
             var subject = new HtmlLexer();
 
             var results = subject.GetTokens(html).Where(t => t.Value != "").ToArray();
@@ -60,7 +60,7 @@ namespace PygmentSharp.UnitTests.Lexers
         [Fact]
         public void SupportsEmbeddedCss()
         {
-            var html = @"<html><head><style>.foo { float: right; }</style></head><body>Hi</body></html>";
+            const string html = @"<html><head><style>.foo { float: right; }</style></head><body>Hi</body></html>";
             var subject = new HtmlLexer();
 
             var tokens = subject.GetTokens(html).Where(t => t.Value != "").ToArray();

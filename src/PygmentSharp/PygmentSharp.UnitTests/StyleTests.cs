@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using NFluent;
 using PygmentSharp.Core;
 using Xunit;
@@ -11,25 +10,27 @@ namespace PygmentSharp.UnitTests
 {
     public class StyleTests
     {
-        private static readonly TokenType Root = new TokenType(null, "Root");
-        private static readonly TokenType Foo = Root.Create(nameof(Foo));
-        private static readonly TokenType Bar = Root.Create(nameof(Bar));
-        private static readonly TokenType Baz = Root.Create(nameof(Baz));
+        private static readonly TokenType _root = new TokenType(null, "Root");
+        private static readonly TokenType _foo = _root.Create(nameof(_foo));
+        // ReSharper disable once UnusedMember.Local
+        private static readonly TokenType _bar = _root.Create(nameof(_bar));
+        // ReSharper disable once UnusedMember.Local
+        private static readonly TokenType _baz = _root.Create(nameof(_baz));
 
         [Fact]
         public void GetsStylesFromStrings()
         {
             var dict = new Dictionary<TokenType, string>()
             {
-                {Root, "#012"},
-                {Foo, "#123abc bold underline mono"},
+                {_root, "#012"},
+                {_foo, "#123abc bold underline mono"},
             };
 
             var subject = new Style(dict);
 
-            Check.That(subject.StyleForToken(Root))
+            Check.That(subject.StyleForToken(_root))
                 .IsEqualTo(new StyleData(color: "001122"));
-            Check.That(subject[Foo])
+            Check.That(subject[_foo])
                 .IsEqualTo(new StyleData(color: "123abc", bold: true, underline: true, mono: true));
         }
 
@@ -38,8 +39,8 @@ namespace PygmentSharp.UnitTests
         {
             var subject = new Style();
 
-            Check.That(subject.StyleForToken(Root)).IsNull();
-            Check.That(subject[Root]).IsNull();
+            Check.That(subject.StyleForToken(_root)).IsNull();
+            Check.That(subject[_root]).IsNull();
         }
 
         [Fact]
@@ -47,8 +48,8 @@ namespace PygmentSharp.UnitTests
         {
             var dict = new Dictionary<TokenType, string>()
             {
-                {Root, "#012"},
-                {Foo, "#123abc bold underline mono"},
+                {_root, "#012"},
+                {_foo, "#123abc bold underline mono"},
             };
 
             var subject = new Style(dict);

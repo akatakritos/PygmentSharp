@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PygmentSharp.Core
 {
@@ -13,7 +9,7 @@ namespace PygmentSharp.Core
         public TokenType Parent { get; set; }
         public string Name { get; set; }
 
-        private List<TokenType> _subtypes;
+        private readonly List<TokenType> _subtypes;
 
         public TokenType(TokenType parent, string name)
         {
@@ -30,6 +26,8 @@ namespace PygmentSharp.Core
         }
 
         public int Depth { get; }
+
+        public IReadOnlyCollection<TokenType> Subtypes => _subtypes;
 
         public TokenType Create(string name)
         {

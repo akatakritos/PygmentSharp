@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PygmentSharp.Core.Extensions
 {
-    public static class TypeExtensions
+    internal static class TypeExtensions
     {
+        /// <summary>
+        /// Creates an instance of the type
+        /// </summary>
+        /// <typeparam name="T">The type to create</typeparam>
+        /// <param name="type">The type to create</param>
+        /// <returns>A new instance of the specified type</returns>
         public static T InstantiateAs<T>(this Type type)
         {
             return (T)Activator.CreateInstance(type);
         }
 
+        /// <summary>
+        /// Gets a value indicating if the <see cref="Type"/> has an <see cref="Attribute"/> matching a pattern
+        /// </summary>
+        /// <typeparam name="TAttr">The type of attributes to check</typeparam>
+        /// <param name="type">The type to search</param>
+        /// <param name="predicate">A prediciate to apply to the attribute</param>
+        /// <returns>true if the type has a matching <see cref="Attribute"/>, false otherwise</returns>
         public static bool HasAttribute<TAttr>(this Type type, Func<TAttr, bool> predicate) where TAttr:Attribute
         {
             return type.GetCustomAttributes<TAttr>()

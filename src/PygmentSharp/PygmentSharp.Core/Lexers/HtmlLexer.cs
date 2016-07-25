@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace PygmentSharp.Core.Lexers
 {
-    public class CssLexer
-    {
-    }
-
     [Lexer("HTML", AlternateNames = "html")]
     [LexerFileExtension("*.html")]
     [LexerFileExtension("*.htm")]

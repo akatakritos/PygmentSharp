@@ -95,6 +95,7 @@
     <Compile Include="LexerLocatorTests.cs" />
     <Compile Include="Lexers\ComonPrefixTests.cs" />
     <Compile Include="Lexers\CSharpExampleFileTests.cs" />
+    <Compile Include="Lexers\CssLexerTests.cs" />
     <Compile Include="Lexers\HtmlLexerTests.cs" />
     <Compile Include="Lexers\JavascriptLexerTests.cs" />
     <Compile Include="Lexers\RegexUtilTests.cs" />

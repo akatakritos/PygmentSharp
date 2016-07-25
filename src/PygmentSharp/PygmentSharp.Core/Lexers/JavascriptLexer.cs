@@ -20,65 +20,61 @@ namespace PygmentSharp.Core.Lexers
             var builder = new StateRuleBuilder();
             builder.DefaultRegexOptions = RegexOptions.Multiline;
 
-            rules["commentsandwhitespace"] = new []
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@"<!--", TokenTypes.Comment),
-                builder.Create(@"//.*?\n", TokenTypes.Comment.Single),
-                builder.Create(@"/\*.*?\*/", TokenTypes.Comment.Multiline)
-            };
+            rules["commentsandwhitespace"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@"<!--", TokenTypes.Comment)
+                .Add(@"//.*?\n", TokenTypes.Comment.Single)
+                .Add(@"/\*.*?\*/", TokenTypes.Comment.Multiline)
+                .Build();
 
-            rules["slashstartsregex"] = builder.Include(rules["commentsandwhitespace"],
-                builder.Create(@"/(\\.|[^[/\\\n]|\[(\\.|[^\]\\\n])*])+/" + @"([gim]+\b|\B)", TokenTypes.String.Regex, "#pop"),
-                builder.Create(@"(?=/)", TokenTypes.Text, "#pop", "badregex"),
-                builder.Default("#pop")
-            );
+            rules["slashstartsregex"] = builder.NewRuleSet()
+                .Include(rules["commentsandwhitespace"])
+                .Add(@"/(\\.|[^[/\\\n]|\[(\\.|[^\]\\\n])*])+/" + @"([gim]+\b|\B)", TokenTypes.String.Regex, "#pop")
+                .Add(@"(?=/)", TokenTypes.Text, "#pop", "badregex")
+                .Default("#pop")
+                .Build();
 
-            rules["badregex"] = new []
-            {
-                builder.Create(@"\n", TokenTypes.Text, "#pop")
-            };
+            rules["badregex"] = builder.NewRuleSet()
+                .Add(@"\n", TokenTypes.Text, "#pop")
+                .Build();
 
-            rules["root"] = new[]
-            {
-                builder.Create(@"\A#! ?/.*?\n", TokenTypes.Comment.Hashbang),
-                builder.Create(@"^(?=\s|/|<!--)", TokenTypes.Text, "slashstartsregex"),
-            }.Concat(
-                builder.Include(rules["commentsandwhitespace"],
-                    builder.Create(@"\+\+|--|~|&&|\?|:|\|\||\\(?=\n)|(<<|>>>?|=>|==?|!=?|[-<>+*%&|^/])=?", TokenTypes.Operator, "slashstartsregex"),
-                    builder.Create(@"\.\.\.", TokenTypes.Punctuation),
-                    builder.Create(@"[{(\[;,]", TokenTypes.Punctuation, "slashstartsregex"),
-                    builder.Create(@"[})\].]", TokenTypes.Punctuation),
-                    builder.Create(@"(for|in|while|do|break|return|continue|switch|case|default|if|else|throw|try|catch|finally|new|delete|typeof|instanceof|void|yield|this|of)\b", TokenTypes.Keyword, "slashstartsregex"),
-                    builder.Create(@"(var|let|with|function)\b", TokenTypes.Keyword.Declaration, "slashstartsregex"),
-                    builder.Create(@"(abstract|boolean|byte|char|class|const|debugger|double|enum|export|extends|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|static|super|synchronized|throws|transient|volatile)\b", TokenTypes.Keyword.Reserved),
-                    builder.Create(@"(true|false|null|NaN|Infinity|undefined)\b", TokenTypes.Keyword.Constant),
-                    builder.Create(@"(Array|Boolean|Date|Error|Function|Math|netscape|Number|Object|Packages|RegExp|String|Promise|Proxy|sun|decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|Error|eval|isFinite|isNaN|isSafeInteger|parseFloat|parseInt|document|this|window)\b", TokenTypes.Name.Builtin),
-                    builder.Create(JS_IDENT, TokenTypes.Name.Other),
-                    builder.Create(@"[0-9][0-9]*\.[0-9]+([eE][0-9]+)?[fd]?", TokenTypes.Number.Float),
-                    builder.Create(@"0b[01]+", TokenTypes.Number.Bin),
-                    builder.Create(@"0o[0-7]+", TokenTypes.Number.Oct),
-                    builder.Create(@"0x[0-9a-fA-F]+", TokenTypes.Number.Hex),
-                    builder.Create(@"[0-9]+'", TokenTypes.Number.Integer),
-                    builder.Create(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double),
-                    builder.Create(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single),
-                    builder.Create(@"`", TokenTypes.String.Backtick, "interp")
-            )).ToArray();
+            rules["root"] = builder.NewRuleSet()
+                .Add(@"\A#! ?/.*?\n", TokenTypes.Comment.Hashbang)
+                .Add(@"^(?=\s|/|<!--)", TokenTypes.Text, "slashstartsregex")
+                .Include(rules["commentsandwhitespace"])
+                .Add(@"\+\+|--|~|&&|\?|:|\|\||\\(?=\n)|(<<|>>>?|=>|==?|!=?|[-<>+*%&|^/])=?", TokenTypes.Operator, "slashstartsregex")
+                .Add(@"\.\.\.", TokenTypes.Punctuation)
+                .Add(@"[{(\[;,]", TokenTypes.Punctuation, "slashstartsregex")
+                .Add(@"[})\].]", TokenTypes.Punctuation)
+                .Add(@"(for|in|while|do|break|return|continue|switch|case|default|if|else|throw|try|catch|finally|new|delete|typeof|instanceof|void|yield|this|of)\b", TokenTypes.Keyword, "slashstartsregex")
+                .Add(@"(var|let|with|function)\b", TokenTypes.Keyword.Declaration, "slashstartsregex")
+                .Add(@"(abstract|boolean|byte|char|class|const|debugger|double|enum|export|extends|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|static|super|synchronized|throws|transient|volatile)\b", TokenTypes.Keyword.Reserved)
+                .Add(@"(true|false|null|NaN|Infinity|undefined)\b", TokenTypes.Keyword.Constant)
+                .Add(@"(Array|Boolean|Date|Error|Function|Math|netscape|Number|Object|Packages|RegExp|String|Promise|Proxy|sun|decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|Error|eval|isFinite|isNaN|isSafeInteger|parseFloat|parseInt|document|this|window)\b", TokenTypes.Name.Builtin)
+                .Add(JS_IDENT, TokenTypes.Name.Other)
+                .Add(@"[0-9][0-9]*\.[0-9]+([eE][0-9]+)?[fd]?", TokenTypes.Number.Float)
+                .Add(@"0b[01]+", TokenTypes.Number.Bin)
+                .Add(@"0o[0-7]+", TokenTypes.Number.Oct)
+                .Add(@"0x[0-9a-fA-F]+", TokenTypes.Number.Hex)
+                .Add(@"[0-9]+'", TokenTypes.Number.Integer)
+                .Add(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double)
+                .Add(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single)
+                .Add(@"`", TokenTypes.String.Backtick, "interp")
+                .Build();
 
-            rules["interp"] = new[]
-            {
-                builder.Create(@"`", TokenTypes.String.Backtick, "#pop"),
-                builder.Create(@"\\\\", TokenTypes.String.Backtick),
-                builder.Create(@"\\`", TokenTypes.String.Backtick),
-                builder.Create(@"\${", TokenTypes.String.Interpol, "interp-inside"),
-                builder.Create(@"\$", TokenTypes.String.Backtick),
-                builder.Create(@"[^`\\$]+'", TokenTypes.String.Backtick)
-            };
+            rules["interp"] = builder.NewRuleSet()
+                .Add(@"`", TokenTypes.String.Backtick, "#pop")
+                .Add(@"\\\\", TokenTypes.String.Backtick)
+                .Add(@"\\`", TokenTypes.String.Backtick)
+                .Add(@"\${", TokenTypes.String.Interpol, "interp-inside")
+                .Add(@"\$", TokenTypes.String.Backtick)
+                .Add(@"[^`\\$]+'", TokenTypes.String.Backtick)
+                .Build();
 
-            rules["interp-inside"] = new[]
-            {
-                builder.Create(@"}", TokenTypes.String.Interpol, "#pop")
-            }.Concat(rules["root"]).ToArray();
+            rules["interp-inside"] = builder.NewRuleSet()
+                .Add(@"}", TokenTypes.String.Interpol, "#pop")
+                .Include(rules["root"])
+                .Build();
 
             return rules;
         }

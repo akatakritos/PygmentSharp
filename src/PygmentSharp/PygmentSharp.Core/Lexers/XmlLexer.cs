@@ -19,39 +19,35 @@ namespace PygmentSharp.Core.Lexers
             var rules = new Dictionary<string, StateRule[]>();
             var builder = new StateRuleBuilder();
 
-            rules["root"] = new []
-            {
-                builder.Create(@"[^<&]+", TokenTypes.Text),
-                builder.Create(@"&\S*?;", TokenTypes.Name.Entity),
-                builder.Create(@"\<\!\[CDATA\[.*?\]\]\>", TokenTypes.Comment.Preproc),
-                builder.Create(@"<!--", TokenTypes.Comment, "comment"),
-                builder.Create(@"<\?.*?\?>", TokenTypes.Comment.Preproc),
-                builder.Create(@"<![^>]*>", TokenTypes.Comment.Preproc),
-                builder.Create(@"<\s*[\w:.-]+", TokenTypes.Name.Tag, "tag"),
-                builder.Create(@"<\s*/\s*[\w:.-]+\s*>'", TokenTypes.Name.Tag)
-            };
+            rules["root"] = builder.NewRuleSet()
+                .Add(@"[^<&]+", TokenTypes.Text)
+                .Add(@"&\S*?;", TokenTypes.Name.Entity)
+                .Add(@"\<\!\[CDATA\[.*?\]\]\>", TokenTypes.Comment.Preproc)
+                .Add(@"<!--", TokenTypes.Comment, "comment")
+                .Add(@"<\?.*?\?>", TokenTypes.Comment.Preproc)
+                .Add(@"<![^>]*>", TokenTypes.Comment.Preproc)
+                .Add(@"<\s*[\w:.-]+", TokenTypes.Name.Tag, "tag")
+                .Add(@"<\s*/\s*[\w:.-]+\s*>'", TokenTypes.Name.Tag)
+                .Build();
 
-            rules["comment"] = new[]
-            {
-                builder.Create(@"[^-]+", TokenTypes.Text),
-                builder.Create(@"-->", TokenTypes.Comment, "#pop"),
-                builder.Create(@"-", TokenTypes.Comment)
-            };
+            rules["comment"] = builder.NewRuleSet()
+                .Add(@"[^-]+", TokenTypes.Text)
+                .Add(@"-->", TokenTypes.Comment, "#pop")
+                .Add(@"-", TokenTypes.Comment)
+                .Build();
 
-            rules["tag"] = new[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@"[\w.:-]+\s*=", TokenTypes.Name.Attribute, "attr"),
-                builder.Create(@"/?\s*>", TokenTypes.Name.Tag, "#pop")
-            };
+            rules["tag"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@"[\w.:-]+\s*=", TokenTypes.Name.Attribute, "attr")
+                .Add(@"/?\s*>", TokenTypes.Name.Tag, "#pop")
+                .Build();
 
-            rules["attr"] = new[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@""".*?""", TokenTypes.String, "#pop"),
-                builder.Create(@".*?'", TokenTypes.String, "#pop"),
-                builder.Create(@"[^\s>]+", TokenTypes.String, "#pop")
-            };
+            rules["attr"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@""".*?""", TokenTypes.String, "#pop")
+                .Add(@".*?'", TokenTypes.String, "#pop")
+                .Add(@"[^\s>]+", TokenTypes.String, "#pop")
+                .Build();
 
             return rules;
         }

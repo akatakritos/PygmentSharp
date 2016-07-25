@@ -18,12 +18,11 @@ namespace PygmentSharp.Core.Lexers
             builder.DefaultRegexOptions = RegexOptions.IgnoreCase;
 
             var rules = new Dictionary<string, StateRule[]>();
-            rules["root"] = new StateRule[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@"--.*?\n", TokenTypes.Comment.Single),
-                builder.Create(@"/\*", TokenTypes.Comment.Multiline, "multiline-comments"),
-                builder.Create(RegexUtil.Words(new []
+            rules["root"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@"--.*?\n", TokenTypes.Comment.Single)
+                .Add(@"/\*", TokenTypes.Comment.Multiline, "multiline-comments")
+                .Add(RegexUtil.Words(new []
                 {
                     "ABORT", "ABS", "ABSOLUTE", "ACCESS", "ADA", "ADD", "ADMIN", "AFTER", "AGGREGATE",
                     "ALIAS", "ALL", "ALLOCATE", "ALTER", "ANALYSE", "ANALYZE", "AND", "ANY", "ARE", "AS",
@@ -100,28 +99,27 @@ namespace PygmentSharp.Core.Lexers
                     "USER_DEFINED_TYPE_SCHEMA", "USING", "VACUUM", "VALID", "VALIDATOR", "VALUES",
                     "VARIABLE", "VERBOSE", "VERSION", "VIEW", "VOLATILE", "WHEN", "WHENEVER", "WHERE",
                     "WITH", "WITHOUT", "WORK", "WRITE", "YEAR", "ZONE"
-                }, suffix:@"\b"), TokenTypes.Keyword),
-                builder.Create(RegexUtil.Words(new []
+                }, suffix:@"\b"), TokenTypes.Keyword)
+                .Add(RegexUtil.Words(new []
                 {
                     "ARRAY", "BIGINT", "BINARY", "BIT", "BLOB", "BOOLEAN", "CHAR", "CHARACTER", "DATE",
                     "DEC", "DECIMAL", "FLOAT", "INT", "INTEGER", "INTERVAL", "NUMBER", "NUMERIC", "REAL",
                     "SERIAL", "SMALLINT", "VARCHAR", "VARYING", "INT8", "SERIAL8", "TEXT"
-                }, suffix:@"\b"), TokenTypes.Name.Builtin),
-                builder.Create(@"[+*/<>=~!@#%^&|`?-]", TokenTypes.Operator),
-                builder.Create(@"[0-9]+", TokenTypes.Number.Integer),
-                builder.Create(@"'(''|[^'])*'", TokenTypes.String.Single),
-                builder.Create(@"""(""""|[^""])*""", TokenTypes.String.Single),
-                builder.Create(@"[a-z_][\w$]*", TokenTypes.Name),
-                builder.Create(@"[;:()\[\],.]", TokenTypes.Punctuation)
-            };
+                }, suffix:@"\b"), TokenTypes.Name.Builtin)
+                .Add(@"[+*/<>=~!@#%^&|`?-]", TokenTypes.Operator)
+                .Add(@"[0-9]+", TokenTypes.Number.Integer)
+                .Add(@"'(''|[^'])*'", TokenTypes.String.Single)
+                .Add(@"""(""""|[^""])*""", TokenTypes.String.Single)
+                .Add(@"[a-z_][\w$]*", TokenTypes.Name)
+                .Add(@"[;:()\[\],.]", TokenTypes.Punctuation)
+                .Build();
 
-            rules["multiline-comments"] = new[]
-            {
-                builder.Create(@"/\*", TokenTypes.Comment.Multiline, "multiline-comments"),
-                builder.Create(@"\*/", TokenTypes.Comment.Multiline, "#pop"),
-                builder.Create(@"[^/*]+", TokenTypes.Comment.Multiline),
-                builder.Create(@"[/*]", TokenTypes.Comment.Multiline)
-            };
+            rules["multiline-comments"] = builder.NewRuleSet()
+                .Add(@"/\*", TokenTypes.Comment.Multiline, "multiline-comments")
+                .Add(@"\*/", TokenTypes.Comment.Multiline, "#pop")
+                .Add(@"[^/*]+", TokenTypes.Comment.Multiline)
+                .Add(@"[/*]", TokenTypes.Comment.Multiline)
+                .Build();
 
             return rules;
         }

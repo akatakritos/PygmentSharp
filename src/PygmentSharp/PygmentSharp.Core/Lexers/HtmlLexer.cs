@@ -18,91 +18,86 @@ namespace PygmentSharp.Core.Lexers
 
             var rules = new Dictionary<string, StateRule[]>();
 
-            rules["root"] = new[]
-            {
-                builder.Create(@"[^<&]+", TokenTypes.Text),
-                builder.Create(@"&\S*?;", TokenTypes.Name.Entity),
-                builder.Create(@"\<\!\[CDATA\[.*?\]\]\>", TokenTypes.Comment.Preproc),
-                builder.Create(@"<!--", TokenTypes.Comment, "comment"),
-                builder.Create(@"<\?.*?\?>", TokenTypes.Comment.Preproc),
-                builder.Create(@"<![^>]*>", TokenTypes.Comment.Preproc),
-                builder.ByGroups(@"(<)(\s*)(script)(\s*)", new[] { "script-content", "tag" },
+            rules["root"] = builder.NewRuleSet()
+                .Add(@"[^<&]+", TokenTypes.Text)
+                .Add(@"&\S*?;", TokenTypes.Name.Entity)
+                .Add(@"\<\!\[CDATA\[.*?\]\]\>", TokenTypes.Comment.Preproc)
+                .Add(@"<!--", TokenTypes.Comment, "comment")
+                .Add(@"<\?.*?\?>", TokenTypes.Comment.Preproc)
+                .Add(@"<![^>]*>", TokenTypes.Comment.Preproc)
+                .ByGroups(@"(<)(\s*)(script)(\s*)", new[] { "script-content", "tag" },
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Name.Tag),
-                    new TokenGroupProcessor(TokenTypes.Text)),
-                builder.ByGroups(@"(<)(\s*)(style)(\s*)", new[] { "style-content", "tag" },
+                    new TokenGroupProcessor(TokenTypes.Text))
+                .ByGroups(@"(<)(\s*)(style)(\s*)", new[] { "style-content", "tag" },
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Name.Tag),
-                    new TokenGroupProcessor(TokenTypes.Text)),
-                builder.ByGroups(@"(<)(\s*)([\w:.-]+)", "tag",
+                    new TokenGroupProcessor(TokenTypes.Text))
+                .ByGroups(@"(<)(\s*)([\w:.-]+)", "tag",
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
-                    new TokenGroupProcessor(TokenTypes.Name.Tag)),
-                builder.ByGroups(@"(<)(\s*)(/)(\s*)([\w:.-]+)(\s*)(>)",
+                    new TokenGroupProcessor(TokenTypes.Name.Tag))
+                .ByGroups(@"(<)(\s*)(/)(\s*)([\w:.-]+)(\s*)(>)",
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Name.Tag),
                     new TokenGroupProcessor(TokenTypes.Text),
-                    new TokenGroupProcessor(TokenTypes.Punctuation)),
-            };
+                    new TokenGroupProcessor(TokenTypes.Punctuation))
+                .Build();
 
-            rules["comment"] = new[]
-            {
-                builder.Create(@"[^-]+", TokenTypes.Comment, "#pop"),
-                builder.Create(@"-->", TokenTypes.Comment),
-                builder.Create(@"-", TokenTypes.Comment)
-            };
+            rules["comment"] = builder.NewRuleSet()
+                .Add(@"[^-]+", TokenTypes.Comment, "#pop")
+                .Add(@"-->", TokenTypes.Comment)
+                .Add(@"-", TokenTypes.Comment)
+                .Build();
 
-            rules["tag"] = new[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.ByGroups(@"([\w:-]+\s*)(=)(\s*)", "attr",
+            rules["tag"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .ByGroups(@"([\w:-]+\s*)(=)(\s*)", "attr",
                     new TokenGroupProcessor(TokenTypes.Name.Attribute),
                     new TokenGroupProcessor(TokenTypes.Operator),
-                    new TokenGroupProcessor(TokenTypes.Text)),
-                builder.Create(@"[\w:-]+", TokenTypes.Name.Attribute),
-                builder.ByGroups(@"(/?)(\s*)(>)", "#pop",
+                    new TokenGroupProcessor(TokenTypes.Text))
+                .Add(@"[\w:-]+", TokenTypes.Name.Attribute)
+                .ByGroups(@"(/?)(\s*)(>)", "#pop",
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation))
-            };
+                .Build();
 
-            rules["script-content"] = new[]
-            {
-                builder.ByGroups(@"(<)(\s*)(/)(\s*)(script)(\s*)(>)", "#pop",
+            rules["script-content"] = builder.NewRuleSet()
+                .ByGroups(@"(<)(\s*)(/)(\s*)(script)(\s*)(>)", "#pop",
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Name.Tag),
                     new TokenGroupProcessor(TokenTypes.Text),
-                    new TokenGroupProcessor(TokenTypes.Punctuation)),
-                builder.Using<JavascriptLexer>(@".+?(?=<\s*/\s*script\s*>)")
-            };
+                    new TokenGroupProcessor(TokenTypes.Punctuation))
+                .Using<JavascriptLexer>(@".+?(?=<\s*/\s*script\s*>)")
+                .Build();
 
-            rules["style-content"] = new[]
-            {
-                builder.ByGroups(@"(<)(\s*)(/)(\s*)(style)(\s*)(>)", "#pop",
+
+            rules["style-content"] = builder.NewRuleSet()
+                .ByGroups(@"(<)(\s*)(/)(\s*)(style)(\s*)(>)", "#pop",
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Name.Tag),
                     new TokenGroupProcessor(TokenTypes.Text),
-                    new TokenGroupProcessor(TokenTypes.Punctuation)),
-                builder.Using<CssLexer>(@".+?(?=<\s*/\s*style\s*>)")
-            };
+                    new TokenGroupProcessor(TokenTypes.Punctuation))
+                .Using<CssLexer>(@".+?(?=<\s*/\s*style\s*>)")
+                .Build();
 
-            rules["attr"] = new[]
-            {
-                builder.Create(@""".*?""", TokenTypes.String, "#pop"),
-                builder.Create(@"'.*?'", TokenTypes.String, "#pop"),
-                builder.Create(@"[^\s>]+", TokenTypes.String, "#pop")
-            };
+            rules["attr"] = builder.NewRuleSet()
+                .Add(@""".*?""", TokenTypes.String, "#pop")
+                .Add(@"'.*?'", TokenTypes.String, "#pop")
+                .Add(@"[^\s>]+", TokenTypes.String, "#pop")
+                .Build();
 
             return rules;
         }

@@ -13,40 +13,41 @@ namespace PygmentSharp.Core.Lexers
             var rules = new Dictionary<string, StateRule[]>();
             var builder = new StateRuleBuilder();
 
-            rules["basics"] = new[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@"/\*(?:.|\n)*?\*/", TokenTypes.Comment),
-                builder.Create(@"\{", TokenTypes.Punctuation, "content"),
-                builder.Create(@"\:[\w-]+", TokenTypes.Name.Decorator),
-                builder.Create(@"\.[\w-]+", TokenTypes.Name.Class),
-                builder.Create(@"\#[\w-]+", TokenTypes.Name.Namespace),
-                builder.Create(@"@[\w-]+", TokenTypes.Keyword, "atrule"),
-                builder.Create(@"[\w-]+", TokenTypes.Name.Tag),
-                builder.Create(@"[~^*!%&$\[\]()<>|+=@:;,./?-]", TokenTypes.Operator),
-                builder.Create(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double),
-                builder.Create(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single)
-            };
+            rules["basics"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@"/\*(?:.|\n)*?\*/", TokenTypes.Comment)
+                .Add(@"\{", TokenTypes.Punctuation, "content")
+                .Add(@"\:[\w-]+", TokenTypes.Name.Decorator)
+                .Add(@"\.[\w-]+", TokenTypes.Name.Class)
+                .Add(@"\#[\w-]+", TokenTypes.Name.Namespace)
+                .Add(@"@[\w-]+", TokenTypes.Keyword, "atrule")
+                .Add(@"[\w-]+", TokenTypes.Name.Tag)
+                .Add(@"[~^*!%&$\[\]()<>|+=@:;,./?-]", TokenTypes.Operator)
+                .Add(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double)
+                .Add(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single)
+                .Build();
 
-            rules["root"] = builder.Include(rules["basics"]);
+            rules["root"] = builder.NewRuleSet()
+                .Include(rules["basics"])
+                .Build();
 
-            rules["atrule"] = new[]
-            {
-                builder.Create(@"\{", TokenTypes.Punctuation, "atcontent"),
-                builder.Create(@";", TokenTypes.Punctuation, "#pop"),
-            }.Concat(rules["basics"]).ToArray();
+            rules["atrule"] = builder.NewRuleSet()
+                .Add(@"\{", TokenTypes.Punctuation, "atcontent")
+                .Add(@";", TokenTypes.Punctuation, "#pop")
+                .Include(rules["basics"])
+                .Build();
 
-            rules["atcontent"] = builder.Include(rules["basics"],
-                builder.Create(@"\}", TokenTypes.Punctuation, "#pop", "#pop")
-            );
+            rules["atcontent"] = builder.NewRuleSet()
+                .Include(rules["basics"])
+                .Add(@"\}", TokenTypes.Punctuation, "#pop", "#pop")
+                .Build();
 
-            rules["content"] = new[]
-            {
-                builder.Create(@"\s+", TokenTypes.Text),
-                builder.Create(@"\}", TokenTypes.Punctuation, "#pop"),
-                builder.Create(@"url\(.*?\)", TokenTypes.String.Other),
-                builder.Create(@"^@.*?$", TokenTypes.Comment.Preproc),
-                builder.Create(RegexUtil.Words(new []
+            rules["content"] = builder.NewRuleSet()
+                .Add(@"\s+", TokenTypes.Text)
+                .Add(@"\}", TokenTypes.Punctuation, "#pop")
+                .Add(@"url\(.*?\)", TokenTypes.String.Other)
+                .Add(@"^@.*?$", TokenTypes.Comment.Preproc)
+                .Add(RegexUtil.Words(new []
                 {
                    "azimuth", "background-attachment", "background-color",
                     "background-image", "background-position", "background-repeat",
@@ -105,8 +106,8 @@ namespace PygmentSharp.Core.Lexers
                     "upper-alpha", "upper-latin", "upper-roman", "uppercase", "url",
                     "visible", "w-resize", "wait", "wider", "x-fast", "x-high", "x-large", "x-loud",
                     "x-low", "x-small", "x-soft", "xx-large", "xx-small", "yes"
-                }, suffix: @"\b"), TokenTypes.Name.Builtin),
-                builder.Create(RegexUtil.Words(new []
+                }, suffix: @"\b"), TokenTypes.Name.Builtin)
+                .Add(RegexUtil.Words(new []
                 {
                     "indigo", "gold", "firebrick", "indianred", "yellow", "darkolivegreen",
                     "darkseagreen", "mediumvioletred", "mediumorchid", "chartreuse",
@@ -133,19 +134,19 @@ namespace PygmentSharp.Core.Lexers
                     "lightslategray", "lawngreen", "lightgreen", "tomato", "hotpink",
                     "lightyellow", "lavenderblush", "linen", "mediumaquamarine", "green",
                     "blueviolet", "peachpuff"
-                }, suffix: @"\b"), TokenTypes.Name.Builtin),
-                builder.Create(@"\!important", TokenTypes.Comment.Preproc),
-                builder.Create(@"/\*(?:.|\n)*?\*/", TokenTypes.Comment),
-                builder.Create(@"\#[a-zA-Z0-9]{1,6}", TokenTypes.Number),
-                builder.Create(@"[.-]?[0-9]*[.]?[0-9]+(em|px|pt|pc|in|mm|cm|ex|s)\b", TokenTypes.Number),
-                builder.Create(@"[.-]?[0-9]*[.]?[0-9]+%", TokenTypes.Number),
-                builder.Create(@"-?[0-9]+", TokenTypes.Number),
-                builder.Create(@"[~^*!%&<>|+=@:,./?-]+", TokenTypes.Operator),
-                builder.Create(@"[\[\]();]+", TokenTypes.Punctuation),
-                builder.Create(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double),
-                builder.Create(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single),
-                builder.Create(@"a-zA-Z_]\w*", TokenTypes.Name)
-            };
+                }, suffix: @"\b"), TokenTypes.Name.Builtin)
+                .Add(@"\!important", TokenTypes.Comment.Preproc)
+                .Add(@"/\*(?:.|\n)*?\*/", TokenTypes.Comment)
+                .Add(@"\#[a-zA-Z0-9]{1,6}", TokenTypes.Number)
+                .Add(@"[.-]?[0-9]*[.]?[0-9]+(em|px|pt|pc|in|mm|cm|ex|s)\b", TokenTypes.Number)
+                .Add(@"[.-]?[0-9]*[.]?[0-9]+%", TokenTypes.Number)
+                .Add(@"-?[0-9]+", TokenTypes.Number)
+                .Add(@"[~^*!%&<>|+=@:,./?-]+", TokenTypes.Operator)
+                .Add(@"[\[\]();]+", TokenTypes.Punctuation)
+                .Add(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double)
+                .Add(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single)
+                .Add(@"a-zA-Z_]\w*", TokenTypes.Name)
+                .Build();
 
             return rules;
         }

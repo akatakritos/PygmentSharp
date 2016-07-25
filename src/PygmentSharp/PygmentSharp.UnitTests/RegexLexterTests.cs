@@ -21,23 +21,20 @@ namespace PygmentSharp.UnitTests
                 var builder = new StateRuleBuilder();
                 var rules = new Dictionary<string, StateRule[]>();
 
-                rules["root"] = new[]
-                {
-                    builder.Create("a", Root, "rag"),
-                    builder.Create("e", Root),
-                    builder.Default("beer", "beer")
-                };
+                rules["root"] = builder.NewRuleSet()
+                    .Add("a", Root, "rag")
+                    .Add("e", Root)
+                    .Default("beer", "beer")
+                    .Build();
 
-                rules["beer"] = new[]
-                {
-                    builder.Create("d", Beer, "#pop", "#pop"),
-                };
+                rules["beer"] = builder.NewRuleSet()
+                    .Add("d", Beer, "#pop", "#pop")
+                    .Build();
 
-                rules["rag"] = new[]
-                {
-                    builder.Create("b", Rag, "#push"),
-                    builder.Create("c", Rag, "#pop", "beer"),
-                };
+                rules["rag"] = builder.NewRuleSet()
+                    .Add("b", Rag, "#push")
+                    .Add("c", Rag, "#pop", "beer")
+                    .Build();
 
                 return rules;
             }

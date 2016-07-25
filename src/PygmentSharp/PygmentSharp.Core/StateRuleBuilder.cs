@@ -9,79 +9,105 @@ namespace PygmentSharp.Core
 {
     public class StateRuleBuilder
     {
+        public RegexOptions DefaultRegexOptions { get; set; }
+
         public StateRuleBuilder()
         {
             DefaultRegexOptions = RegexOptions.None;
         }
 
-        public StateRule Create([RegexPattern]string regex, TokenType tokenType, string stateName)
+        public FluentStateRuleBuilder NewRuleSet()
         {
-            return new StateRule(CreateRegex(regex), tokenType, Parse(stateName));
-        }
-        public StateRule Create([RegexPattern]string regex, TokenType tokenType, params string[] rules)
-        {
-            return new StateRule(CreateRegex(regex), tokenType,
-                new CombinedAction(rules.Select(Parse).ToArray()));
+            return new FluentStateRuleBuilder(DefaultRegexOptions);
         }
 
-        public StateRule Create([RegexPattern]string regex, TokenType tokenType)
+        public class FluentStateRuleBuilder
         {
-            return new StateRule(CreateRegex(regex), tokenType, new NoopAction());
-        }
+            private readonly RegexOptions _defaultRegexOptions;
+            private readonly List<StateRule> _rules = new List<StateRule>();
+            public StateRule[] Build() => _rules.ToArray();
 
-        public StateRule Default(params string[] states)
-        {
-            return new StateRule(CreateRegex(""), TokenTypes.Token,
-                new CombinedAction(states.Select(Parse).ToArray()));
-        }
+            public FluentStateRuleBuilder(RegexOptions defaultRegexOptions)
+            {
+                _defaultRegexOptions = defaultRegexOptions;
+            }
 
-        public StateRule[] Include(StateRule[] existing, params StateRule[] newRules)
-        {
-            return existing.Concat(newRules).ToArray();
-        }
+            public FluentStateRuleBuilder Add([RegexPattern]string regex, TokenType tokenType, string stateName)
+            {
+                _rules.Add(new StateRule(CreateRegex(regex), tokenType, Parse(stateName)));
+                return this;
+            }
 
-        private StateChangingAction Parse(string name)
-        {
-            if (name == "#push")
-                return new PushAgainAction();
-            if (name == "#pop")
-                return new PopAction();
+            public FluentStateRuleBuilder Add([RegexPattern]string regex, TokenType tokenType, params string[] rules)
+            {
+                _rules.Add(new StateRule(CreateRegex(regex), tokenType,
+                    new CombinedAction(rules.Select(Parse).ToArray())));
+                return this;
+            }
 
-            return new PushStateAction(name);
-        }
+            public FluentStateRuleBuilder Add([RegexPattern]string regex, TokenType tokenType)
+            {
+                _rules.Add(new StateRule(CreateRegex(regex), tokenType, new NoopAction()));
+                return this;
+            }
 
-        public StateRule ByGroups([RegexPattern]string regex,  params GroupProcessor[] processors)
-        {
-            return new StateRule(CreateRegex(regex), TokenTypes.Token,
-                new GroupAction(processors));
-        }
+            public FluentStateRuleBuilder Default(params string[] states)
+            {
+                _rules.Add(new StateRule(CreateRegex(""), TokenTypes.Token,
+                    new CombinedAction(states.Select(Parse).ToArray())));
+                return this;
+            }
 
-        public StateRule ByGroups([RegexPattern]string regex, string newState, params GroupProcessor[] processors)
-        {
+            public FluentStateRuleBuilder Include(StateRule[] existing, params StateRule[] newRules)
+            {
+                _rules.AddRange(existing);
+                _rules.AddRange(newRules);
+                return this;
+            }
 
-            return new StateRule(CreateRegex(regex), TokenTypes.Token,
-                new GroupAction(Parse(newState), processors));
-        }
+            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, params GroupProcessor[] processors)
+            {
+                _rules.Add(new StateRule(CreateRegex(regex), TokenTypes.Token,
+                    new GroupAction(processors)));
+                return this;
+            }
 
-        public StateRule ByGroups([RegexPattern]string regex, string[] newStates, params GroupProcessor[] processors)
-        {
-            var actions = newStates.Select(Parse).ToArray();
-            return new StateRule(CreateRegex(regex), TokenTypes.Token,
-                new GroupAction(new CombinedAction(actions), processors));
-        }
+            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, string newState, params GroupProcessor[] processors)
+            {
+                _rules.Add(new StateRule(CreateRegex(regex), TokenTypes.Token,
+                    new GroupAction(Parse(newState), processors)));
+                return this;
+            }
 
+            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, string[] newStates, params GroupProcessor[] processors)
+            {
+                var actions = newStates.Select(Parse).ToArray();
+                _rules.Add(new StateRule(CreateRegex(regex), TokenTypes.Token,
+                    new GroupAction(new CombinedAction(actions), processors)));
+                return this;
+            }
 
-        public Regex CreateRegex(string regex)
-        {
-            return new Regex(@"\G(?:" + regex + ")", DefaultRegexOptions);
-        }
+            public FluentStateRuleBuilder Using<T>([RegexPattern]string regex) where T : Lexer, new()
+            {
+                var lexer = new T();
+                _rules.Add(new StateRule(CreateRegex(regex), TokenTypes.Token, new LexerAction(lexer)));
+                return this;
+            }
 
-        public RegexOptions DefaultRegexOptions { get; set; }
+            private StateChangingAction Parse(string name)
+            {
+                if (name == "#push")
+                    return new PushAgainAction();
+                if (name == "#pop")
+                    return new PopAction();
 
-        public StateRule Using<T>([RegexPattern]string regex) where T:Lexer,new()
-        {
-            var lexer = new T();
-            return new StateRule(CreateRegex(regex), TokenTypes.Token, new LexerAction(lexer));
+                return new PushStateAction(name);
+            }
+
+            private Regex CreateRegex(string regex)
+            {
+                return new Regex(@"\G(?:" + regex + ")", _defaultRegexOptions);
+            }
         }
     }
 }

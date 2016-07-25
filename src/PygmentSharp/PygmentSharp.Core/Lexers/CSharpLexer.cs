@@ -29,35 +29,34 @@ namespace PygmentSharp.Core.Lexers
             var cs_ident = CSharpLexerLevel.Full;
             var builder = new StateRuleBuilder();
 
-            rules["root"] = new StateRule[]
-            {
-                builder.ByGroups(@"^([ \t]*(?:" + cs_ident + @"(?:\[\])?\s+)+?)" +  // return type
-                                 @"(" + cs_ident +   @")" +                            // method name
-                                 @"(\s*)(\()",                                         // signature start
+            rules["root"] = builder.NewRuleSet()
+                .ByGroups(@"^([ \t]*(?:" + cs_ident + @"(?:\[\])?\s+)+?)" +  // return type
+                                 @"(" + cs_ident +   @")" +                  // method name
+                                 @"(\s*)(\()",                               // signature start
                     new LexerGroupProcessor(this),
                     new TokenGroupProcessor(TokenTypes.Name.Function),
-                    new TokenGroupProcessor(TokenTypes.Punctuation)),
+                    new TokenGroupProcessor(TokenTypes.Punctuation))
 
-                builder.Create(@"^\s*\[.*?\]", TokenTypes.Name.Attribute),
-                builder.Create(@"[^\S\n]+", TokenTypes.Text),
-                builder.Create(@"\\\n", TokenTypes.Text), //line continuation
-                builder.Create(@"//.*?\n", TokenTypes.Comment.Single),
-                builder.Create(@"/[*].*?[*]/", TokenTypes.Comment.Multiline),
-                builder.Create(@"\n", TokenTypes.Text),
-                builder.Create(@"[~!%^&*()+=|\[\]:;,.<>/?-]", TokenTypes.Punctuation),
-                builder.Create(@"[{}]", TokenTypes.Punctuation),
-                builder.Create(@"@""(""""|[^""])*""", TokenTypes.String),
-                builder.Create(@"""(\\\\|\\""|[^""\n])*[""\n]", TokenTypes.String),
-                builder.Create(@"'\\.'|'[^\\]'", TokenTypes.String.Char),
-                builder.Create(@"[0-9](\.[0-9]*)?([eE][+-][0-9]+)?" +
-                                 @"[flFLdD]?|0[xX][0-9a-fA-F]+[Ll]?", TokenTypes.Number),
-                builder.Create(@"#[ \t]*(if|endif|else|elif|define|undef|" +
-                                 @"line|error|warning|region|endregion|pragma)\b.*?\n", TokenTypes.Comment.Preproc),
-                builder.ByGroups(@"'\b(extern)(\s+)(alias)\b",
+                .Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute)
+                .Add(@"[^\S\n]+", TokenTypes.Text)
+                .Add(@"\\\n", TokenTypes.Text) //line continuation
+                .Add(@"//.*?\n", TokenTypes.Comment.Single)
+                .Add(@"/[*].*?[*]/", TokenTypes.Comment.Multiline)
+                .Add(@"\n", TokenTypes.Text)
+                .Add(@"[~!%^&*()+=|\[\]:;,.<>/?-]", TokenTypes.Punctuation)
+                .Add(@"[{}]", TokenTypes.Punctuation)
+                .Add(@"@""(""""|[^""])*""", TokenTypes.String)
+                .Add(@"""(\\\\|\\""|[^""\n])*[""\n]", TokenTypes.String)
+                .Add(@"'\\.'|'[^\\]'", TokenTypes.String.Char)
+                .Add(@"[0-9](\.[0-9]*)?([eE][+-][0-9]+)?" +
+                                 @"[flFLdD]?|0[xX][0-9a-fA-F]+[Ll]?", TokenTypes.Number)
+                .Add(@"#[ \t]*(if|endif|else|elif|define|undef|" +
+                                 @"line|error|warning|region|endregion|pragma)\b.*?\n", TokenTypes.Comment.Preproc)
+                .ByGroups(@"'\b(extern)(\s+)(alias)\b",
                     new TokenGroupProcessor(TokenTypes.Keyword),
                     new TokenGroupProcessor(TokenTypes.Text),
-                    new TokenGroupProcessor(TokenTypes.Keyword)),
-                builder.Create(@"(abstract|as|async|await|base|break|case|catch|" +
+                    new TokenGroupProcessor(TokenTypes.Keyword))
+                .Add(@"(abstract|as|async|await|base|break|case|catch|" +
                                 @"checked|const|continue|default|delegate|" +
                                 @"do|else|enum|event|explicit|extern|false|finally|" +
                                 @"fixed|for|foreach|goto|if|implicit|in|interface|" +
@@ -68,32 +67,30 @@ namespace PygmentSharp.Core.Lexers
                                 @"unchecked|unsafe|virtual|void|while|" +
                                 @"get|set|new|partial|yield|add|remove|value|alias|ascending|" +
                                 @"descending|from|group|into|orderby|select|where|" +
-                                @"join|equals)\b", TokenTypes.Keyword),
-                builder.ByGroups(@"(global)(::)",
+                                @"join|equals)\b", TokenTypes.Keyword)
+                .ByGroups(@"(global)(::)",
                     new TokenGroupProcessor(TokenTypes.Keyword),
-                    new TokenGroupProcessor(TokenTypes.Punctuation)),
-                builder.Create(@"(bool|byte|char|decimal|double|dynamic|float|int|long|object|" +
-                                 @"sbyte|short|string|uint|ulong|ushort|var)\b\??", TokenTypes.Keyword.Type),
-                builder.ByGroups(@"(class|struct)(\s+)", "class",
+                    new TokenGroupProcessor(TokenTypes.Punctuation))
+                .Add(@"(bool|byte|char|decimal|double|dynamic|float|int|long|object|" +
+                                 @"sbyte|short|string|uint|ulong|ushort|var)\b\??", TokenTypes.Keyword.Type)
+                .ByGroups(@"(class|struct)(\s+)", "class",
                     new TokenGroupProcessor(TokenTypes.Keyword),
-                    new TokenGroupProcessor(TokenTypes.Text)),
-                builder.ByGroups(@"(namespace|using)(\s+)", "namespace",
+                    new TokenGroupProcessor(TokenTypes.Text))
+                .ByGroups(@"(namespace|using)(\s+)", "namespace",
                     new TokenGroupProcessor(TokenTypes.Keyword),
-                    new TokenGroupProcessor(TokenTypes.Text)),
-                builder.Create(cs_ident, TokenTypes.Name)
-            };
+                    new TokenGroupProcessor(TokenTypes.Text))
+                .Add(cs_ident, TokenTypes.Name)
+                .Build();
 
-            rules["class"] = new []
-            {
-                builder.Create(cs_ident, TokenTypes.Name.Class, "#pop"),
-                builder.Default("#pop")
-            };
+            rules["class"] = builder.NewRuleSet()
+                .Add(cs_ident, TokenTypes.Name.Class, "#pop")
+                .Default("#pop")
+                .Build();
 
-            rules["namespace"] = new[]
-            {
-                builder.Create(@"(?=\()", TokenTypes.Text, "#pop"), // using resource
-                builder.Create(@"(" + cs_ident + @"|\.)+", TokenTypes.Name.Namespace, "#pop")
-            };
+            rules["namespace"] = builder.NewRuleSet()
+                .Add(@"(?=\()", TokenTypes.Text, "#pop") // using resource
+                .Add(@"(" + cs_ident + @"|\.)+", TokenTypes.Name.Namespace, "#pop")
+                .Build();
 
             return rules;
         }

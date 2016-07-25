@@ -53,6 +53,11 @@ namespace PygmentSharp.Core
                 new CombinedAction(states.Select(Parse).ToArray()));
         }
 
+        public StateRule[] Include(StateRule[] existing, params StateRule[] newRules)
+        {
+            return existing.Concat(newRules).ToArray();
+        }
+
         private StateChangingAction Parse(string name)
         {
             if (name == "#push")
@@ -93,6 +98,7 @@ namespace PygmentSharp.Core
 
         public StateRule Using<T>([RegexPattern]string regex)
         {
+            // see lexer.py
             return new StateRule(CreateRegex(regex), TokenTypes.Token, new NoopAction());
         }
     }

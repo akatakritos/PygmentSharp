@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace PygmentSharp.Core.Lexers
 {
-    public class JavascriptLexer
-    {
-    }
-
     public class CssLexer
     {
     }

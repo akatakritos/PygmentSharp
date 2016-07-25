@@ -11,11 +11,11 @@ namespace PygmentSharp.UnitTests
     public class StyleTests
     {
         private static readonly TokenType _root = new TokenType(null, "Root");
-        private static readonly TokenType _foo = _root.Create(nameof(_foo));
+        private static readonly TokenType _foo = _root.Create("Foo");
         // ReSharper disable once UnusedMember.Local
-        private static readonly TokenType _bar = _root.Create(nameof(_bar));
+        private static readonly TokenType _bar = _root.Create("Bar");
         // ReSharper disable once UnusedMember.Local
-        private static readonly TokenType _baz = _root.Create(nameof(_baz));
+        private static readonly TokenType _baz = _root.Create("Baz");
 
         [Fact]
         public void GetsStylesFromStrings()

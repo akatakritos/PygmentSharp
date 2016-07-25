@@ -101,6 +101,7 @@
     <Compile Include="Lexers\JavascriptLexerTests.cs" />
     <Compile Include="Lexers\RegexUtilTests.cs" />
     <Compile Include="Lexers\SqlLexerTests.cs" />
+    <Compile Include="Lexers\XmlLexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexLexterTests.cs" />
     <Compile Include="SampleFile.cs" />

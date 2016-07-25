@@ -192,6 +192,8 @@ namespace PygmentSharp.Core.Lexers
         /// Creates an optimized regex that will match any of the listed words
         /// </summary>
         /// <param name="words"></param>
+        /// <param name="prefix">A regex prefix to insert at the front of the optimized regex</param>
+        /// <param name="suffix">A regex suffix to append at the end of the optimized regex</param>
         /// <returns></returns>
         public static string Words(string[] words, string prefix = "", string suffix = "")
         {

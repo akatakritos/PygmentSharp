@@ -10,9 +10,9 @@ namespace PygmentSharp.UnitTests
 {
     public class RegexLexterTests
     {
-        public static readonly TokenType Root = TokenTypes.Text.Create(nameof(Root));
-        public static readonly TokenType Beer = TokenTypes.Text.Create(nameof(Beer));
-        public static readonly TokenType Rag = TokenTypes.Text.Create(nameof(Rag));
+        public static readonly TokenType Root = TokenTypes.Text.CreateChild(nameof(Root));
+        public static readonly TokenType Beer = TokenTypes.Text.CreateChild(nameof(Beer));
+        public static readonly TokenType Rag = TokenTypes.Text.CreateChild(nameof(Rag));
 
         private sealed class TestLexer : RegexLexer
         {

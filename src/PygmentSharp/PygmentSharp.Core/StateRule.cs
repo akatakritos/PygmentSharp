@@ -2,16 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
 
 namespace PygmentSharp.Core
 {
+    /// <summary>
+    /// Represents a rule for matching syntax. If the regex matches, the tokenTpye is emitted and the action is applied
+    /// </summary>
     public class StateRule
     {
+        /// <summary>
+        /// Gets the regular expression to attempt to match
+        /// </summary>
         public Regex Regex { get; }
+
+        /// <summary>
+        /// Gets the TokenType that should be emitted if the regex matches
+        /// </summary>
         public TokenType TokenType { get; }
+
+        /// <summary>
+        /// Gets the action to take when a match occurs
+        /// </summary>
+        /// <remarks>
+        /// Matches might choose to change the current state machine state, or emit more than one token, etc
+        /// </remarks>
         public StateAction Action { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateRule"/> structure
+        /// </summary>
+        /// <remarks>
+        /// Internal to force external plugins to use the builder
+        /// </remarks>
+        /// <param name="regex">The regular expression to attempt to match</param>
+        /// <param name="tokenType">The type of token that should be emitted when matched</param>
+        /// <param name="action">An action to take when matched</param>
         internal StateRule(Regex regex, TokenType tokenType, StateAction action)
         {
             Regex = regex;
@@ -25,44 +50,5 @@ namespace PygmentSharp.Core
         }
     }
 
-    public abstract class GroupProcessor
-    {
-        public abstract IEnumerable<Token> GetTokens(RegexLexerContext context, string value);
-    }
 
-    public class LexerGroupProcessor : GroupProcessor
-    {
-        public Lexer Lexer { get; }
-
-        public LexerGroupProcessor(Lexer lexer)
-        {
-            Lexer = lexer;
-        }
-
-
-        public override IEnumerable<Token> GetTokens(RegexLexerContext context, string value)
-        {
-            var tokens = Lexer.GetTokens(value);
-
-            context.Position += value.Length;
-
-            return tokens;
-        }
-    }
-
-    public class TokenGroupProcessor : GroupProcessor
-    {
-        public TokenType Type { get; }
-
-        public TokenGroupProcessor(TokenType type)
-        {
-            Type = type;
-        }
-
-        public override IEnumerable<Token> GetTokens(RegexLexerContext context, string value)
-        {
-            yield return new Token(context.Position, Type, value);
-            context.Position += value.Length;
-        }
-    }
 }

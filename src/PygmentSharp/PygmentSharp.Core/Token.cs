@@ -4,17 +4,45 @@ using System.Linq;
 
 namespace PygmentSharp.Core
 {
+    /// <summary>
+    /// Represents a token from the lexing file. A Token is a type, value, and position
+    /// </summary>
+    /// <remarks>
+    /// Lexers will emit a sequence of Tokens, each with a given type. Formatters will consume
+    /// Tokens and turn them into highlighted text in whatever format they support
+    /// </remarks>
     public struct Token : IEquatable<Token>
     {
+        /// <summary>
+        /// The 0 based index into the string being lexed
+        /// </summary>
         public int Index { get; }
+
+        /// <summary>
+        /// The type of this token (Comment, Text, Keyword, etc)
+        /// </summary>
         public TokenType Type { get; }
 
+        /// <summary>
+        /// The string value of the token
+        /// </summary>
         public string Value { get; }
 
+        /// <summary>
+        /// Initializes a new Token at index 0
+        /// </summary>
+        /// <param name="type">The type of the Token</param>
+        /// <param name="value">The value of the Token</param>
         public Token(TokenType type, string value) : this(0, type, value)
         {
         }
 
+        /// <summary>
+        /// Initializes a new Token at a provided index
+        /// </summary>
+        /// <param name="index">The index into the string being lexer</param>
+        /// <param name="type">The type of the Token</param>
+        /// <param name="value">The value of the Token</param>
         public Token(int index, TokenType type, string value)
         {
             Index = index;
@@ -33,10 +61,7 @@ namespace PygmentSharp.Core
             return new Token(Index + indexOffset, Type, Value);
         }
 
-        public override string ToString()
-        {
-            return $"{Index}: \"{Value}\" ({Type})";
-        }
+        public override string ToString() => $"{Index}: \"{Value}\" ({Type})";
 
         #region R# Equality Members
 

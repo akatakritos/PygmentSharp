@@ -98,6 +98,7 @@
     <Compile Include="Formatters\HtmlFormatter.cs" />
     <Compile Include="Formatters\HtmlFormatterOptions.cs" />
     <Compile Include="Formatters\NullFormatter.cs" />
+    <Compile Include="GroupProcessor.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerLocator.cs" />
     <Compile Include="Lexers\CommonPrefix.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Token.cs" />
     <Compile Include="TokenType.cs" />
     <Compile Include="TokenTypeMap.cs" />
+    <Compile Include="Utils\Argument.cs" />
     <Compile Include="Utils\Slice.cs" />
   </ItemGroup>
   <ItemGroup>

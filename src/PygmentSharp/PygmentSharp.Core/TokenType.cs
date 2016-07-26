@@ -4,41 +4,86 @@ using System.Linq;
 
 namespace PygmentSharp.Core
 {
+    /// <summary>
+    /// Represents a nested type for a <see cref="Token"/>
+    /// </summary>
+    /// <remarks>
+    /// Token Types are nested. For example, a Comment will have nested types <c>Comment.Multiline</c>,
+    /// <c>Comment.Single</c>, or <c>Comment.Preproc</c>. Lexers and formatters have a choice on how
+    /// specific they want to get. If a formatter doesn't want to support different styles for each of
+    /// those comment types, it can just implement highlighting for Comment and all the child types will
+    /// fall in line.
+    /// </remarks>
     public class TokenType
     {
-        public TokenType Parent { get; set; }
+        /// <summary>
+        /// Gets the parent type
+        /// </summary>
+        public TokenType Parent { get; }
+
+        /// <summary>
+        /// Gets the name of this type
+        /// </summary>
         public string Name { get; set; }
 
         private readonly List<TokenType> _subtypes;
+        /// <summary>
+        /// Gets the depth of this Token Type
+        /// </summary>
+        /// <remarks>
+        /// For example, Root.Comment.Preproc has a depth of 3
+        /// </remarks>
+        public int Depth { get; }
 
+        /// <summary>
+        /// Gets the list of subtypes for this token type
+        /// </summary>
+        public IReadOnlyCollection<TokenType> Subtypes => _subtypes;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TokenType"/> class
+        /// </summary>
+        /// <param name="parent">The parent token type</param>
+        /// <param name="name">The name of this token type</param>
         public TokenType(TokenType parent, string name)
         {
             Parent = parent;
             Name = name;
-            _subtypes = new List<TokenType>();
 
+            _subtypes = new List<TokenType>();
             Depth = CalculateDepth();
         }
 
-        private int CalculateDepth()
-        {
-            return YieldAncestors().Count();
-        }
-
-        public int Depth { get; }
-
-        public IReadOnlyCollection<TokenType> Subtypes => _subtypes;
-
-        public TokenType Create(string name)
+        /// <summary>
+        /// Creates a child token type
+        /// </summary>
+        /// <param name="name">The name of the child token type</param>
+        /// <returns></returns>
+        public TokenType CreateChild(string name)
         {
             var newTokenType = new TokenType(this, name);
             _subtypes.Add(newTokenType);
             return newTokenType;
         }
 
+        public TChild AddChild<TChild>(TChild child) where TChild : TokenType
+        {
+            _subtypes.Add(child);
+            return child;
+        }
+
+        /// <summary>
+        /// Gets a list of types for this token, starting with itself and ending at its highest level parent
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TokenType> Split()
         {
             return YieldAncestors().Reverse();
+        }
+
+        private int CalculateDepth()
+        {
+            return YieldAncestors().Count();
         }
 
         private IEnumerable<TokenType> YieldAncestors()
@@ -64,19 +109,19 @@ namespace PygmentSharp.Core
     {
         public NameTokenType(TokenType parent) : base(parent, "Name")
         {
-            Attribute = Create("Attribute");
-            Builtin = new NameBuiltinTokenType(this);
-            Class = Create("Class");
-            Constant = Create("Constant");
-            Decorator = Create("Decorator");
-            Entity = Create("Entity");
-            Exception = Create("Exception");
-            Function = Create("Exception");
-            Property = Create("Property");
-            Label = Create("Label");
-            Namespace = Create("Namespace");
-            Other = Create("Other");
-            Tag = Create("Tag");
+            Attribute = CreateChild("Attribute");
+            Builtin = AddChild(new NameBuiltinTokenType(this));
+            Class = CreateChild("Class");
+            Constant = CreateChild("Constant");
+            Decorator = CreateChild("Decorator");
+            Entity = CreateChild("Entity");
+            Exception = CreateChild("Exception");
+            Function = CreateChild("Exception");
+            Property = CreateChild("Property");
+            Label = CreateChild("Label");
+            Namespace = CreateChild("Namespace");
+            Other = CreateChild("Other");
+            Tag = CreateChild("Tag");
             Variable = new NameVariableTokenType(this);
         }
 
@@ -100,9 +145,9 @@ namespace PygmentSharp.Core
     {
         public NameVariableTokenType(TokenType parent) : base(parent, "Variable")
         {
-            Class = Create("Class");
-            Global = Create("Global");
-            Instance = Create("Instance");
+            Class = CreateChild("Class");
+            Global = CreateChild("Global");
+            Instance = CreateChild("Instance");
         }
 
         public TokenType Class { get; }
@@ -114,7 +159,7 @@ namespace PygmentSharp.Core
     {
         public NameBuiltinTokenType(TokenType parent) : base(parent, "Builtin")
         {
-            Pseudo = Create("Pseudo");
+            Pseudo = CreateChild("Pseudo");
         }
 
         public TokenType Pseudo { get; }
@@ -124,12 +169,12 @@ namespace PygmentSharp.Core
     {
         public KeywordTokenType(TokenType parent) : base(parent, "Keyword")
         {
-            Constant = Create("Constant");
-            Declaration = Create("Declaration");
-            Namespace = Create("Namespace");
-            Pseudo = Create("Pseudo");
-            Reserved = Create("Reserved");
-            Type = Create("Type");
+            Constant = CreateChild("Constant");
+            Declaration = CreateChild("Declaration");
+            Namespace = CreateChild("Namespace");
+            Pseudo = CreateChild("Pseudo");
+            Reserved = CreateChild("Reserved");
+            Type = CreateChild("Type");
         }
 
         public TokenType Constant { get; }
@@ -145,9 +190,9 @@ namespace PygmentSharp.Core
     {
         public LiteralTokenType(TokenType parent) : base(parent, "Literal")
         {
-            Date = Create("Date");
-            String = new StringTokenType(this);
-            Number = new NumberTokenType(this);
+            Date = CreateChild("Date");
+            String = AddChild(new StringTokenType(this));
+            Number = AddChild(new NumberTokenType(this));
         }
 
         public TokenType Date { get; }
@@ -159,17 +204,17 @@ namespace PygmentSharp.Core
     {
         public StringTokenType(TokenType parent) : base(parent, "String")
         {
-            Backtick = Create("Backtick");
-            Char = Create("Char");
-            Doc = Create("Doc");
-            Double = Create("Double");
-            Escape = Create("Escape");
-            Heredoc = Create("Heredoc");
-            Interpol = Create("Interpol");
-            Other = Create("Other");
-            Regex = Create("Regex");
-            Single = Create("Single");
-            Symbol = Create("Symbol");
+            Backtick = CreateChild("Backtick");
+            Char = CreateChild("Char");
+            Doc = CreateChild("Doc");
+            Double = CreateChild("Double");
+            Escape = CreateChild("Escape");
+            Heredoc = CreateChild("Heredoc");
+            Interpol = CreateChild("Interpol");
+            Other = CreateChild("Other");
+            Regex = CreateChild("Regex");
+            Single = CreateChild("Single");
+            Symbol = CreateChild("Symbol");
 
         }
 
@@ -191,11 +236,11 @@ namespace PygmentSharp.Core
         public NumberTokenType(TokenType parent) : base(parent, "Number")
         {
 
-            Bin = Create("Bin");
-            Float = Create("Float");
-            Hex = Create("Hex");
-            Integer = new IntegerTokenType(this);
-            Oct = Create("Oct");
+            Bin = CreateChild("Bin");
+            Float = CreateChild("Float");
+            Hex = CreateChild("Hex");
+            Integer = AddChild(new IntegerTokenType(this));
+            Oct = CreateChild("Oct");
         }
 
         public TokenType Bin { get; }
@@ -209,7 +254,7 @@ namespace PygmentSharp.Core
     {
         public IntegerTokenType(TokenType parent) : base(parent, "Integer")
         {
-            Long = Create("Long");
+            Long = CreateChild("Long");
         }
 
         public TokenType Long { get; }
@@ -219,7 +264,7 @@ namespace PygmentSharp.Core
     {
         public OperatorTokenType(TokenType parent) : base(parent, "Operator")
         {
-            Word = Create("Word");
+            Word = CreateChild("Word");
         }
 
         public TokenType Word { get; }
@@ -230,12 +275,12 @@ namespace PygmentSharp.Core
     {
         public CommentTokenType(TokenType parent) : base(parent, "Comment")
         {
-            Hashbang = Create("Hashbang");
-            Multiline = Create("Multiline");
-            Preproc = Create("Preproc");
-            PreprocFile = Create("PreprocFile");
-            Single = Create("Single");
-            Special = Create("Special");
+            Hashbang = CreateChild("Hashbang");
+            Multiline = CreateChild("Multiline");
+            Preproc = CreateChild("Preproc");
+            PreprocFile = CreateChild("PreprocFile");
+            Single = CreateChild("Single");
+            Special = CreateChild("Special");
         }
 
         public TokenType Hashbang { get; }
@@ -250,16 +295,16 @@ namespace PygmentSharp.Core
     {
         public GenericTokenType(TokenType parent) : base(parent, "Generic")
         {
-            Deleted = Create("Deleted");
-            Emph = Create("Emph");
-            Error = Create("Error");
-            Heading = Create("Heading");
-            Inserted = Create("Inserted");
-            Output = Create("Output");
-            Prompt = Create(nameof(Prompt));
-            Strong = Create(nameof(Strong));
-            Subheading = Create(nameof(Subheading));
-            Traceback = Create(nameof(Traceback));
+            Deleted = CreateChild("Deleted");
+            Emph = CreateChild("Emph");
+            Error = CreateChild("Error");
+            Heading = CreateChild("Heading");
+            Inserted = CreateChild("Inserted");
+            Output = CreateChild("Output");
+            Prompt = CreateChild(nameof(Prompt));
+            Strong = CreateChild(nameof(Strong));
+            Subheading = CreateChild(nameof(Subheading));
+            Traceback = CreateChild(nameof(Traceback));
 
         }
 
@@ -278,19 +323,19 @@ namespace PygmentSharp.Core
     public static class TokenTypes
     {
         public static readonly TokenType Token = new TokenType(null, "Token");
-        public static readonly TokenType Text = Token.Create("Text");
-        public static readonly TokenType Whitespace = Text.Create("Whitespace");
-        public static readonly TokenType Escape = Token.Create("Escape");
-        public static readonly TokenType Error = Token.Create("Error");
-        public static readonly TokenType Other = Token.Create("Other");
-        public static readonly KeywordTokenType Keyword = new KeywordTokenType(Token);
-        public static readonly NameTokenType Name = new NameTokenType(Token);
-        public static readonly LiteralTokenType Literal = new LiteralTokenType(Token);
+        public static readonly TokenType Text = Token.CreateChild("Text");
+        public static readonly TokenType Whitespace = Text.CreateChild("Whitespace");
+        public static readonly TokenType Escape = Token.CreateChild("Escape");
+        public static readonly TokenType Error = Token.CreateChild("Error");
+        public static readonly TokenType Other = Token.CreateChild("Other");
+        public static readonly KeywordTokenType Keyword = Token.AddChild(new KeywordTokenType(Token));
+        public static readonly NameTokenType Name = Token.AddChild(new NameTokenType(Token));
+        public static readonly LiteralTokenType Literal = Token.AddChild(new LiteralTokenType(Token));
         public static readonly StringTokenType String = Literal.String; //alias
         public static readonly NumberTokenType Number = Literal.Number; //alias
-        public static readonly TokenType Punctuation = Token.Create("Punctuation");
-        public static readonly OperatorTokenType Operator = new OperatorTokenType(Token);
-        public static readonly CommentTokenType Comment = new CommentTokenType(Token);
-        public static readonly GenericTokenType Generic = new GenericTokenType(Token);
+        public static readonly TokenType Punctuation = Token.CreateChild("Punctuation");
+        public static readonly OperatorTokenType Operator = Token.AddChild(new OperatorTokenType(Token));
+        public static readonly CommentTokenType Comment = Token.AddChild(new CommentTokenType(Token));
+        public static readonly GenericTokenType Generic = Token.AddChild(new GenericTokenType(Token));
     }
 }

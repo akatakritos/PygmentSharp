@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core
 {
     public class TokenTypeMap

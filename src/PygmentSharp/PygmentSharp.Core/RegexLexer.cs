@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core
 {
     public class RegexLexerContext

@@ -6,6 +6,7 @@ using NFluent;
 
 using PygmentSharp.Core;
 using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Tokens;
 
 using Xunit;
 

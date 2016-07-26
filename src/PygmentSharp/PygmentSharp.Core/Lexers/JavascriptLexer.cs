@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core.Lexers
 {
     [Lexer("Javascript", AlternateNames = "javascript,JavaScript,ECMAScript")]

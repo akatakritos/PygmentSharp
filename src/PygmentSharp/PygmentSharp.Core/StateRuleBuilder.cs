@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 using JetBrains.Annotations;
 
+using PygmentSharp.Core.Tokens;
 using PygmentSharp.Core.Utils;
 
 namespace PygmentSharp.Core

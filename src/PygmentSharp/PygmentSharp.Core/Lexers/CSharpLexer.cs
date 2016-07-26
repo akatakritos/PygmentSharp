@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core.Lexers
 {
     public static class CSharpLexerLevel

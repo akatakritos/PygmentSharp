@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core.Formatters
 {
     /// <summary>

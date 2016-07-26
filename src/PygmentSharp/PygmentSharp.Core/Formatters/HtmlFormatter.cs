@@ -8,6 +8,7 @@ using System.Text;
 
 using PygmentSharp.Core.Extensions;
 using PygmentSharp.Core.Styles;
+using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Formatters
 {

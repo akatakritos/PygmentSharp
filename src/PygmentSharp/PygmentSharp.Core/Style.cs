@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using PygmentSharp.Core.Tokens;
+
 namespace PygmentSharp.Core
 {
     public class Style : IEnumerable<KeyValuePair<TokenType, StyleData>>

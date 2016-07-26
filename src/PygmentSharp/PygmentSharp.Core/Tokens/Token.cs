@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Tokens
 {
     /// <summary>
     /// Represents a token from the lexing file. A Token is a type, value, and position

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -86,10 +87,11 @@ namespace PygmentSharp.Core.Extensions
         /// <param name="s">The string to check</param>
         /// <param name="pattern">The patterm to match</param>
         /// <returns></returns>
-        public static bool MatchesWildcardPattern(this string s, string pattern)
+        public static bool MatchesFileWildcard(this string s, string pattern)
         {
-            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", "."));
-            return regex.IsMatch(s);
+            var filename = Path.GetFileName(s);
+            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", "."), RegexOptions.IgnoreCase);
+            return regex.IsMatch(filename);
         }
     }
 }

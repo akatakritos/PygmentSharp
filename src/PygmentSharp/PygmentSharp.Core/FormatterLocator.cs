@@ -25,7 +25,7 @@ namespace PygmentSharp.Core
         private static bool HasMatchingWildcard(Type lexer, string file)
         {
              return lexer.HasAttribute<FormatterFileExtensionAttribute>(a =>
-                file.MatchesWildcardPattern(a.Pattern));
+                file.MatchesFileWildcard(a.Pattern));
         }
 
         private static bool HasFormatter(Type l, string name)

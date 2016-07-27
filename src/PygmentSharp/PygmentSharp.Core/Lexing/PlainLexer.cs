@@ -4,7 +4,7 @@ using System.Linq;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core.Lexers
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// Lexes text as a single big ol' <see cref="Token"/>

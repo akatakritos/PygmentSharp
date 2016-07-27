@@ -4,11 +4,11 @@ using System.Linq;
 
 using NFluent;
 
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Utils;
 
 using Xunit;
 
-namespace PygmentSharp.UnitTests.Lexers
+namespace PygmentSharp.UnitTests.Utils
 {
     public class ComonPrefixTests
     {

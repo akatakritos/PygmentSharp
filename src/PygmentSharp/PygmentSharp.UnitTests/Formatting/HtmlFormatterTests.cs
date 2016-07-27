@@ -6,12 +6,13 @@ using System.Text.RegularExpressions;
 
 using NFluent;
 
-using PygmentSharp.Core.Formatters;
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Formatting;
+using PygmentSharp.Core.Lexing;
+
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PygmentSharp.UnitTests.Formatters
+namespace PygmentSharp.UnitTests.Formatting
 {
     public class HtmlFormatterTests
     {

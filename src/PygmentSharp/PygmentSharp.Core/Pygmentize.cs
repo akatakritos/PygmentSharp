@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using PygmentSharp.Core.Formatters;
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Formatting;
+using PygmentSharp.Core.Lexing;
 
 namespace PygmentSharp.Core
 {

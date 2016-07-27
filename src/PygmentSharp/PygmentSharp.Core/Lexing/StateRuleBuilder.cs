@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using PygmentSharp.Core.Tokens;
 using PygmentSharp.Core.Utils;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// Assists in creating <see cref="StateRule"/> state machine steps

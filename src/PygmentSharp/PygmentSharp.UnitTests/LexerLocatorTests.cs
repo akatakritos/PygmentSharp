@@ -4,7 +4,8 @@ using System.Linq;
 
 using NFluent;
 using PygmentSharp.Core;
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Lexing;
+
 using Xunit;
 
 namespace PygmentSharp.UnitTests

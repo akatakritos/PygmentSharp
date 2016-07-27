@@ -5,7 +5,7 @@ using System.Linq;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core.Formatters
+namespace PygmentSharp.Core.Formatting
 {
     /// <summary>
     /// A formatter that writes tokens as plain text

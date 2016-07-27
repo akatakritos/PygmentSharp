@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core.Lexers
+namespace PygmentSharp.Core.Lexing
 {
     internal static class CSharpLexerLevel
     {

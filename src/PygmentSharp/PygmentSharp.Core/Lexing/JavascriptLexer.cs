@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core.Lexers
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// A lexer for javascript

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PygmentSharp.Core.Lexers
+namespace PygmentSharp.Core.Utils
 {
     /// <summary>
     ///     Calculations for the longest common prefix of a list of strings

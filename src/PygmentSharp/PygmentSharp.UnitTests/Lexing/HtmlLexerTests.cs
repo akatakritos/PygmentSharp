@@ -4,13 +4,13 @@ using System.Linq;
 
 using NFluent;
 
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Lexing;
 using PygmentSharp.Core.Tokens;
 
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PygmentSharp.UnitTests.Lexers
+namespace PygmentSharp.UnitTests.Lexing
 {
     public class HtmlLexerTests
     {

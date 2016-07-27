@@ -4,7 +4,7 @@ using System.Linq;
 
 using PygmentSharp.Core.Styles;
 
-namespace PygmentSharp.Core.Formatters
+namespace PygmentSharp.Core.Formatting
 {
     /// <summary>
     /// Holds options for HTML formatting

@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// Defines the current context of the lexer

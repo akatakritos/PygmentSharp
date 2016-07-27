@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// Represents a rule for matching syntax. If the regex matches, the tokenTpye is emitted and the action is applied

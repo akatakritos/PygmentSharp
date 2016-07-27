@@ -4,12 +4,12 @@ using System.Linq;
 
 using NFluent;
 
-using PygmentSharp.Core;
+using PygmentSharp.Core.Lexing;
 using PygmentSharp.Core.Tokens;
 
 using Xunit;
 
-namespace PygmentSharp.UnitTests.Lexers
+namespace PygmentSharp.UnitTests.Lexing
 {
     public class RegexLexterTests
     {

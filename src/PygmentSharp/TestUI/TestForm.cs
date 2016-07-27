@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using PygmentSharp.Core;
-using PygmentSharp.Core.Formatters;
+using PygmentSharp.Core.Formatting;
 using PygmentSharp.Core.Tokens;
 
 namespace TestUI

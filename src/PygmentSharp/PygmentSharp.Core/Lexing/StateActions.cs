@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// When a rule is matched, the state action is applied to actually get the tokens

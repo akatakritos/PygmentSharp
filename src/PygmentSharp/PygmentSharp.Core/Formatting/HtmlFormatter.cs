@@ -10,7 +10,7 @@ using PygmentSharp.Core.Extensions;
 using PygmentSharp.Core.Styles;
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core.Formatters
+namespace PygmentSharp.Core.Formatting
 {
     internal class ClassToStyle
     {

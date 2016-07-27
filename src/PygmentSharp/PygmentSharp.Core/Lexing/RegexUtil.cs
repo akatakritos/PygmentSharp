@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using PygmentSharp.Core.Extensions;
 using PygmentSharp.Core.Utils;
 
-namespace PygmentSharp.Core.Lexers
+namespace PygmentSharp.Core.Lexing
 {
     /// <summary>
     /// Utility methods for working with regular expressions

@@ -116,7 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fixtures\csharp-sample.txt" />
-    <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PygmentSharp.Core\PygmentSharp.Core.csproj">

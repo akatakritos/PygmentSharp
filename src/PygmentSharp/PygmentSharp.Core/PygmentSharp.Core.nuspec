@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/akatakritos/PygmentSharp</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>C# highlighter.</releaseNotes>
+    <releaseNotes>Version 0.1.0 organizes a lot of the code, adds documentation on the public API, and adds lexers for HTML, CSS, Javascript, XML, and BASH.</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags></tags>
   </metadata>

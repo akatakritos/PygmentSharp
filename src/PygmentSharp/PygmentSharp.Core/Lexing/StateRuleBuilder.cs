@@ -155,6 +155,20 @@ namespace PygmentSharp.Core.Lexing
             }
 
             /// <summary>
+            ///
+            /// </summary>
+            /// <param name="regex"></param>
+            /// <param name="tokens"></param>
+            /// <returns></returns>
+            public FluentStateRuleBuilder ByGroups([RegexPattern] string regex, params TokenType[] tokens)
+            {
+                Argument.EnsureNotNull(regex, nameof(regex));
+                var processors = tokens.Select(t => new TokenGroupProcessor(t)).ToList();
+                _rules.Add(new StateRule(CreateRegex(regex), TokenTypes.Token, new GroupAction(processors)));
+                return this;
+            }
+
+            /// <summary>
             /// Adds a rule who's regular expression matches a set of groups, and applies processing to each
             /// of those match group values. A new state is then taken inside of the lexer
             /// </summary>

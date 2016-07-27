@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using NFluent;
 
@@ -47,20 +46,6 @@ namespace PygmentSharp.UnitTests.Lexing
                 new Token(30, TokenTypes.Text, " "),
                 new Token(31, TokenTypes.Punctuation, "}")
              );
-        }
-    }
-
-    internal static class TestHelpers
-    {
-        public static string DumpForCode(this IEnumerable<Token> tokens)
-        {
-            var sb = new StringBuilder();
-            foreach (var token in tokens)
-            {
-                sb.AppendLine($"new Token({token.Index}, TokenTypes.{token.Type.ToString().Replace("Token.","")}, \"{token.Value}\"),");
-            }
-
-            return sb.ToString();
         }
     }
 }

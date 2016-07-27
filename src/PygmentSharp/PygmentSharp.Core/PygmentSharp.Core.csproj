@@ -106,6 +106,7 @@
     <Compile Include="GroupProcessor.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerLocator.cs" />
+    <Compile Include="Lexing\BashLexer.cs" />
     <Compile Include="Utils\CommonPrefix.cs" />
     <Compile Include="Lexing\CSharpLexer.cs" />
     <Compile Include="Lexing\CssLexer.cs" />

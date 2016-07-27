@@ -94,6 +94,8 @@
     <Compile Include="FormatterLocatorTests.cs" />
     <Compile Include="Formatting\HtmlFormatterTests.cs" />
     <Compile Include="LexerLocatorTests.cs" />
+    <Compile Include="Lexing\BashLexerTests.cs" />
+    <Compile Include="TestHelpers.cs" />
     <Compile Include="Utils\ComonPrefixTests.cs" />
     <Compile Include="Lexing\CSharpExampleFileTests.cs" />
     <Compile Include="Lexing\CSharpLexerTests.cs" />

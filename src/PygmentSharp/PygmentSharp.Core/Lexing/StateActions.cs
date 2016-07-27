@@ -47,6 +47,16 @@ namespace PygmentSharp.Core.Lexing
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupAction"/> class
         /// </summary>
+        /// <param name="processors">The processors to apply to each match group</param>
+        public GroupAction(IReadOnlyList<GroupProcessor> processors)
+        {
+            Action = new NoopAction();
+            Processors = processors;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupAction"/> class
+        /// </summary>
         /// <param name="action">The action to apply</param>
         /// <param name="processors">The processors to apply to each match group</param>
         public GroupAction(StateChangingAction action, params GroupProcessor[] processors)

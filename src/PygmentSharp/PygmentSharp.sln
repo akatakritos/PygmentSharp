@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{956C833D-F0FF-48F2-A4CE-48D571007A80}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\CHANGELOG.md = ..\..\CHANGELOG.md
+		..\..\package.bat = ..\..\package.bat
 		PygmentSharp.Core\PygmentSharp.Core.nuspec = PygmentSharp.Core\PygmentSharp.Core.nuspec
 		..\..\README.md = ..\..\README.md
 		..\..\ReleaseSteps.md = ..\..\ReleaseSteps.md

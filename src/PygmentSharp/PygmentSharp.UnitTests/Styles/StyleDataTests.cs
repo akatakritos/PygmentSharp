@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using NFluent;
 
 using PygmentSharp.Core.Styles;
 
 using Xunit;
 
-namespace PygmentSharp.UnitTests
+namespace PygmentSharp.UnitTests.Styles
 {
     public class StyleDataTests
     {

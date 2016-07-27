@@ -9,7 +9,7 @@ using PygmentSharp.Core.Tokens;
 
 using Xunit;
 
-namespace PygmentSharp.UnitTests
+namespace PygmentSharp.UnitTests.Styles
 {
     public class TokenTypeMapTests
     {

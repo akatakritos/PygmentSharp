@@ -1,5 +1,13 @@
 ## Release Steps
 
+### Things to check before releasing
+ - Tests pass?
+ - Public API documented?
+ - Roadmap up to date?
+
+
+### Steps
+
 1. Cut release branch from develop
 2. Bump version in `AssemblyInfo.cs`
 3. Update changelog

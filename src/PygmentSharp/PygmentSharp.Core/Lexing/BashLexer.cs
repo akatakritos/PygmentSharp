@@ -21,6 +21,7 @@ namespace PygmentSharp.Core.Lexing
     [LexerFileExtension("bashrc")]
     [LexerFileExtension(".bash_*")]
     [LexerFileExtension("bash_*")]
+    [LexerFileExtension(".profile")]
     [LexerFileExtension("PKGBUILD")]
     public class BashLexer : RegexLexer
     {

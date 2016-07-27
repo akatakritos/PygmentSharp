@@ -4,9 +4,12 @@ using System.Linq;
 
 namespace PygmentSharp.Core.Tokens
 {
+    /// <summary>
+    /// Holds different types of number tokens
+    /// </summary>
     public class NumberTokenType : TokenType
     {
-        public NumberTokenType(TokenType parent) : base(parent, "Number")
+        internal NumberTokenType(TokenType parent) : base(parent, "Number")
         {
 
             Bin = CreateChild("Bin");
@@ -16,10 +19,30 @@ namespace PygmentSharp.Core.Tokens
             Oct = CreateChild("Oct");
         }
 
+
+        /// <summary>
+        /// Gets a token for representing a binary number
+        /// </summary>
         public TokenType Bin { get; }
+
+        /// <summary>
+        /// Gets a token for representing a floating point number
+        /// </summary>
         public TokenType Float { get; }
+
+        /// <summary>
+        /// Gets a token for representing a hexadecimal number
+        /// </summary>
         public TokenType Hex { get; }
+
+        /// <summary>
+        /// Gets a token for representing an integer number
+        /// </summary>
         public IntegerTokenType Integer { get; }
+
+        /// <summary>
+        /// Gets a token for representing an octal number
+        /// </summary>
         public TokenType Oct { get; }
     }
 }

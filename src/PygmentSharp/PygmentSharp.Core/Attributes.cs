@@ -53,24 +53,47 @@ namespace PygmentSharp.Core
         }
     }
 
+    /// <summary>
+    /// Annotates a <see cref="Formatter"/> with its name
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class FormatterAttribute : Attribute
     {
+        /// <summary>
+        /// Gets the name of the formatter
+        /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// Gets or sets a comma-separated list of alternative names for a <see cref="Formatter"/>
+        /// </summary>
         public string AlternateNames { get; set; }
 
+        /// <summary>
+        /// Initializes a new isntance of the <see cref="FormatterAttribute"/>
+        /// </summary>
+        /// <param name="name">The name of the formatter</param>
         public FormatterAttribute(string name)
         {
             Name = name;
         }
     }
 
+    /// <summary>
+    /// Annotates a <see cref="Formatter"/> with a file extension it can write to
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class FormatterFileExtensionAttribute : Attribute
     {
+        /// <summary>
+        /// Gets the wildcard pattern matching file types this formatter can write
+        /// </summary>
         public string Pattern { get; }
 
+        /// <summary>
+        /// Initalizes a new instance of the <see cref="FormatterFileExtensionAttribute"/> class
+        /// </summary>
+        /// <param name="pattern">The wildcard pattern</param>
         public FormatterFileExtensionAttribute(string pattern)
         {
             Pattern = pattern;

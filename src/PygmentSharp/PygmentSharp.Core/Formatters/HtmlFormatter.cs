@@ -19,7 +19,7 @@ namespace PygmentSharp.Core.Formatters
         public int Depth => TokenType.Depth;
     }
 
-    public struct WrapResult
+    internal struct WrapResult
     {
         public bool IsSourceLine { get; }
         public string FormattedLine { get; }
@@ -64,6 +64,9 @@ pre {{ line-height: 125%; }}
 </body>
 </html>
 ";
+        /// <summary>
+        /// Gets the options for the formatter
+        /// </summary>
         public HtmlFormatterOptions Options { get; }
 
         private Dictionary<string, ClassToStyle> _cssToStyleMap;
@@ -79,7 +82,7 @@ pre {{ line-height: 125%; }}
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlFormatter"/> class with given <see cref="options"/>
+        /// Initializes a new instance of the <see cref="HtmlFormatter"/> class with given <paramref name="options"/>
         /// </summary>
         /// <param name="options">Configuration details for the <see cref="HtmlFormatter"/></param>
         public HtmlFormatter(HtmlFormatterOptions options)
@@ -88,11 +91,6 @@ pre {{ line-height: 125%; }}
             _style = Options.Style ?? new DefaultStyle();
             CreateStylesheet();
         }
-
-        /// <summary>
-        /// Gets the name of the Formatter
-        /// </summary>
-        public override string Name => "HTML";
 
         private string GetTokenTypeClass(TokenType ttype)
         {
@@ -178,7 +176,7 @@ pre {{ line-height: 125%; }}
 
         }
 
-        public string GetStyleDefaults(string arg = null)
+        internal string GetStyleDefaults(string arg = null)
         {
             string prefix = arg;
             if (arg == null)
@@ -189,7 +187,7 @@ pre {{ line-height: 125%; }}
             return GetStyleDefaults(new [] { prefix }, arg != null);
         }
 
-        public string GetStyleDefaults(string[] prefixes)
+        internal string GetStyleDefaults(string[] prefixes)
         {
             return GetStyleDefaults(prefixes, true);
         }
@@ -538,11 +536,17 @@ pre {{ line-height: 125%; }}
             }
         }
 
-        protected virtual IEnumerable<WrapResult> Wrap(IEnumerable<WrapResult> source, TextWriter writer)
+        private IEnumerable<WrapResult> Wrap(IEnumerable<WrapResult> source, TextWriter writer)
         {
             return WrapDiv(WrapPre(source));
         }
 
+        /// <summary>
+        /// When overriden in a child class, formats tokens into text stream
+        /// </summary>
+        /// <remarks>The name was borrowed from python, because it would further process the results to an encoding. That's not needed in C#</remarks>
+        /// <param name="tokenSource">The input stream of Tokens</param>
+        /// <param name="writer">The output stream to write text</param>
         protected override void FormatUnencoded(IEnumerable<Token> tokenSource, TextWriter writer)
         {
             var source = FormatLines(tokenSource);

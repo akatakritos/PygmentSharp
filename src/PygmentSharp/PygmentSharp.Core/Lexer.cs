@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using PygmentSharp.Core.Tokens;
+using PygmentSharp.Core.Utils;
 
 namespace PygmentSharp.Core
 {
@@ -15,9 +16,14 @@ namespace PygmentSharp.Core
     /// </remarks>
     public abstract class Lexer
     {
+        /// <summary>
+        /// Gets the tokens from an input text
+        /// </summary>
+        /// <param name="text">The text to process</param>
+        /// <returns></returns>
         public IEnumerable<Token> GetTokens(string text)
         {
-            if (text == null) throw new ArgumentNullException(nameof(text));
+            Argument.EnsureNotNull(text, nameof(text));
 
             text = text.Replace("\r\n", "\n");
             text = text.Replace("\r", "\n");

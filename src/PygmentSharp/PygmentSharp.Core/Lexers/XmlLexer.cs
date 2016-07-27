@@ -6,6 +6,9 @@ using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Lexers
 {
+    /// <summary>
+    /// A lexer for XML
+    /// </summary>
     [Lexer("XML", AlternateNames = "xml")]
     [LexerFileExtension("*.xml")]
     [LexerFileExtension("*.xsl")]
@@ -16,6 +19,12 @@ namespace PygmentSharp.Core.Lexers
     [LexerFileExtension("*.wsf")]
     public class XmlLexer : RegexLexer
     {
+        /// <summary>
+        /// Gets the state transition rules for the lexer. Each time a regex is matched,
+        /// the internal state machine can be bumped to a new state which determines what
+        /// regexes become valid again
+        /// </summary>
+        /// <returns></returns>
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();

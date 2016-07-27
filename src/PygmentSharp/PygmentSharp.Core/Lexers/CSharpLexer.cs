@@ -5,7 +5,7 @@ using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Lexers
 {
-    public static class CSharpLexerLevel
+    internal static class CSharpLexerLevel
     {
         public static readonly string None = @"@?[_a-zA-Z]\w*";
 
@@ -21,10 +21,19 @@ namespace PygmentSharp.Core.Lexers
 
 
 
+    /// <summary>
+    /// A lexer for C#
+    /// </summary>
     [Lexer("C#", AlternateNames = "csharp,c#,c-sharp,c sharp,c #")]
     [LexerFileExtension("*.cs")]
     public class CSharpLexer : RegexLexer
     {
+        /// <summary>
+        /// Gets the state transition rules for the lexer. Each time a regex is matched,
+        /// the internal state machine can be bumped to a new state which determines what
+        /// regexes become valid again
+        /// </summary>
+        /// <returns></returns>
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();

@@ -6,10 +6,19 @@ using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Lexers
 {
+    /// <summary>
+    /// Lexes CSS files
+    /// </summary>
     [Lexer("CSS", AlternateNames = "css")]
     [LexerFileExtension("*.css")]
     public class CssLexer : RegexLexer
     {
+        /// <summary>
+        /// Gets the state transition rules for the lexer. Each time a regex is matched,
+        /// the internal state machine can be bumped to a new state which determines what
+        /// regexes become valid again
+        /// </summary>
+        /// <returns></returns>
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();

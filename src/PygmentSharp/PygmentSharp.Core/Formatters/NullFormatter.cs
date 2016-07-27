@@ -14,7 +14,12 @@ namespace PygmentSharp.Core.Formatters
     /// and written using the <see cref="NullFormatter"/> should match the original input file</remarks>
     public class NullFormatter : Formatter
     {
-        public override string Name => "Null";
+        /// <summary>
+        /// When overriden in a child class, formats tokens into text stream
+        /// </summary>
+        /// <remarks>The name was borrowed from python, because it would further process the results to an encoding. That's not needed in C#</remarks>
+        /// <param name="tokenSource">The input stream of Tokens</param>
+        /// <param name="writer">The output stream to write text</param>
         protected override void FormatUnencoded(IEnumerable<Token> tokenSource, TextWriter writer)
         {
             foreach (var token in tokenSource)

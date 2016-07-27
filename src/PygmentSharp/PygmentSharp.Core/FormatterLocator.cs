@@ -6,7 +6,7 @@ using PygmentSharp.Core.Extensions;
 
 namespace PygmentSharp.Core
 {
-    public class FormatterLocator : AttributeLocator<FormatterAttribute>
+    internal class FormatterLocator : AttributeLocator<FormatterAttribute>
     {
         private IEnumerable<Type> Formatters => Types;
 

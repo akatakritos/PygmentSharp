@@ -51,7 +51,7 @@ namespace PygmentSharp.Core.Tokens
         }
 
         /// <summary>
-        /// Creates a new token with an index adjusted by <see cref="indexOffset"/>
+        /// Creates a new token with an index adjusted by <paramref name="indexOffset"/>
         /// </summary>
         /// <remarks>This is useful for nested lexers that pass the inner lexer a substring of the full file, and nead to adjust the posititions accordingly</remarks>
         /// <param name="indexOffset">The number of characters to offset</param>
@@ -61,21 +61,35 @@ namespace PygmentSharp.Core.Tokens
             return new Token(Index + indexOffset, Type, Value);
         }
 
+        /// <summary>
+        /// Gets a string representation of the Token
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() => $"{Index}: \"{Value}\" ({Type})";
 
         #region R# Equality Members
 
+        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        /// <param name="other">An object to compare with this object.</param>
         public bool Equals(Token other)
         {
             return Index == other.Index && Type.Equals(other.Type) && string.Equals(Value, other.Value);
         }
 
+        /// <summary>Indicates whether this instance and a specified object are equal.</summary>
+        /// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
+        /// <param name="obj">The object to compare with the current instance. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             return obj is Token && Equals((Token) obj);
         }
 
+        /// <summary>Returns the hash code for this instance.</summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -87,11 +101,23 @@ namespace PygmentSharp.Core.Tokens
             }
         }
 
+        /// <summary>
+        /// compares two tokens for equality
+        /// </summary>
+        /// <param name="left">The LHS token</param>
+        /// <param name="right">The RHS token</param>
+        /// <returns></returns>
         public static bool operator ==(Token left, Token right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two tokens for inequality
+        /// </summary>
+        /// <param name="left">The LHS token</param>
+        /// <param name="right">The RHS token</param>
+        /// <returns></returns>
         public static bool operator !=(Token left, Token right)
         {
             return !left.Equals(right);

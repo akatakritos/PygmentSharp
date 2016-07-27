@@ -9,6 +9,9 @@ using PygmentSharp.Core.Utils;
 
 namespace PygmentSharp.Core.Lexers
 {
+    /// <summary>
+    /// Utility methods for working with regular expressions
+    /// </summary>
     public static class RegexUtil
     {
         private static readonly string[] AllClasses =
@@ -45,12 +48,22 @@ namespace PygmentSharp.Core.Lexers
             "Zs"
         };
 
+        /// <summary>
+        /// creates a regular expression match set that matches a character from unicode classes
+        /// </summary>
+        /// <param name="classes">The set of unicdeo classes to match characters from</param>
+        /// <returns></returns>
         public static string Combine(params string[] classes)
         {
             return string.Join("",
                 classes.Select(c => $@"\p{{{c}}}"));
         }
 
+        /// <summary>
+        /// Matches all characters except those in the provided unicode character classes
+        /// </summary>
+        /// <param name="classes">The unicode character classes to exclude</param>
+        /// <returns></returns>
         public static string AllExcept(params string[] classes)
         {
             var passed = AllClasses.Where(c => !classes.Contains(c)).ToArray();

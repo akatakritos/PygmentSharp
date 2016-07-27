@@ -46,6 +46,9 @@ namespace PygmentSharp.Core
             Action = action;
         }
 
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object.</returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return $"{Regex} -> {TokenType}";

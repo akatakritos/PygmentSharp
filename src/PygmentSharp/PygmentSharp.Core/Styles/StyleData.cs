@@ -5,18 +5,68 @@ using System.Text;
 
 namespace PygmentSharp.Core.Styles
 {
+    /// <summary>
+    /// Represents formatting and color style
+    /// </summary>
     public sealed class StyleData : IEquatable<StyleData>
     {
+        /// <summary>
+        /// Gets the text color
+        /// </summary>
         public string Color { get; }
+
+        /// <summary>
+        /// Gets a value indicating if the text is bold
+        /// </summary>
         public bool Bold { get; }
+
+        /// <summary>
+        /// Gets a value indicating if the text is italic
+        /// </summary>
         public bool Italic { get; }
+
+        /// <summary>
+        /// Gets a value indicating if the text is underliend
+        /// </summary>
         public bool Underline { get; }
+
+        /// <summary>
+        /// gets the background color
+        /// </summary>
         public string BackgroundColor { get; }
+
+        /// <summary>
+        /// gets the border color
+        /// </summary>
         public string BorderColor { get; }
+
+        /// <summary>
+        /// gets a value indicating if the font should come from the Roman family
+        /// </summary>
         public bool Roman { get; }
+
+        /// <summary>
+        /// gets a value indicating if the font should be sans-serif
+        /// </summary>
         public bool Sans { get; }
+
+        /// <summary>
+        /// gets a value indicating if the font should be monospaced
+        /// </summary>
         public bool Mono { get; }
 
+        /// <summary>
+        /// Initializea a new instance of the <see cref="StyleData"/> class
+        /// </summary>
+        /// <param name="color">text color</param>
+        /// <param name="bold">text bolded?</param>
+        /// <param name="italic">text italics?</param>
+        /// <param name="underline">text udnerliend?</param>
+        /// <param name="bgColor">background color</param>
+        /// <param name="borderColor">border color</param>
+        /// <param name="roman">font roman?</param>
+        /// <param name="sans">font sans-serif?</param>
+        /// <param name="mono">font monospaced?</param>
         public StyleData(string color = null,
             bool bold = false,
             bool italic = false,
@@ -38,8 +88,20 @@ namespace PygmentSharp.Core.Styles
             Mono = mono;
         }
 
+        /// <summary>
+        /// Parses a <see cref="StyleData"/> instance from a string
+        /// </summary>
+        /// <param name="text">the string to parse</param>
+        /// <returns></returns>
         public static StyleData Parse(string text) => Parse(text, new StyleData());
 
+        /// <summary>
+        /// Parses a <see cref="StyleData"/> instance from a string, merging with a default. Unset properties in the parse string will
+        /// be copied from the base style
+        /// </summary>
+        /// <param name="text">The string to parse</param>
+        /// <param name="merged">The base style to merge with</param>
+        /// <returns></returns>
         public static StyleData Parse(string text, StyleData merged)
         {
             string color = merged.Color, bgColor = merged.BackgroundColor, borderColor = merged.BorderColor;
@@ -61,9 +123,9 @@ namespace PygmentSharp.Core.Styles
                     italic = false;
                 else if (styledef == "underline")
                     underline = true;
-                else if (styledef.StartsWith("bg:"))
+                else if (styledef.StartsWith("bg:", StringComparison.Ordinal))
                     bgColor = ColorFormat(styledef.Substring(3));
-                else if (styledef.StartsWith("border:"))
+                else if (styledef.StartsWith("border:", StringComparison.Ordinal))
                     borderColor = ColorFormat(styledef.Substring(7));
                 else if (styledef == "roman")
                     roman = true;
@@ -78,6 +140,9 @@ namespace PygmentSharp.Core.Styles
             return new StyleData(color, bold, italic, underline, bgColor, borderColor, roman, sans, mono);
         }
 
+        /// <summary>Returns a string that represents the current object. Basically CSS style</summary>
+        /// <returns>A string that represents the current object.</returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             var color = string.IsNullOrEmpty(Color) ? null : $"color:#{Color};";
@@ -123,6 +188,9 @@ namespace PygmentSharp.Core.Styles
 
         #region R# Equality
 
+        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        /// <param name="other">An object to compare with this object.</param>
         public bool Equals(StyleData other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -130,6 +198,10 @@ namespace PygmentSharp.Core.Styles
             return string.Equals(Color, other.Color) && Bold == other.Bold && Italic == other.Italic && Underline == other.Underline && string.Equals(BackgroundColor, other.BackgroundColor) && string.Equals(BorderColor, other.BorderColor) && Roman == other.Roman && Sans == other.Sans && Mono == other.Mono;
         }
 
+        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <returns>true if the specified object  is equal to the current object; otherwise, false.</returns>
+        /// <param name="obj">The object to compare with the current object. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -138,6 +210,9 @@ namespace PygmentSharp.Core.Styles
             return Equals((StyleData) obj);
         }
 
+        /// <summary>Serves as the default hash function. </summary>
+        /// <returns>A hash code for the current object.</returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -155,11 +230,23 @@ namespace PygmentSharp.Core.Styles
             }
         }
 
+        /// <summary>
+        /// Compares two StyleDatas for equality
+        /// </summary>
+        /// <param name="left">The LHS styledata</param>
+        /// <param name="right">The RHS styledata</param>
+        /// <returns></returns>
         public static bool operator ==(StyleData left, StyleData right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Compares two StyleDatas for inequality
+        /// </summary>
+        /// <param name="left">The LHS styledata</param>
+        /// <param name="right">The RHS styledata</param>
+        /// <returns></returns>
         public static bool operator !=(StyleData left, StyleData right)
         {
             return !Equals(left, right);

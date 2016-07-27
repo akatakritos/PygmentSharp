@@ -13,6 +13,11 @@ namespace PygmentSharp.Core.Lexers
     [LexerFileExtension("*.txt")]
     public class PlainLexer : Lexer
     {
+        /// <summary>
+        /// When overridden in a child class, gets all the <see cref="Token"/>s for the given string
+        /// </summary>
+        /// <param name="text">The string to tokenize</param>
+        /// <returns>A sequence of <see cref="Token"/> structs</returns>
         protected override IEnumerable<Token> GetTokensUnprocessed(string text)
         {
             yield return new Token(0, TokenTypes.Text, text);

@@ -16,6 +16,12 @@ namespace PygmentSharp.Core
     /// </remarks>
     public abstract class GroupProcessor
     {
+        /// <summary>
+        /// Gets the tokens for a matched group value
+        /// </summary>
+        /// <param name="context">The lexer context</param>
+        /// <param name="value">The matched group value to process</param>
+        /// <returns></returns>
         public abstract IEnumerable<Token> GetTokens(RegexLexerContext context, string value);
     }
 

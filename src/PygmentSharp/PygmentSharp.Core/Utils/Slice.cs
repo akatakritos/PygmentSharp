@@ -127,7 +127,7 @@ namespace PygmentSharp.Core.Utils
         }
 
         /// <summary>
-        /// Slices an array starting at a given index. If <paramref name="index"/> is negative,
+        /// Slices an array starting at a given index. If <paramref name="start"/> is negative,
         /// the slicing starts from that many items from the end of the array
         /// </summary>
         /// <typeparam name="T"></typeparam>

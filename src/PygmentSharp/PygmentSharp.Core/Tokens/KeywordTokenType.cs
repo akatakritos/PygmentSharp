@@ -4,9 +4,12 @@ using System.Linq;
 
 namespace PygmentSharp.Core.Tokens
 {
+    /// <summary>
+    /// Holds different types of keyword tokens
+    /// </summary>
     public class KeywordTokenType : TokenType
     {
-        public KeywordTokenType(TokenType parent) : base(parent, "Keyword")
+        internal KeywordTokenType(TokenType parent) : base(parent, "Keyword")
         {
             Constant = CreateChild("Constant");
             Declaration = CreateChild("Declaration");
@@ -16,12 +19,35 @@ namespace PygmentSharp.Core.Tokens
             Type = CreateChild("Type");
         }
 
+        /// <summary>
+        /// Gets a token for representing a constant keyword
+        /// </summary>
         public TokenType Constant { get; }
+
+        /// <summary>
+        /// Gets a token for representing a declaration keyword
+        /// </summary>
         public TokenType Declaration { get; }
+
+        /// <summary>
+        /// Gets a token for representing a namespace keyword
+        /// </summary>
         public TokenType Namespace { get; }
-        public TokenType Pseudo{ get; }
+
+        /// <summary>
+        /// Gets a token for representing a pseudo keyword
+        /// </summary>
+        public TokenType Pseudo { get; }
+
+        /// <summary>
+        /// Gets a token for representing a reserved word
+        /// </summary>
         public TokenType Reserved { get; }
-        public TokenType Type{ get; }
+
+        /// <summary>
+        /// Gets a token for representing a type keyword
+        /// </summary>
+        public TokenType Type { get; }
 
     }
 }

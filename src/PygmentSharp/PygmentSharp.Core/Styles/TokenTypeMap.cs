@@ -6,7 +6,7 @@ using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Styles
 {
-    public class TokenTypeMap
+    internal class TokenTypeMap
     {
         private readonly IDictionary<TokenType, string> _map;
 

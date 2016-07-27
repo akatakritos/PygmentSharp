@@ -66,6 +66,12 @@ namespace PygmentSharp.Core.Tokens
             return newTokenType;
         }
 
+        /// <summary>
+        /// Adds a child to this Token
+        /// </summary>
+        /// <typeparam name="TChild">The type of child being added</typeparam>
+        /// <param name="child">The child to add</param>
+        /// <returns></returns>
         public TChild AddChild<TChild>(TChild child) where TChild : TokenType
         {
             _subtypes.Add(child);
@@ -98,6 +104,9 @@ namespace PygmentSharp.Core.Tokens
             } while (current != null);
         }
 
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object.</returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Join(".", Split().Select(t => t.Name));

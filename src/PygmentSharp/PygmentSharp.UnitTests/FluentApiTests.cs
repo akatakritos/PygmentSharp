@@ -6,8 +6,8 @@ using System.Linq;
 using NFluent;
 
 using PygmentSharp.Core;
-using PygmentSharp.Core.Formatters;
-using PygmentSharp.Core.Lexers;
+using PygmentSharp.Core.Formatting;
+using PygmentSharp.Core.Lexing;
 
 using Xunit;
 
@@ -34,6 +34,8 @@ namespace PygmentSharp.UnitTests
                 .WithLexer(new CSharpLexer())
                 .ToHtml()
                 .AsString();
+
+            Check.That(result).StartsWith("<div class=\"highlight\" >");
 
         }
 

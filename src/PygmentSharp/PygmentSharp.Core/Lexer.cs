@@ -1,92 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Win32.SafeHandles;
+
+using PygmentSharp.Core.Tokens;
+using PygmentSharp.Core.Utils;
 
 namespace PygmentSharp.Core
 {
-    public struct Token : IEquatable<Token>
-    {
-        public int Index { get; }
-        public TokenType Type { get; }
-
-        public string Value { get; }
-
-        public Token(TokenType type, string value) : this(0, type, value)
-        {
-        }
-
-        public Token(int index, TokenType type, string value)
-        {
-            Index = index;
-            Value = value;
-            Type = type;
-        }
-
-        public override string ToString()
-        {
-            return $"{Index}: \"{Value}\" ({Type})";
-        }
-
-        #region R# Equality Members
-
-        public bool Equals(Token other)
-        {
-            return Index == other.Index && Type.Equals(other.Type) && string.Equals(Value, other.Value);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            return obj is Token && Equals((Token) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Index;
-                hashCode = (hashCode*397) ^ Type.GetHashCode();
-                hashCode = (hashCode*397) ^ Value.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        public static bool operator ==(Token left, Token right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Token left, Token right)
-        {
-            return !left.Equals(right);
-        }
-
-        #endregion
-    }
-
+    /// <summary>
+    /// Base class for all Lexers
+    /// </summary>
+    /// <remarks>
+    /// Lexers convert the input source to a sequence of <see cref="Token"/>s.
+    /// The token types determine how they will
+    /// be highlighted by supported output <see cref="Formatter"/>s.
+    /// </remarks>
     public abstract class Lexer
     {
+        /// <summary>
+        /// Gets the tokens from an input text
+        /// </summary>
+        /// <param name="text">The text to process</param>
+        /// <returns></returns>
         public IEnumerable<Token> GetTokens(string text)
         {
+            Argument.EnsureNotNull(text, nameof(text));
+
             text = text.Replace("\r\n", "\n");
             text = text.Replace("\r", "\n");
 
             return GetTokensUnprocessed(text);
         }
 
+        /// <summary>
+        /// When overridden in a child class, gets all the <see cref="Token"/>s for the given string
+        /// </summary>
+        /// <param name="text">The string to tokenize</param>
+        /// <returns>A sequence of <see cref="Token"/> structs</returns>
         protected abstract IEnumerable<Token> GetTokensUnprocessed(string text);
-    }
-
-    [Lexer("Plain", AlternateNames = "Text,Plain Text")]
-    [LexerFileExtension("*.txt")]
-    public class PlainLexer : Lexer
-    {
-        protected override IEnumerable<Token> GetTokensUnprocessed(string text)
-        {
-            yield return new Token(0, TokenTypes.Text, text);
-        }
-
     }
 }

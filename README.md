@@ -15,11 +15,13 @@ Other features can be ported by the community as needed.
 - [x] HTML Output
 - [x] C# Highlighting
 - [X] SQL Highlighting
-- [ ] HTML Highlighting
-- [ ] XML Highlighting
+- [X] HTML Highlighting
+  - [X] Javascript Highlighting
+  - [X] CSS Highlighting
+- [X] XML Highlighting
 - [ ] Shell script highlighting
-- [ ] Ruby Highlighting
 - [ ] PHP Highlighting
+- [ ] Ruby Highlighting
 
 ## Installation
 

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+
+using PygmentSharp.Core.Utils;
 
 namespace PygmentSharp.Core.Extensions
 {
@@ -54,14 +57,14 @@ namespace PygmentSharp.Core.Extensions
         /// <summary>
         /// Reverses a string
         /// </summary>
-        /// <remarks>So named so as to not interfere with LINQ Enumerable.<see cref="Enumerable.Reverse"/></remarks>
+        /// <remarks>So named so as to not interfere with LINQ <c>Enumerable.Reverse</c>/></remarks>
         /// <param name="input">The string to reverse</param>
         /// <returns>The string in reverse</returns>
         public static string Backwards(this string input)
         {
             var sb = new StringBuilder(input.Length);
 
-            for (int i = input.Length - 1; i >= 0; i--)
+            for (var i = input.Length - 1; i >= 0; i--)
                 sb.Append(input[i]);
 
             return sb.ToString();
@@ -86,10 +89,14 @@ namespace PygmentSharp.Core.Extensions
         /// <param name="s">The string to check</param>
         /// <param name="pattern">The patterm to match</param>
         /// <returns></returns>
-        public static bool MatchesWildcardPattern(this string s, string pattern)
+        public static bool MatchesFileWildcard(this string s, string pattern)
         {
-            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", "."));
-            return regex.IsMatch(s);
+            Argument.EnsureNotNull(s, nameof(s));
+            Argument.EnsureNotNull(pattern, nameof(pattern));
+
+            var filename = Path.GetFileName(s);
+            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", "."), RegexOptions.IgnoreCase);
+            return regex.IsMatch(filename);
         }
     }
 }

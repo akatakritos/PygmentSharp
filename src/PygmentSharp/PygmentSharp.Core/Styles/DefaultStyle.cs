@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PygmentSharp.Core;
+
+using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Styles
 {
+    /// <summary>
+    /// The default style configuration
+    /// </summary>
     public class DefaultStyle : Style
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultStyle"/> class
+        /// </summary>
         public DefaultStyle() : base(StyleMap)
         {
             BackgroundColor = "#f8f8f8";
         }
 
-        public static IDictionary<TokenType, string> StyleMap => new Dictionary<TokenType, string>()
+        private static IDictionary<TokenType, string> StyleMap => new Dictionary<TokenType, string>()
         {
             {TokenTypes.Whitespace, "#bbbbbb"},
             {TokenTypes.Comment, "italic #408080"},

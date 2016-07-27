@@ -4,6 +4,7 @@
  - Tests pass?
  - Public API documented?
  - Roadmap up to date?
+ - Does it build and pass tests in Release mode?
 
 
 ### Steps

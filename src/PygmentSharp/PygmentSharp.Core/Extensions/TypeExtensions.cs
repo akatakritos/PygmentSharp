@@ -8,7 +8,7 @@ namespace PygmentSharp.Core.Extensions
     internal static class TypeExtensions
     {
         /// <summary>
-        /// Creates an instance of the type
+        /// Creates an instance of the type. Useful for when you know the base type at compile time, but not necessarily the derived type
         /// </summary>
         /// <typeparam name="T">The type to create</typeparam>
         /// <param name="type">The type to create</param>

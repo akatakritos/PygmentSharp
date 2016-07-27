@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using NFluent;
-using PygmentSharp.Core;
+
+using PygmentSharp.Core.Styles;
+
 using Xunit;
 
 namespace PygmentSharp.UnitTests

@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using PygmentSharp.Core.Tokens;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Styles
 {
     public class TokenTypeMap
     {

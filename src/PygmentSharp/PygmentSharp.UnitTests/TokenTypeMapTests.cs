@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using NFluent;
-using PygmentSharp.Core;
+
+using PygmentSharp.Core.Styles;
 using PygmentSharp.Core.Tokens;
 
 using Xunit;

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 using NFluent;
-using PygmentSharp.Core;
+
 using PygmentSharp.Core.Formatters;
 using PygmentSharp.Core.Lexers;
 using PygmentSharp.Core.Tokens;

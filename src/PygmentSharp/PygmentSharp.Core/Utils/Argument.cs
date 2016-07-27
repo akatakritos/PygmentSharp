@@ -15,7 +15,8 @@ namespace PygmentSharp.Core.Utils
         /// <param name="arg">The argument to validate</param>
         /// <param name="argName">The name of the argument</param>
         // ReSharper disable once UnusedParameter.Global
-        public static void EnsureNotNull(object arg, [InvokerParameterName]string argName)
+        [AssertionMethod]
+        public static void EnsureNotNull([AssertionCondition(AssertionConditionType.IS_NOT_NULL)]object arg, [InvokerParameterName]string argName)
         {
             if (arg == null)
                 throw new ArgumentNullException(argName);

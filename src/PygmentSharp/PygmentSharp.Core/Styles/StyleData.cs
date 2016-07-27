@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace PygmentSharp.Core
+namespace PygmentSharp.Core.Styles
 {
     public sealed class StyleData : IEquatable<StyleData>
     {

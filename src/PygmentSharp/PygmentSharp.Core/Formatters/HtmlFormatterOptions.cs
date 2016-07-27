@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using PygmentSharp.Core.Styles;
+
 namespace PygmentSharp.Core.Formatters
 {
     public class HtmlFormatterOptions

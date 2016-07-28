@@ -26,8 +26,7 @@ namespace TestUI
             {
                 var filename = dialog.FileName;
 
-                var locator = new LexerLocator();
-                var lexer = locator.FindByFilename(filename);
+                var lexer = LexerLocator.FindByFilename(filename);
 
                 if (lexer == null)
                 {

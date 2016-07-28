@@ -165,7 +165,7 @@ namespace PygmentSharp.Core
 
         public void ToFile(string filename)
         {
-            var formatter = new FormatterLocator().FindByFilename(filename);
+            var formatter = FormatterLocator.FindByFilename(filename);
             var tokens = _lexer.GetTokens(_input);
             using (var output = new StreamWriter(File.OpenWrite(filename), Encoding.UTF8))
             {
@@ -198,7 +198,7 @@ namespace PygmentSharp.Core
         /// <returns></returns>
         public static IPygmentizeBuilder File(string filename)
         {
-            var lexer = new LexerLocator().FindByFilename(filename);
+            var lexer = LexerLocator.FindByFilename(filename);
             return new PygmentizeContentBuilder(System.IO.File.ReadAllText(filename))
                 .WithLexer(lexer);
         }

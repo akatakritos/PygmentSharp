@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using JetBrains.Annotations;
-
 using PygmentSharp.Core.Tokens;
 using PygmentSharp.Core.Utils;
 
@@ -66,7 +64,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="tokenType">The type of token to emit</param>
             /// <param name="nextState">The next state to transition the machine to. See the docs for <see cref="StateRuleBuilder"/> for details</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder Add([RegexPattern,NotNull]string regex, [NotNull]TokenType tokenType, [NotNull]string nextState)
+            public FluentStateRuleBuilder Add(string regex, TokenType tokenType, string nextState)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(tokenType, nameof(tokenType));
@@ -83,7 +81,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="tokenType">type of token to emit</param>
             /// <param name="nextStates">a sequence of states to evaluate onto the state machine stack. See the docs for <see cref="StateRuleBuilder"/> for details</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder Add([RegexPattern]string regex, TokenType tokenType, params string[] nextStates)
+            public FluentStateRuleBuilder Add(string regex, TokenType tokenType, params string[] nextStates)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(tokenType, nameof(tokenType));
@@ -99,7 +97,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="regex">The regular expression to match</param>
             /// <param name="tokenType">The type of token to emit if matched</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder Add([RegexPattern]string regex, TokenType tokenType)
+            public FluentStateRuleBuilder Add(string regex, TokenType tokenType)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(tokenType, nameof(tokenType));
@@ -144,7 +142,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="regex">The regular expression to match. Should have a sequence of groups that correspond to a processor</param>
             /// <param name="processors">The actions to apply to each matched group</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, params GroupProcessor[] processors)
+            public FluentStateRuleBuilder ByGroups(string regex, params GroupProcessor[] processors)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(processors, nameof(processors));
@@ -160,7 +158,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="regex"></param>
             /// <param name="tokens"></param>
             /// <returns></returns>
-            public FluentStateRuleBuilder ByGroups([RegexPattern] string regex, params TokenType[] tokens)
+            public FluentStateRuleBuilder ByGroups(string regex, params TokenType[] tokens)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 var processors = tokens.Select(t => new TokenGroupProcessor(t)).ToList();
@@ -180,7 +178,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="newState">The new state to apply to the lexer stack</param>
             /// <param name="processors">The actions to apply to each matched group</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, string newState, params GroupProcessor[] processors)
+            public FluentStateRuleBuilder ByGroups(string regex, string newState, params GroupProcessor[] processors)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(newState, nameof(newState));
@@ -203,7 +201,7 @@ namespace PygmentSharp.Core.Lexing
             /// <param name="newStates">The set of new state to apply to the lexer stack</param>
             /// <param name="processors">The actions to apply to each matched group</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder ByGroups([RegexPattern]string regex, string[] newStates, params GroupProcessor[] processors)
+            public FluentStateRuleBuilder ByGroups(string regex, string[] newStates, params GroupProcessor[] processors)
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
                 Argument.EnsureNotNull(newStates, nameof(newStates));
@@ -225,7 +223,7 @@ namespace PygmentSharp.Core.Lexing
             /// <typeparam name="T">The type of lexer to invoke</typeparam>
             /// <param name="regex">The regular expression to match and process</param>
             /// <returns></returns>
-            public FluentStateRuleBuilder Using<T>([RegexPattern]string regex) where T : Lexer, new()
+            public FluentStateRuleBuilder Using<T>(string regex) where T : Lexer, new()
             {
                 Argument.EnsureNotNull(regex, nameof(regex));
 

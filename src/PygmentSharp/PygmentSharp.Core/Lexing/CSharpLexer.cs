@@ -47,6 +47,7 @@ namespace PygmentSharp.Core.Lexing
                                  @"(\s*)(\()",                               // signature start
                     new LexerGroupProcessor(this),
                     new TokenGroupProcessor(TokenTypes.Name.Function),
+                    new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation))
 
                 .Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute)

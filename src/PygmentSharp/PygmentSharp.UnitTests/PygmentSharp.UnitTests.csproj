@@ -95,6 +95,7 @@
     <Compile Include="Formatting\HtmlFormatterTests.cs" />
     <Compile Include="LexerLocatorTests.cs" />
     <Compile Include="Lexing\BashLexerTests.cs" />
+    <Compile Include="Regressions\CSharpRegressionTests.cs" />
     <Compile Include="TestHelpers.cs" />
     <Compile Include="Utils\ComonPrefixTests.cs" />
     <Compile Include="Lexing\CSharpExampleFileTests.cs" />
@@ -118,6 +119,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fixtures\8-aspnet-codebehind.txt" />
+    <Content Include="Fixtures\8-onmodelcreating.txt" />
+    <Content Include="Fixtures\8-preparelayout.txt" />
+    <Content Include="Fixtures\8-x509.txt" />
     <Content Include="Fixtures\csharp-sample.txt" />
   </ItemGroup>
   <ItemGroup>

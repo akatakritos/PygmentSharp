@@ -24,7 +24,7 @@ namespace PygmentSharp.Core.Extensions
         }
 
         /// <summary>
-        ///     Port of the python idiom `result = s and "default" where
+        ///     Port of the python idiom `result = s or "default" where
         ///     the result is "default" if s is null or empty
         /// </summary>
         /// <param name="s"></param>

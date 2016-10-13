@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using NFluent;
+
 using PygmentSharp.Core;
 using PygmentSharp.Core.Lexing;
 
@@ -17,9 +18,7 @@ namespace PygmentSharp.UnitTests
         [InlineData("SQL", typeof(SqlLexer))]
         public void FindByName_SearchesAttributeName(string name, Type lexerType)
         {
-            var subject = new LexerLocator();
-
-            var lexer = subject.FindByName(name);
+            var lexer = LexerLocator.FindByName(name);
 
             Check.That(lexer.GetType()).IsEqualTo(lexerType);
         }
@@ -27,9 +26,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByName_SearchesAlternateNames()
         {
-            var subject = new LexerLocator();
-
-            var lexer = subject.FindByName("c-sharp");
+            var lexer = LexerLocator.FindByName("c-sharp");
 
             Check.That(lexer).IsInstanceOf<CSharpLexer>();
         }
@@ -37,9 +34,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByName_ReturnsNullForNotFound()
         {
-            var subject = new LexerLocator();
-
-            var lexer = subject.FindByName("hotpotato");
+            var lexer = LexerLocator.FindByName("hotpotato");
 
             Check.That(lexer).IsNull();
         }
@@ -49,21 +44,34 @@ namespace PygmentSharp.UnitTests
         [InlineData("bigdata.sql", typeof(SqlLexer))]
         public void FindByFilename_SearchesForFileExtensions(string file, Type lexerType)
         {
-            var subject = new LexerLocator();
-
-            var lexer = subject.FindByFilename(file);
+            var lexer = LexerLocator.FindByFilename(file);
 
             Check.That(lexer.GetType()).IsEqualTo(lexerType);
         }
 
         [Fact]
-        public void FindByFilename_RetusnNullForNotFound()
+        public void FindByFilename_ReturnsNullForNotFound()
         {
-            var subject = new LexerLocator();
-
-            var lexer = subject.FindByFilename("*.trump");
+            var lexer = LexerLocator.FindByFilename("*.trump");
 
             Check.That(lexer).IsNull();
+        }
+
+        [Fact]
+        public void SearchesCaseInsensitively()
+        {
+            var lexer = LexerLocator.FindByName("sql");
+            Check.That(lexer).IsNotNull();
+        }
+
+        [Theory]
+        [InlineData("js", typeof(JavascriptLexer))] // #6
+        [InlineData("text", typeof(PlainLexer))] // #7
+        [InlineData("json", typeof(JavascriptLexer))] // #5
+        public void LexerLocationRegressions(string search, Type expectedLexer)
+        {
+            var lexer = LexerLocator.FindByName(search);
+            Check.That(lexer.GetType()).IsEqualTo(expectedLexer);
         }
     }
 }

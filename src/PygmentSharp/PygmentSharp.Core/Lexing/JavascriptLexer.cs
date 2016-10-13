@@ -10,8 +10,9 @@ namespace PygmentSharp.Core.Lexing
     /// <summary>
     /// A lexer for javascript
     /// </summary>
-    [Lexer("Javascript", AlternateNames = "javascript,JavaScript,ECMAScript")]
+    [Lexer("Javascript", AlternateNames = "javascript,ecmascript,js,json")]
     [LexerFileExtension("*.js")]
+    [LexerFileExtension("*.json")]
     public class JavascriptLexer : RegexLexer
     {
         /// <summary>

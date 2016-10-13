@@ -19,7 +19,7 @@ Other features can be ported by the community as needed.
   - [X] Javascript Highlighting
   - [X] CSS Highlighting
 - [X] XML Highlighting
-- [ ] Shell script highlighting
+- [X] Shell script highlighting
 - [ ] PHP Highlighting
 - [ ] Ruby Highlighting
 

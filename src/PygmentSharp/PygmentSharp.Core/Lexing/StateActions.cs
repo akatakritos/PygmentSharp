@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using PygmentSharp.Core.Tokens;
@@ -72,7 +73,10 @@ namespace PygmentSharp.Core.Lexing
         /// <returns>A list of tokens to emit</returns>
         public override IEnumerable<Token> Execute(RegexLexerContext context)
         {
-            for(int i = 1; i < context.Match.Groups.Count; i++)
+            if (context.Match.Groups.Count > Processors.Count + 1)
+                throw new InvalidOperationException("Regex had more match groups than processors");
+
+            for (int i = 1; i < context.Match.Groups.Count; i++)
             {
                 var group = context.Match.Groups[i];
                 var tokens = Processors[i-1].GetTokens(context, group.Value);

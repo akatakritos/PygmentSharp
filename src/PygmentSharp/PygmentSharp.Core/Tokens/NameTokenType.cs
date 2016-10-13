@@ -18,7 +18,7 @@ namespace PygmentSharp.Core.Tokens
             Decorator = CreateChild("Decorator");
             Entity = CreateChild("Entity");
             Exception = CreateChild("Exception");
-            Function = CreateChild("Exception");
+            Function = CreateChild("Function");
             Property = CreateChild("Property");
             Label = CreateChild("Label");
             Namespace = CreateChild("Namespace");

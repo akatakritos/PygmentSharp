@@ -6,17 +6,17 @@ using PygmentSharp.Core.Extensions;
 
 namespace PygmentSharp.Core
 {
-    internal class FormatterLocator : AttributeLocator<FormatterAttribute>
+    internal static class FormatterLocator
     {
-        private IEnumerable<Type> Formatters => Types;
+        private static IEnumerable<Type> Formatters => AttributeLocator.GetTypesWithAttribute<FormatterAttribute>();
 
-        public Formatter FindByName(string name)
+        public static Formatter FindByName(string name)
         {
             var type = Formatters.FirstOrDefault(l => HasFormatter(l, name));
             return type?.InstantiateAs<Formatter>();
         }
 
-        public Formatter FindByFilename(string filename)
+        public static Formatter FindByFilename(string filename)
         {
             var type = Formatters.FirstOrDefault(l => HasMatchingWildcard(l, filename));
             return type?.InstantiateAs<Formatter>();

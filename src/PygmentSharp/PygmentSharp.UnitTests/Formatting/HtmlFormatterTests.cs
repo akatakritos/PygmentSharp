@@ -57,7 +57,7 @@ namespace PygmentSharp.UnitTests.Formatting
         {
             var options = new HtmlFormatterOptions()
             {
-                LineNumbers = LineNumberStype.Table
+                LineNumbers = LineNumberStyle.Table
             };
             var input = SampleFile.Load("csharp-sample.txt");
             var tokens = new CSharpLexer()
@@ -78,7 +78,7 @@ namespace PygmentSharp.UnitTests.Formatting
         {
             var options = new HtmlFormatterOptions()
             {
-                LineNumbers = LineNumberStype.Table,
+                LineNumbers = LineNumberStyle.Table,
                 LineNumberStart = 5
             };
             var input = SampleFile.Load("csharp-sample.txt");

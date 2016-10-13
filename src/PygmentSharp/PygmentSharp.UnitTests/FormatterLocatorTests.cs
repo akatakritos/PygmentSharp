@@ -16,9 +16,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByName_SearchesAttributeName()
         {
-            var subject = new FormatterLocator();
-
-            var lexer = subject.FindByName("HTML");
+            var lexer = FormatterLocator.FindByName("HTML");
 
             Check.That(lexer).IsInstanceOf<HtmlFormatter>();
         }
@@ -26,9 +24,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByName_SearchesAlternateNames()
         {
-            var subject = new FormatterLocator();
-
-            var lexer = subject.FindByName("web");
+            var lexer = FormatterLocator.FindByName("web");
 
             Check.That(lexer).IsInstanceOf<HtmlFormatter>();
         }
@@ -36,9 +32,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByName_ReturnsNullForNotFound()
         {
-            var subject = new FormatterLocator();
-
-            var lexer = subject.FindByName("hotpotato");
+            var lexer = FormatterLocator.FindByName("hotpotato");
 
             Check.That(lexer).IsNull();
         }
@@ -48,9 +42,7 @@ namespace PygmentSharp.UnitTests
         [InlineData("file.htm")]
         public void FindByFilename_SearchesForFileExtensions(string filename)
         {
-            var subject = new FormatterLocator();
-
-            var lexer = subject.FindByFilename(filename);
+            var lexer = FormatterLocator.FindByFilename(filename);
 
             Check.That(lexer).IsInstanceOf<HtmlFormatter>();
         }
@@ -58,9 +50,7 @@ namespace PygmentSharp.UnitTests
         [Fact]
         public void FindByFilename_RetusnNullForNotFound()
         {
-            var subject = new FormatterLocator();
-
-            var lexer = subject.FindByFilename("crazy.trump");
+            var lexer = FormatterLocator.FindByFilename("crazy.trump");
 
             Check.That(lexer).IsNull();
         }

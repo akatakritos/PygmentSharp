@@ -9,16 +9,16 @@ namespace PygmentSharp.Core
     /// <summary>
     /// Finds lexers in the current assembly
     /// </summary>
-    public class LexerLocator : AttributeLocator<LexerAttribute>
+    public static class LexerLocator
     {
-        private IEnumerable<Type> Lexers => Types;
+        private static IEnumerable<Type> Lexers => AttributeLocator.GetTypesWithAttribute<LexerAttribute>();
 
         /// <summary>
         /// Finds <see cref="Lexer"/> by name
         /// </summary>
         /// <param name="name">The name to search for</param>
         /// <returns></returns>
-        public Lexer FindByName(string name)
+        public static Lexer FindByName(string name)
         {
             var type = Lexers.FirstOrDefault(l => HasLexerName(l, name));
 
@@ -30,7 +30,7 @@ namespace PygmentSharp.Core
         /// </summary>
         /// <param name="filename">The filename to search lexers for</param>
         /// <returns></returns>
-        public Lexer FindByFilename(string filename)
+        public static Lexer FindByFilename(string filename)
         {
             var type = Lexers.FirstOrDefault(l => HasMatchingWildcard(l, filename));
             return type?.InstantiateAs<Lexer>();
@@ -43,7 +43,7 @@ namespace PygmentSharp.Core
 
         private static bool HasLexerName(Type l, string name)
         {
-           return l.HasAttribute<LexerAttribute>(a => a.Name == name || a.AlternateNames.CsvContains(name));
+           return l.HasAttribute<LexerAttribute>(a => a.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)|| a.AlternateNames.CsvContains(name, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

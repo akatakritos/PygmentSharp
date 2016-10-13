@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using JetBrains.Annotations;
-
 namespace PygmentSharp.Core.Utils
 {
     internal static class Argument
@@ -15,8 +13,7 @@ namespace PygmentSharp.Core.Utils
         /// <param name="arg">The argument to validate</param>
         /// <param name="argName">The name of the argument</param>
         // ReSharper disable once UnusedParameter.Global
-        [AssertionMethod]
-        public static void EnsureNotNull([AssertionCondition(AssertionConditionType.IS_NOT_NULL)]object arg, [InvokerParameterName]string argName)
+        public static void EnsureNotNull(object arg, string argName)
         {
             if (arg == null)
                 throw new ArgumentNullException(argName);

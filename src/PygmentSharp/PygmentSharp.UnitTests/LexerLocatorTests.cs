@@ -49,11 +49,18 @@ namespace PygmentSharp.UnitTests
         }
 
         [Fact]
-        public void FindByFilename_RetusnNullForNotFound()
+        public void FindByFilename_ReturnsNullForNotFound()
         {
             var lexer = LexerLocator.FindByFilename("*.trump");
 
             Check.That(lexer).IsNull();
+        }
+
+        [Fact]
+        public void SearchesCaseInsensitively()
+        {
+            var lexer = LexerLocator.FindByName("sql");
+            Check.That(lexer).IsNotNull();
         }
     }
 }

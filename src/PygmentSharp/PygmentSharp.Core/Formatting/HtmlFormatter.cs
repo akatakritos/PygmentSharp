@@ -556,7 +556,7 @@ pre {{ line-height: 125%; }}
 
             if (!Options.NoWrap)
             {
-                if (Options.LineNumbers == LineNumberStype.Inline)
+                if (Options.LineNumbers == LineNumberStyle.Inline)
                     source = WrapInlineLineNumbers(source);
                 if (!string.IsNullOrEmpty(Options.LineAnchors))
                     source = WrapLineAnchors(source);
@@ -564,7 +564,7 @@ pre {{ line-height: 125%; }}
                     source = WrapLineSpans(source);
                 source = Wrap(source, writer);
 
-                if (Options.LineNumbers == LineNumberStype.Table)
+                if (Options.LineNumbers == LineNumberStyle.Table)
                     source = WrapTableLineNos(source);
                 if (Options.Full)
                     source = WrapFull(source);

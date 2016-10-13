@@ -62,7 +62,7 @@ namespace PygmentSharp.Core.Formatting
         /// <summary>
         /// Specifies the type of line numbers to generate
         /// </summary>
-        public LineNumberStype LineNumbers { get; set; } = LineNumberStype.None;
+        public LineNumberStyle LineNumbers { get; set; } = LineNumberStyle.None;
 
         /// <summary>
         /// Specifies what line number to start at
@@ -128,7 +128,7 @@ namespace PygmentSharp.Core.Formatting
     /// <summary>
     /// Indicates the mode in which lines numbers should be displayed
     /// </summary>
-    public enum LineNumberStype
+    public enum LineNumberStyle
     {
         /// <summary>
         /// No line numbers displayed

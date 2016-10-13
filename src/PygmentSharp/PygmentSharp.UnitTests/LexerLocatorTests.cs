@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using NFluent;
+
 using PygmentSharp.Core;
 using PygmentSharp.Core.Lexing;
 
@@ -61,6 +62,16 @@ namespace PygmentSharp.UnitTests
         {
             var lexer = LexerLocator.FindByName("sql");
             Check.That(lexer).IsNotNull();
+        }
+
+        [Theory]
+        [InlineData("js", typeof(JavascriptLexer))] // #6
+        [InlineData("text", typeof(PlainLexer))] // #7
+        [InlineData("json", typeof(JavascriptLexer))] // #5
+        public void LexerLocationRegressions(string search, Type expectedLexer)
+        {
+            var lexer = LexerLocator.FindByName(search);
+            Check.That(lexer.GetType()).IsEqualTo(expectedLexer);
         }
     }
 }

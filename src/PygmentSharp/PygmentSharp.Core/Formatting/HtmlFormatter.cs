@@ -427,7 +427,7 @@ pre {{ line-height: 125%; }}
                         ttype = ttype.Parent;
                         cclass = getcls(ttype);
                     }
-                    cspan = $"<span style=\"{c2s[cclass].StyleRules}\">";
+                    cspan = !string.IsNullOrEmpty(cclass) ? $"<span style=\"{c2s[cclass].StyleRules}\">" : "";
 
                 }
                 else

@@ -1,3 +1,6 @@
+## 0.2.1 (2020-05-09)
+ - Fix exception with NoClasses option of HtmlFormatter. Courtesy of @caleblanchard - #11
+
 ## 0.2.0 (2016-10-13)
  - Fix exception parsing C# files
  - Search for lexers case insensitively

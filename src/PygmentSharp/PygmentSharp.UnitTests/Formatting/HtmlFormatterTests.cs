@@ -160,5 +160,29 @@ namespace PygmentSharp.UnitTests.Formatting
 
             Check.That(sd).Contains(".c1");
         }
+
+        [Fact]
+        public void NoClass()
+        {
+            var options = new HtmlFormatterOptions()
+            {
+                NoClasses = true,
+                Title = "My Source Code",
+                Full = true,
+            };
+
+            var input = SampleFile.Load("csharp-sample.txt");
+            var tokens = new CSharpLexer()
+                .GetTokens(input);
+
+            var subject = new HtmlFormatter(options);
+            var output = new StringWriter();
+            subject.Format(tokens, output);
+
+            var html = output.ToString();
+            File.WriteAllText("output.html", html);
+
+            Check.That(html).DoesNotContain("class=\"k\""); // no keyword class
+        }
     }
 }

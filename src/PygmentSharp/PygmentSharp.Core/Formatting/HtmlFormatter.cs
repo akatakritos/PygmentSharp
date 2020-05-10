@@ -315,8 +315,8 @@ pre {{ line-height: 125%; }}
             {
                 yield return new WrapResult(false, $"<table class=\"{Options.CssClass}table\">" +
                                                    "<tr><td><div class=\"linenodiv\"" +
-                                                   "style=\"background-color: #f0f0f0; padding-right: 10px\">\"" +
-                                                   "<pre style=\"line-height: 125%\">\"" +
+                                                   "style=\"background-color: #f0f0f0; padding-right: 10px\">" +
+                                                   "<pre style=\"line-height: 125%\">" +
                                                    ls + "</pre></div></td><td class=\"code\">");
             }
             else
@@ -427,7 +427,7 @@ pre {{ line-height: 125%; }}
                         ttype = ttype.Parent;
                         cclass = getcls(ttype);
                     }
-                    cspan = $"<span style=\"{c2s[cclass].StyleRules}\">";
+                    cspan = !string.IsNullOrEmpty(cclass) ? $"<span style=\"{c2s[cclass].StyleRules}\">" : "";
 
                 }
                 else

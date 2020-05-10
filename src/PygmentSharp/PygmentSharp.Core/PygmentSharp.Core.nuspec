@@ -11,12 +11,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-      - Fix exception parsing C# files
-      - Search for lexers case insensitively
-      - Removed dependency on Jetbrains.Annotations
-      - BREAKING CHANGE: Lexer locator API is now static method
+      - Fixes crash when using NoClasses option in HtmlFormatter (#11 courtesy @caleblanchard)
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2020</copyright>
     <tags></tags>
   </metadata>
 </package>

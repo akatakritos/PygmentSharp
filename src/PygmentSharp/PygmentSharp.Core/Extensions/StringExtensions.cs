@@ -95,7 +95,7 @@ namespace PygmentSharp.Core.Extensions
             Argument.EnsureNotNull(pattern, nameof(pattern));
 
             var filename = Path.GetFileName(s);
-            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", "."), RegexOptions.IgnoreCase);
+            var regex = new Regex(pattern.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".") + "$", RegexOptions.IgnoreCase);
             return regex.IsMatch(filename);
         }
     }

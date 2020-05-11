@@ -70,7 +70,7 @@ namespace PygmentSharp.UnitTests.Lexing
             var writer = new StringWriter();
             new NullFormatter().Format(_results, writer);
 
-            var s = writer.ToString().Replace("\n", "\r\n");
+            var s = writer.ToString().Replace("\n", Environment.NewLine);
 
             Check.That(s).IsEqualTo(expected);
         }

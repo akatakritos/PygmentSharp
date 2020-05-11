@@ -14,7 +14,7 @@ namespace PygmentSharp.UnitTests.Styles
     public class TokenTypeMapTests
     {
         [Theory]
-        [MemberData("MapTest")]
+        [MemberData(nameof(MapTest))]
         public void TypesHaveCorrectCssClass(TokenType tokenType, string cssClass)
         {
             var subject = TokenTypeMap.Instance;

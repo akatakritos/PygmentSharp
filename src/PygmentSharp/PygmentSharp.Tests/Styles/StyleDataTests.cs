@@ -13,7 +13,7 @@ namespace PygmentSharp.UnitTests.Styles
     public class StyleDataTests
     {
         [Theory]
-        [MemberData("ParseData")]
+        [MemberData(nameof(ParseData))]
         public void Parse(string text, StyleData expected)
         {
             var result = StyleData.Parse(text);

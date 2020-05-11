@@ -40,7 +40,7 @@ namespace PygmentSharp.UnitTests.Extensions
         [InlineData("", "b","c","c")]
         public void PythonAndOr(string a, string b, string c, string expectedResult)
         {
-            var result = a.PythonAnd(b).PythonOr("c");
+            var result = a.PythonAnd(b).PythonOr(c);
 
             Check.That(result).IsEqualTo(expectedResult);
         }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -15,11 +15,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Fixtures\8-aspnet-codebehind.txt" />
-    <Content Include="Fixtures\8-onmodelcreating.txt" />
-    <Content Include="Fixtures\8-preparelayout.txt" />
-    <Content Include="Fixtures\8-x509.txt" />
-    <Content Include="Fixtures\csharp-sample.txt" />
+    <Content Include="Fixtures\8-aspnet-codebehind.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\8-onmodelcreating.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\8-preparelayout.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\8-x509.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\csharp-sample.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,9 @@
+﻿protected override void PrepareLayout()
+{
+    // Dynamically generate zone IDs and names
+    StartLayout(keepExistingControls: true);
+    AddZone(this.ID + "_left", this.ID + " Left", Left);
+    AddZone(this.ID + "_middle", this.ID + " Middle", Middle);
+    AddZone(this.ID + "_right", this.ID + " Right", Right);
+    EndLayout(addToControls: false);
+}

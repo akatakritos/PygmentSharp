@@ -1,0 +1,40 @@
+﻿protected void Page_Load(object sender, EventArgs e)
+{
+    Page.PreRender += Page_PreRender;
+}
+
+void Page_PreRender(object sender, EventArgs e)
+{
+    if (TriggerControl == null)
+        return;
+
+    AddDataRevealIdToTriggerControl();
+}
+
+private void AddDataRevealIdToTriggerControl()
+{
+    var triggerControl = FindControlRecursive(Page, TriggerControl) as HtmlControl;
+    if (triggerControl != null)
+        triggerControl.Attributes["data-reveal-id"] = ModalId;
+    else
+        throw new InvalidOperationException(
+            string.Format("Could not locate TriggerControl '{0}'. Did you include runat=\"server\"?", TriggerControl));
+    }
+}
+
+public string TriggerControl { get; set; }
+
+private static Control FindControlRecursive(Control root, string id)
+{
+    if (root.ID == id)
+        return root;
+
+    foreach (Control c in root.Controls)
+    {
+        var ctr = FindControlRecursive(c, id);
+        if (ctr != null)
+            return ctr;
+    }
+
+    return null;
+}

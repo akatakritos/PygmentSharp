@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fixtures\8-aspnet-codebehind.txt" />
+    <None Remove="Fixtures\8-onmodelcreating.txt" />
+    <None Remove="Fixtures\8-preparelayout.txt" />
+    <None Remove="Fixtures\8-x509.txt" />
+    <None Remove="Fixtures\csharp-sample.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fixtures\8-aspnet-codebehind.txt" />
+    <Content Include="Fixtures\8-onmodelcreating.txt" />
+    <Content Include="Fixtures\8-preparelayout.txt" />
+    <Content Include="Fixtures\8-x509.txt" />
+    <Content Include="Fixtures\csharp-sample.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="NFluent" Version="2.7.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PygmentSharp.Core\PygmentSharp.Core.csproj" />
+  </ItemGroup>
+
+</Project>

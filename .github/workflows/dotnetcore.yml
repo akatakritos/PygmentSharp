@@ -17,9 +17,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+    - name: Change to directory
+      run: cd src/PygmentSharp
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore PygmentSharp.Core
     - name: Test
       run: dotnet test --no-restore --verbosity normal

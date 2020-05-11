@@ -12,9 +12,12 @@
     <FileVersion>0.2.1.0</FileVersion>
     <PackageReleaseNotes>- Fixes crash when using NoClasses option in HtmlFormatter (#11 courtesy @caleblanchard)</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/akatakritos/PygmentSharp</PackageProjectUrl>
+    <Version>0.2.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />

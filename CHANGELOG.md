@@ -1,3 +1,8 @@
+## 0.3.0 (2020-06-29)
+- Target .NET Standard 2.0
+- Add typescript lexer
+- Add github CI
+
 ## 0.2.1 (2020-05-09)
  - Fix exception with NoClasses option of HtmlFormatter. Courtesy of @caleblanchard - #11
 

@@ -16,7 +16,7 @@
 5. PR release branch to master
 6. If CI passes, merge PR to master
 7. Tag master with new version
-8. Build nuget: `nuget pack -c Release`
+8. Build nuget: `dotnet pack -c Release`
 9. Upload new package to nuget website
 10. Merge release branch back into develop
 11. Delete release branch

@@ -1,4 +1,0 @@
-﻿protected override void OnModelCreating(DbModelBuilder modelBuilder)
-{
-    modelBuilder.HasDefaultSchema("app1");
-}

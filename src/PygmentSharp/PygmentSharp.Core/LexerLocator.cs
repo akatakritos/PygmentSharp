@@ -43,7 +43,7 @@ namespace PygmentSharp.Core
 
         private static bool HasLexerName(Type l, string name)
         {
-           return l.HasAttribute<LexerAttribute>(a => a.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)|| a.AlternateNames.CsvContains(name, StringComparison.InvariantCultureIgnoreCase));
+           return l.HasAttribute<LexerAttribute>(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) || a.AlternateNames.CsvContains(name, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

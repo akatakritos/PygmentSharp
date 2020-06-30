@@ -78,7 +78,7 @@ namespace PygmentSharp.Core.Styles
         /// </summary>
         /// <param name="ttype">The type of token</param>
         /// <returns></returns>
-        public StyleData StyleForToken(TokenType ttype)
+        public StyleData? StyleForToken(TokenType ttype)
         {
             return this[ttype];
         }
@@ -87,7 +87,7 @@ namespace PygmentSharp.Core.Styles
         /// Gets the style for a token type
         /// </summary>
         /// <param name="ttype">The type of token</param>
-        public StyleData this[TokenType ttype] => _styles.ContainsKey(ttype) ? _styles[ttype] : null;
+        public StyleData? this[TokenType ttype] => _styles.ContainsKey(ttype) ? _styles[ttype] : null;
 
         /// <summary>Returns an enumerator that iterates through the collection.</summary>
         /// <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.</returns>

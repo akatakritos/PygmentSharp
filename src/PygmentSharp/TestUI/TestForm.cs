@@ -56,7 +56,7 @@ namespace TestUI
                 {
                     var lvi = new ListViewItem(token.Index.ToString());
                     lvi.SubItems.Add(token.Type.ToString());
-                    lvi.SubItems.Add(token.Value);
+                    lvi.SubItems.Add(Escape(token.Value));
 
                     tokenList.Items.Add(lvi);
                 }
@@ -65,6 +65,14 @@ namespace TestUI
             {
                 tokenList.EndUpdate();
             }
+        }
+
+        private static string Escape(string tokenValue)
+        {
+            return tokenValue
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n")
+                .Replace("\t", "\\t");
         }
 
         private void ShowHtml(string html)

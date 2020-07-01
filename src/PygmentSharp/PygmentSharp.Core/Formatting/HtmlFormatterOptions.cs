@@ -32,7 +32,7 @@ namespace PygmentSharp.Core.Formatting
         /// <summary>
         /// Gets or sets the title of the generated page. Only relevant if <see cref="Full"/> is true
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating if tokens should be wrapped in inline styles rather than CSS classes
@@ -42,7 +42,7 @@ namespace PygmentSharp.Core.Formatting
         /// <summary>
         /// Specifies a prefix to prepend to all css classes, in case of collisions with existing styles
         /// </summary>
-        public string ClassPrefix { get; set; }
+        public string? ClassPrefix { get; set; }
 
         /// <summary>
         /// The CSS class to apply to the main wrapping div
@@ -107,7 +107,7 @@ namespace PygmentSharp.Core.Formatting
         /// <summary>
         /// If set, displays the name of the file being highlighted
         /// </summary>
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
 
         /// <summary>
         /// If set, specifies a set of line numbers that should be highlighted
@@ -117,12 +117,12 @@ namespace PygmentSharp.Core.Formatting
         /// <summary>
         /// Specifies inline styles for the wrapper div
         /// </summary>
-        public string CssStyles { get; set; }
+        public string? CssStyles { get; set; }
 
         /// <summary>
         /// Specifies the colors for the CSS
         /// </summary>
-        public Style Style { get; set; }
+        public Style? Style { get; set; }
     }
 
     /// <summary>

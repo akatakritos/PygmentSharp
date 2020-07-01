@@ -19,7 +19,7 @@ namespace PygmentSharp.Core.Styles
             _map = map;
         }
 
-        public string this[TokenType type] => _map.ContainsKey(type) ? _map[type] : null;
+        public string? this[TokenType type] => _map.ContainsKey(type) ? _map[type] : null;
 
         public bool Contains(TokenType type) => _map.ContainsKey(type);
 

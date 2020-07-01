@@ -13,7 +13,7 @@ namespace PygmentSharp.Core.Styles
         /// <summary>
         /// Gets the text color
         /// </summary>
-        public string Color { get; }
+        public string? Color { get; }
 
         /// <summary>
         /// Gets a value indicating if the text is bold
@@ -33,12 +33,12 @@ namespace PygmentSharp.Core.Styles
         /// <summary>
         /// gets the background color
         /// </summary>
-        public string BackgroundColor { get; }
+        public string? BackgroundColor { get; }
 
         /// <summary>
         /// gets the border color
         /// </summary>
-        public string BorderColor { get; }
+        public string? BorderColor { get; }
 
         /// <summary>
         /// gets a value indicating if the font should come from the Roman family
@@ -67,12 +67,12 @@ namespace PygmentSharp.Core.Styles
         /// <param name="roman">font roman?</param>
         /// <param name="sans">font sans-serif?</param>
         /// <param name="mono">font monospaced?</param>
-        public StyleData(string color = null,
+        public StyleData(string? color = null,
             bool bold = false,
             bool italic = false,
             bool underline = false,
-            string bgColor = null,
-            string borderColor = null,
+            string? bgColor = null,
+            string? borderColor = null,
             bool roman = false,
             bool sans = false,
             bool mono = false)
@@ -104,7 +104,7 @@ namespace PygmentSharp.Core.Styles
         /// <returns></returns>
         public static StyleData Parse(string text, StyleData merged)
         {
-            string color = merged.Color, bgColor = merged.BackgroundColor, borderColor = merged.BorderColor;
+            string? color = merged.Color, bgColor = merged.BackgroundColor, borderColor = merged.BorderColor;
             bool bold = merged.Bold, italic = merged.Italic, underline = merged.Underline, roman = merged.Roman, sans = merged.Sans, mono = merged.Mono;
 
             foreach (var styledef in text.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries))
@@ -236,7 +236,7 @@ namespace PygmentSharp.Core.Styles
         /// <param name="left">The LHS styledata</param>
         /// <param name="right">The RHS styledata</param>
         /// <returns></returns>
-        public static bool operator ==(StyleData left, StyleData right)
+        public static bool operator ==(StyleData? left, StyleData? right)
         {
             return Equals(left, right);
         }
@@ -247,7 +247,7 @@ namespace PygmentSharp.Core.Styles
         /// <param name="left">The LHS styledata</param>
         /// <param name="right">The RHS styledata</param>
         /// <returns></returns>
-        public static bool operator !=(StyleData left, StyleData right)
+        public static bool operator !=(StyleData? left, StyleData? right)
         {
             return !Equals(left, right);
         }

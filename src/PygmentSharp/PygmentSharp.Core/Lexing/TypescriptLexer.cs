@@ -20,7 +20,7 @@ namespace PygmentSharp.Core.Lexing
             var rules = new Dictionary<string, StateRule[]>();
 
             var builder = new StateRuleBuilder();
-            builder.DefaultRegexOptions = RegexOptions.Multiline;
+            builder.DefaultRegexOptions = RegexOptions.Singleline;
 
             rules["commentsandwhitespace"] = builder.NewRuleSet()
                 .Add(@"\s+", TokenTypes.Text)

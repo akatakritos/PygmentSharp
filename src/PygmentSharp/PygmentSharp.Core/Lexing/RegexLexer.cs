@@ -54,17 +54,18 @@ namespace PygmentSharp.Core.Lexing
     /// </summary>
     public abstract class RegexLexer : Lexer
     {
-        /// <summary>
-        /// When overridden in a child class, gets all the <see cref="Token"/>s for the given string
-        /// </summary>
-        /// <param name="text">The string to tokenize</param>
-        /// <returns>A sequence of <see cref="Token"/> structs</returns>
+        /// <inheritdoc/>
         protected override IEnumerable<Token> GetTokensUnprocessed(string text)
+        {
+            var stateStack = new Stack<string>(50);
+            stateStack.Push("root");
+            return GetTokensUnprocessed(text, stateStack);
+        }
+
+        protected virtual IEnumerable<Token> GetTokensUnprocessed(string text, Stack<string> stateStack)
         {
             var rules = GetStateRules();
             int pos = 0;
-            var stateStack = new Stack<string>(50);
-            stateStack.Push("root");
             var currentStateRules = rules[stateStack.Peek()];
 
             while (true)

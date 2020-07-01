@@ -18,7 +18,7 @@ namespace PygmentSharp.Core.Tokens
             Decorator = CreateChild("Decorator");
             Entity = CreateChild("Entity");
             Exception = CreateChild("Exception");
-            Function = CreateChild("Function");
+            Function = new FunctionTokenType(this);
             Property = CreateChild("Property");
             Label = CreateChild("Label");
             Namespace = CreateChild("Namespace");
@@ -66,7 +66,7 @@ namespace PygmentSharp.Core.Tokens
         /// <summary>
         /// Gets a token for representing the name of a function
         /// </summary>
-        public TokenType Function { get; }
+        public FunctionTokenType Function { get; }
 
         /// <summary>
         /// Gets a token for representing the name of a property

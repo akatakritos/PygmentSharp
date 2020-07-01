@@ -22,6 +22,7 @@ namespace PygmentSharp.Core.Tokens
             Regex = CreateChild("Regex");
             Single = CreateChild("Single");
             Symbol = CreateChild("Symbol");
+            Delimiter = CreateChild("Delimiter");
 
         }
 
@@ -80,5 +81,10 @@ namespace PygmentSharp.Core.Tokens
         /// Gets a token for representing a symbol
         /// </summary>
         public TokenType Symbol { get; }
+
+        /// <summary>
+        /// Gets a token for representing a delimeter
+        /// </summary>
+        public TokenType Delimiter { get; }
     }
 }

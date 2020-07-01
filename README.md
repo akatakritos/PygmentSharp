@@ -1,6 +1,6 @@
 # PygmentSharp
 
-[![Build status](https://ci.appveyor.com/api/projects/status/24ayr5ou5cux26ui/branch/master?svg=true)](https://ci.appveyor.com/project/akatakritos/pygmentsharp/branch/master)
+![Build Status](https://github.com/akatakritos/PygmentSharp/workflows/.NET%20Core/badge.svg)
 
 A port of python's [Pygments](http://pygments.org/) syntax highlighter.
 

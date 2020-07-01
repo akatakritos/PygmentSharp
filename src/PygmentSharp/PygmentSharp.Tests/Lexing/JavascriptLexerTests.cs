@@ -49,5 +49,39 @@ namespace PygmentSharp.UnitTests.Lexing
                 new Token(43, TokenTypes.Punctuation, ";")
                 );
         }
+
+        [Fact]
+        public void MultilineComments_issue_21()
+        {
+            var code = @"
+/**
+ * Converts a list of elements into a list of batches each of maximum size `batchSize`.
+ * @param list - list of elements
+ * @param batchSize - the size of the batch
+ */
+export function batch(list, batchSize) {
+  const batches = [];
+  let currentBatch = [];
+
+  list.forEach(element => {
+    currentBatch.push(element);
+
+    if (currentBatch.length === batchSize) {
+      batches.push(currentBatch);
+      currentBatch = [];
+    }
+  });
+
+  if (currentBatch.length > 0) {
+    batches.push(currentBatch);
+  }
+
+  return batches;
+}";
+            var subject = new JavascriptLexer();
+            var tokens = subject.GetTokens(code.Trim());
+
+            Check.That(tokens).Not.HasElementThatMatches(t => t.Type == TokenTypes.Error);
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace PygmentSharp.Core.Lexing
             string JS_IDENT = JS_IDENT_START + "(?:" + JS_IDENT_PART + ")*";
 
             var builder = new StateRuleBuilder();
-            builder.DefaultRegexOptions = RegexOptions.Multiline;
+            builder.DefaultRegexOptions = RegexOptions.Singleline;
 
             rules["commentsandwhitespace"] = builder.NewRuleSet()
                 .Add(@"\s+", TokenTypes.Text)
@@ -68,7 +68,7 @@ namespace PygmentSharp.Core.Lexing
                 .Add(@"0b[01]+", TokenTypes.Number.Bin)
                 .Add(@"0o[0-7]+", TokenTypes.Number.Oct)
                 .Add(@"0x[0-9a-fA-F]+", TokenTypes.Number.Hex)
-                .Add(@"[0-9]+'", TokenTypes.Number.Integer)
+                .Add(@"[0-9]+", TokenTypes.Number.Integer)
                 .Add(@"""(\\\\|\\""|[^""])*""", TokenTypes.String.Double)
                 .Add(@"'(\\\\|\\'|[^'])*'", TokenTypes.String.Single)
                 .Add(@"`", TokenTypes.String.Backtick, "interp")

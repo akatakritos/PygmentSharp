@@ -41,6 +41,10 @@ namespace PygmentSharp.Core.Lexing
             var cs_ident = CSharpLexerLevel.Full;
             var builder = new StateRuleBuilder();
 
+            // SingleLine makes the . operator match \n's and MultiLine makes $ and ^ match at beginning and end of each line
+            // without this, multi-line comments aren't matched correctly
+            builder.DefaultRegexOptions = System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Multiline;
+
             rules["root"] = builder.NewRuleSet()
                 .ByGroups(@"^([ \t]*(?:" + cs_ident + @"(?:\[\])?\s+)+?)" +  // return type
                                  @"(" + cs_ident +   @")" +                  // method name

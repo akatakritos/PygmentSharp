@@ -53,8 +53,10 @@ namespace PygmentSharp.Core.Lexing
                     new TokenGroupProcessor(TokenTypes.Name.Function),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation))
-
-                .Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute)
+                /* we want to tokenize attributes, not treat everything inside the brackets as a single token 
+                 * so comment out the next line, as the other rules will match and tokenize the attribute
+                 */
+                //.Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute) 
                 .Add(@"[^\S\n]+", TokenTypes.Text)
                 .Add(@"\\\n", TokenTypes.Text) //line continuation
                 .Add(@"//.*?\n", TokenTypes.Comment.Single)

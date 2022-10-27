@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 using NFluent;
 
@@ -30,7 +28,7 @@ namespace PygmentSharp.UnitTests.Lexing
 
             _output.WriteLine(tokens.DumpForCode());
 
-            Check.That(tokens).Contains(
+            Check.That(tokens).ContainsExactly(
                 new Token(0, TokenTypes.Name.Tag, "<xml"),
                 new Token(4, TokenTypes.Name.Tag, ">"),
                 new Token(5, TokenTypes.Name.Tag, "<something"),
@@ -42,12 +40,108 @@ namespace PygmentSharp.UnitTests.Lexing
                 new Token(28, TokenTypes.Name.Tag, "<baz"),
                 new Token(32, TokenTypes.Name.Tag, ">"),
                 new Token(33, TokenTypes.Text, "zoink"),
-                new Token(38, TokenTypes.Error, "<"),
-                new Token(39, TokenTypes.Text, "/baz>"),
-                new Token(44, TokenTypes.Error, "<"),
-                new Token(45, TokenTypes.Text, "/xml>")
+                new Token(38, TokenTypes.Name.Tag, "</baz>"),
+                new Token(44, TokenTypes.Name.Tag, "</xml>")
             );
         }
 
+        [Fact]
+        public void SupportsEntities()
+        {
+            const string xml = "&lt;&gt;";
+            var subject = new XmlLexer();
+            
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Name.Entity, "&lt;"),
+                new Token(4, TokenTypes.Name.Entity, "&gt;")
+            );
+        }
+
+        [Fact]
+        public void SupportsCData()
+        {
+            const string xml = "<xml><![CDATA[data]]></xml>";
+            var subject = new XmlLexer();
+
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Name.Tag, "<xml"),
+                new Token(4, TokenTypes.Name.Tag, ">"),
+                new Token(5, TokenTypes.Comment.Preproc, "<![CDATA[data]]>"),
+                new Token(21, TokenTypes.Name.Tag, "</xml>")
+            );
+        }
+
+        [Fact]
+        public void SupportsMultilineComment()
+        {
+            const string xml = "<!-- Multiline\nComment -->";
+            var subject = new XmlLexer();
+
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Comment.Multiline, xml)
+            );
+        }
+
+        [Fact]
+        public void SupportsXmlDeclaration()
+        {
+            const string xml = "<?xml version=\"1.0\"?>";
+            var subject = new XmlLexer();
+
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Comment.Preproc, xml)
+            );
+        }
+
+        [Fact]
+        public void SupportsDoctype()
+        {
+            const string xml = "<!DOCTYPE document SYSTEM \"document.dtd\">";
+            var subject = new XmlLexer();
+
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Comment.Preproc, xml)
+            );
+        }
+
+        [Fact]
+        public void SupportsMultilineAttributes()
+        {
+            const string xml = "<xml foo=\"bar\nbaz\" />";
+            var subject = new XmlLexer();
+
+            var tokens = subject.GetTokens(xml).ToArray();
+
+            _output.WriteLine(tokens.DumpForCode());
+
+            Check.That(tokens).ContainsExactly(
+                new Token(0, TokenTypes.Name.Tag, "<xml"),
+                new Token(4, TokenTypes.Text, " "),
+                new Token(5, TokenTypes.Name.Attribute, "foo="),
+                new Token(9, TokenTypes.Literal.String, "\"bar\nbaz\""),
+                new Token(18, TokenTypes.Text, " "),
+                new Token(19, TokenTypes.Name.Tag, "/>")
+            );
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace PygmentSharp.Core.Tokens
         /// <summary>
         /// Gets the parent type
         /// </summary>
-        public TokenType Parent { get; }
+        public TokenType? Parent { get; }
 
         /// <summary>
         /// Gets the name of this type
@@ -45,7 +45,7 @@ namespace PygmentSharp.Core.Tokens
         /// </summary>
         /// <param name="parent">The parent token type</param>
         /// <param name="name">The name of this token type</param>
-        public TokenType(TokenType parent, string name)
+        public TokenType(TokenType? parent, string name)
         {
             Parent = parent;
             Name = name;

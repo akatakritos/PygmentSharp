@@ -42,7 +42,7 @@ namespace PygmentSharp.Core.Extensions
         /// <param name="search">that string for which to find</param>
         /// <param name="comparison">(optional) provide string comparison rules</param>
         /// <returns></returns>
-        public static bool CsvContains(this string s, string search, StringComparison comparison = default(StringComparison))
+        public static bool CsvContains(this string? s, string search, StringComparison comparison = default(StringComparison))
         {
             if (s == null)
             {

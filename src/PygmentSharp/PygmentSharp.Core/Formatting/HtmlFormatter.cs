@@ -14,8 +14,8 @@ namespace PygmentSharp.Core.Formatting
 {
     internal class ClassToStyle
     {
-        public string StyleRules { get; set; }
-        public TokenType TokenType { get; set; }
+        public string StyleRules { get; set; } = default!;
+        public TokenType TokenType { get; set; } = default!;
         public int Depth => TokenType.Depth;
     }
 
@@ -89,28 +89,32 @@ pre {{ line-height: 125%; }}
         {
             Options = options;
             _style = Options.Style ?? new DefaultStyle();
-            CreateStylesheet();
+            CreateStylesheet(out _cssToStyleMap, out _tokenToClassMap);
         }
 
-        private string GetTokenTypeClass(TokenType ttype)
+        private string GetTokenTypeClass(TokenType? ttype)
         {
-            var foundName = TokenTypeMap.Instance[ttype];
+            var foundName = ttype == null ? null : TokenTypeMap.Instance[ttype];
             if (foundName != null)
                 return foundName;
 
             var autoName = new StringBuilder();
+            TokenType? currentToken = ttype;
+
             while (foundName == null)
             {
-                Debug.Assert(ttype != null, "ttype != null");
-                autoName.Insert(0, "-" + ttype.Parent?.Name);
-                ttype = ttype.Parent;
-                foundName = TokenTypeMap.Instance[ttype];
+                if (currentToken == null)
+                    throw new InvalidOperationException("Found null token type when building class name");
+
+                autoName.Insert(0, "-" + currentToken.Parent?.Name);
+                currentToken = currentToken.Parent;
+                foundName = currentToken == null ? null : TokenTypeMap.Instance[currentToken];
             }
 
             return foundName + autoName;
         }
 
-        private string GetCssClass(TokenType ttype)
+        private string GetCssClass(TokenType? ttype)
         {
             var ttypeclass = GetTokenTypeClass(ttype);
             if (ttypeclass != null)
@@ -123,16 +127,18 @@ pre {{ line-height: 125%; }}
             var cls = new StringBuilder();
             cls.Append(GetCssClass(ttype));
 
-            while (!TokenTypeMap.Instance.Contains(ttype))
+            var currentTokenType = ttype;
+
+            while (currentTokenType != null && !TokenTypeMap.Instance.Contains(ttype))
             {
-                ttype = ttype.Parent;
-                cls.Insert(0, GetCssClass(ttype) + " ");
+                currentTokenType = currentTokenType.Parent;
+                cls.Insert(0, GetCssClass(currentTokenType) + " ");
             }
 
             return cls.ToString();
         }
 
-        private void CreateStylesheet()
+        private void CreateStylesheet(out Dictionary<string, ClassToStyle> cssToStyleMap, out TokenTypeMap tokenToClassMap)
         {
             //variable names kept for parity with python
             var t2c = new Dictionary<TokenType, string>()
@@ -171,18 +177,14 @@ pre {{ line-height: 125%; }}
                 }
             }
 
-            _tokenToClassMap = new TokenTypeMap(t2c);
-            _cssToStyleMap = c2s;
+            tokenToClassMap = new TokenTypeMap(t2c);
+            cssToStyleMap = c2s;
 
         }
 
-        internal string GetStyleDefaults(string arg = null)
+        internal string GetStyleDefaults(string? arg = null)
         {
-            string prefix = arg;
-            if (arg == null)
-            {
-                prefix = string.IsNullOrEmpty(Options.CssClass) ? "" : ("." + Options.CssClass);
-            }
+            string prefix = arg ?? (string.IsNullOrEmpty(Options.CssClass) ? "" : ("." + Options.CssClass));
 
             return GetStyleDefaults(new [] { prefix }, arg != null);
         }
@@ -214,7 +216,7 @@ pre {{ line-height: 125%; }}
                 var textStyle = "";
                 if (_tokenToClassMap.Contains(TokenTypes.Text))
                 {
-                    textStyle = " " + _cssToStyleMap[_tokenToClassMap[TokenTypes.Text]].StyleRules;
+                    textStyle = " " + _cssToStyleMap[_tokenToClassMap[TokenTypes.Text]!].StyleRules;
                 }
 
                 lines.Insert(0, $"{prefix("")} {{ background: {_style.BackgroundColor}; {textStyle} }}");
@@ -408,26 +410,27 @@ pre {{ line-height: 125%; }}
         {
             var nocls = Options.NoClasses;
             var lsep = Options.LineSeparator;
-            Func<TokenType, string> getcls = ttype => _tokenToClassMap[ttype];
+            Func<TokenType?, string?> getcls = ttype => ttype == null ? null : _tokenToClassMap[ttype];
             var c2s = _cssToStyleMap;
             var lspan = "";
             var line = new StringBuilder();
 
             foreach (var token in tokenSource)
             {
-                var ttype = token.Type;
+                TokenType? ttype = token.Type;
                 var value = token.Value;
 
                 string cspan;
                 if (nocls)
                 {
                     var cclass = getcls(ttype);
-                    while (cclass == null)
+                    while (cclass == null && ttype != null)
                     {
                         ttype = ttype.Parent;
                         cclass = getcls(ttype);
                     }
-                    cspan = !string.IsNullOrEmpty(cclass) ? $"<span style=\"{c2s[cclass].StyleRules}\">" : "";
+
+                    cspan = !string.IsNullOrEmpty(cclass) ? $"<span style=\"{c2s[cclass!].StyleRules}\">" : "";
 
                 }
                 else

@@ -18,7 +18,7 @@ namespace PygmentSharp.Core
         /// </summary>
         /// <param name="name">The name to search for</param>
         /// <returns></returns>
-        public static Lexer FindByName(string name)
+        public static Lexer? FindByName(string name)
         {
             var type = Lexers.FirstOrDefault(l => HasLexerName(l, name));
 
@@ -30,7 +30,7 @@ namespace PygmentSharp.Core
         /// </summary>
         /// <param name="filename">The filename to search lexers for</param>
         /// <returns></returns>
-        public static Lexer FindByFilename(string filename)
+        public static Lexer? FindByFilename(string filename)
         {
             var type = Lexers.FirstOrDefault(l => HasMatchingWildcard(l, filename));
             return type?.InstantiateAs<Lexer>();

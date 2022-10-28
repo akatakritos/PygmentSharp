@@ -10,13 +10,13 @@ namespace PygmentSharp.Core
     {
         private static IEnumerable<Type> Formatters => AttributeLocator.GetTypesWithAttribute<FormatterAttribute>();
 
-        public static Formatter FindByName(string name)
+        public static Formatter? FindByName(string name)
         {
             var type = Formatters.FirstOrDefault(l => HasFormatter(l, name));
             return type?.InstantiateAs<Formatter>();
         }
 
-        public static Formatter FindByFilename(string filename)
+        public static Formatter? FindByFilename(string filename)
         {
             var type = Formatters.FirstOrDefault(l => HasMatchingWildcard(l, filename));
             return type?.InstantiateAs<Formatter>();

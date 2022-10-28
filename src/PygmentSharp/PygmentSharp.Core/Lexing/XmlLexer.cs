@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Text.RegularExpressions;
 using PygmentSharp.Core.Tokens;
 
 namespace PygmentSharp.Core.Lexing
@@ -28,23 +28,20 @@ namespace PygmentSharp.Core.Lexing
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();
-            var builder = new StateRuleBuilder();
+            var builder = new StateRuleBuilder
+            {
+                DefaultRegexOptions = RegexOptions.Multiline | RegexOptions.Singleline
+            };
 
             rules["root"] = builder.NewRuleSet()
                 .Add(@"[^<&]+", TokenTypes.Text)
                 .Add(@"&\S*?;", TokenTypes.Name.Entity)
                 .Add(@"\<\!\[CDATA\[.*?\]\]\>", TokenTypes.Comment.Preproc)
-                .Add(@"<!--", TokenTypes.Comment, "comment")
+                .Add(@"<!--.*?-->", TokenTypes.Comment.Multiline)
                 .Add(@"<\?.*?\?>", TokenTypes.Comment.Preproc)
                 .Add(@"<![^>]*>", TokenTypes.Comment.Preproc)
                 .Add(@"<\s*[\w:.-]+", TokenTypes.Name.Tag, "tag")
-                .Add(@"<\s*/\s*[\w:.-]+\s*>'", TokenTypes.Name.Tag)
-                .Build();
-
-            rules["comment"] = builder.NewRuleSet()
-                .Add(@"[^-]+", TokenTypes.Text)
-                .Add(@"-->", TokenTypes.Comment, "#pop")
-                .Add(@"-", TokenTypes.Comment)
+                .Add(@"<\s*/\s*[\w:.-]+\s*>", TokenTypes.Name.Tag)
                 .Build();
 
             rules["tag"] = builder.NewRuleSet()

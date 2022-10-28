@@ -110,5 +110,40 @@ namespace PygmentSharp.Tests.Lexing
                 new Token(40, TokenTypes.Operator, ">"));
         }
 
+        [Fact]
+        public void StartingWithJsDoc_issue_21()
+        {
+            var code = @"
+/**
+ * Converts a list of elements into a list of batches each of maximum size `batchSize`.
+ * @param list - list of elements
+ * @param batchSize - the size of the batch
+ */
+export function batch<T>(list: T[], batchSize: number): T[][] {
+  const batches: T[][] = [];
+  let currentBatch: T[] = [];
+
+  list.forEach(element => {
+    currentBatch.push(element);
+
+    if (currentBatch.length === batchSize) {
+      batches.push(currentBatch);
+      currentBatch = [];
+    }
+  });
+
+  if (currentBatch.length > 0) {
+    batches.push(currentBatch);
+  }
+
+  return batches;
+}
+";
+            var lexer = new TypescriptLexer();
+            var tokens = lexer.GetTokens(code.Trim());
+
+            Check.That(tokens).Not.HasElementThatMatches(t => t.Type == TokenTypes.Error);
+        }
+
     }
 }

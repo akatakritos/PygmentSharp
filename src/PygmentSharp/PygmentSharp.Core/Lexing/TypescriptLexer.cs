@@ -6,17 +6,21 @@ using System.Text.RegularExpressions;
 
 namespace PygmentSharp.Core.Lexing
 {
+    /// <summary>
+    /// Lexer for typescipt files
+    /// </summary>
     [Lexer("Typescript", AlternateNames = "typescript,ts")]
     [LexerFileExtension("*.ts")]
     [LexerFileExtension("*.tsx")]
     public class TypescriptLexer : RegexLexer
     {
+        /// <inheritdoc/>
         protected override IDictionary<string, StateRule[]> GetStateRules()
         {
             var rules = new Dictionary<string, StateRule[]>();
 
             var builder = new StateRuleBuilder();
-            builder.DefaultRegexOptions = RegexOptions.Multiline;
+            builder.DefaultRegexOptions = RegexOptions.Singleline;
 
             rules["commentsandwhitespace"] = builder.NewRuleSet()
                 .Add(@"\s+", TokenTypes.Text)

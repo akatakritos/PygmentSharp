@@ -18,7 +18,7 @@ namespace PygmentSharp.Core
         /// <summary>
         /// Gets or sets a comma separated list of alternative lexer names (case sensitive)`
         /// </summary>
-        public string AlternateNames { get; set; }
+        public string? AlternateNames { get; set; }
 
         /// <summary>
         /// Constructs a new instance of the <see cref="LexerAttribute"/>
@@ -67,7 +67,7 @@ namespace PygmentSharp.Core
         /// <summary>
         /// Gets or sets a comma-separated list of alternative names for a <see cref="Formatter"/>
         /// </summary>
-        public string AlternateNames { get; set; }
+        public string? AlternateNames { get; set; }
 
         /// <summary>
         /// Initializes a new isntance of the <see cref="FormatterAttribute"/>

@@ -40,7 +40,7 @@ namespace PygmentSharp.Core
         /// </summary>
         /// <param name="encoding">optional encoding. default is utf-8</param>
         /// <returns>the formatted text</returns>
-        public string OutputAsString(Encoding encoding = null)
+        public string OutputAsString(Encoding? encoding = null)
         {
             var outputEncoding = encoding ?? Encoding.UTF8;
             var reader = new StreamReader(OutputStream, outputEncoding);
@@ -166,6 +166,11 @@ namespace PygmentSharp.Core
         public void ToFile(string filename)
         {
             var formatter = FormatterLocator.FindByFilename(filename);
+            if (formatter == null)
+            {
+                throw new InvalidOperationException($"Failed to find a formatter for {filename}");
+            }
+
             var tokens = _lexer.GetTokens(_input);
             using (var output = new StreamWriter(File.OpenWrite(filename), Encoding.UTF8))
             {
@@ -199,6 +204,11 @@ namespace PygmentSharp.Core
         public static IPygmentizeBuilder File(string filename)
         {
             var lexer = LexerLocator.FindByFilename(filename);
+            if (lexer == null)
+            {
+                throw new InvalidOperationException($"Failed to find a lexer for {filename}");
+            }
+
             return new PygmentizeContentBuilder(System.IO.File.ReadAllText(filename))
                 .WithLexer(lexer);
         }

@@ -8,15 +8,14 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/akatakritos/PygmentSharp</RepositoryUrl>
     <PackageTags>syntax highlighting</PackageTags>
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
-    <FileVersion>0.3.0.0</FileVersion>
-    <PackageReleaseNotes>- Target .NET Standard 2.0
-- Add typescript lexer
-- Add github CI</PackageReleaseNotes>
+    <AssemblyVersion>0.3.1.0</AssemblyVersion>
+    <FileVersion>0.3.1.0</FileVersion>
+    <PackageReleaseNotes>- misc bug fixes in xml tokenizer</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/akatakritos/PygmentSharp</PackageProjectUrl>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
+    <PackageVersion>0.3.1</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <CodeAnalysisRuleSet />

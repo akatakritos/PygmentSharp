@@ -1,3 +1,6 @@
+## 0.3.1 (2022-10-28)
+- Fix bugs in xml tokenizer (@reima)
+
 ## 0.3.0 (2020-06-29)
 - Target .NET Standard 2.0
 - Add typescript lexer

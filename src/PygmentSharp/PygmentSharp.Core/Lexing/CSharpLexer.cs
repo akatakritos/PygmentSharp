@@ -41,6 +41,10 @@ namespace PygmentSharp.Core.Lexing
             var cs_ident = CSharpLexerLevel.Full;
             var builder = new StateRuleBuilder();
 
+            // SingleLine makes the . operator match \n's and MultiLine makes $ and ^ match at beginning and end of each line
+            // without this, multi-line comments aren't matched correctly
+            builder.DefaultRegexOptions = System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Multiline;
+
             rules["root"] = builder.NewRuleSet()
                 .ByGroups(@"^([ \t]*(?:" + cs_ident + @"(?:\[\])?\s+)+?)" +  // return type
                                  @"(" + cs_ident +   @")" +                  // method name
@@ -49,8 +53,10 @@ namespace PygmentSharp.Core.Lexing
                     new TokenGroupProcessor(TokenTypes.Name.Function),
                     new TokenGroupProcessor(TokenTypes.Text),
                     new TokenGroupProcessor(TokenTypes.Punctuation))
-
-                .Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute)
+                /* we want to tokenize attributes, not treat everything inside the brackets as a single token 
+                 * so comment out the next line, as the other rules will match and tokenize the attribute
+                 */
+                //.Add(@"^\s*\[.*?\]", TokenTypes.Name.Attribute) 
                 .Add(@"[^\S\n]+", TokenTypes.Text)
                 .Add(@"\\\n", TokenTypes.Text) //line continuation
                 .Add(@"//.*?\n", TokenTypes.Comment.Single)
